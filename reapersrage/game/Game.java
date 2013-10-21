@@ -22,6 +22,7 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private int tickCount;
     private Screen screen;
+    private Thread gameThread;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -43,23 +44,30 @@ public class Game extends Canvas implements Runnable {
 
     public synchronized void start() {
         running = true;
-        new Thread(this).start();
+        gameThread = new Thread(this, NAME);
+        gameThread.start();
+        //new Thread(this).start();
     }
 
     public synchronized void stop() {
         running = false;
-    }
-
-    public void init() {
         try {
-            screen = new Screen(WIDTH, HEIGHT,
-                    new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
-        } catch (IOException e) {
+            gameThread.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
+    public void init() {
+        screen = new Screen(WIDTH, HEIGHT);
+       /* try {
+            screen = new Screen(WIDTH, HEIGHT,
+                    new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
     public void run() {
         long lastTime = System.nanoTime();
         double unprocessed = 0D;
@@ -113,6 +121,10 @@ public class Game extends Canvas implements Runnable {
         }
         screen.clear();
         screen.render();
+
+        for (int i =0; i < pixels.length; i++) {
+            pixels[i] = screen.getPixel(i);
+        }
 
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
