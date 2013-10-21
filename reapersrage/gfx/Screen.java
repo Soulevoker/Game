@@ -26,7 +26,11 @@ public class Screen {
             colors[i * 4 + 3] = 0xffffff;
         }
     }
-
+    @Deprecated
+    /**
+     * @Deprecated
+     * Old way of rendering our screen.
+     */
     public void render(int[] pixels, int offs, int row) {
         for (int yt = yScroll >> 3; yt <= (yScroll + H) >> 3; yt++) {
             int y0 = yt * 8 - yScroll;
