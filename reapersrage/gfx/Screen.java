@@ -32,6 +32,14 @@ public class Screen {
     public int getPixel(int index) {
         return this.pixels[index];
     }
+    
+    public int getScreenPixelAmount() {
+        return this.pixels.length;
+    }
+    
+    public int[] getScreenPixels {
+        return this.pixels;
+    }
 
     //OLD
     /* private static final int MAP_WIDTH = 64; //Must be 2^x
