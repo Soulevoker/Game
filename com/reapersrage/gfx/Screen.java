@@ -1,37 +1,38 @@
 package com.reapersrage.gfx;
 
+import java.util.Random;
+
 public class Screen {
+    private static final int MAP_WIDTH = 64;
     public int yScroll, xScroll;
     private int width, height;
     private int[] pixels;
+    int[] tiles = new int[MAP_WIDTH * MAP_WIDTH];
+    Random random = new Random();
 
     public Screen(int width, int height) {
         this.width = width;
         this.height = height;
         pixels = new int[width * height];
+        for (int i =0; i < tiles.length; i ++)  {
+            tiles[i] = random.nextInt(0xffFFff);
+        }
     }
-
+    //TODO: Render Sprite Maps, and implement tile loading
     public void render() {
-        for (int y = yScroll >> 3; y <= (yScroll + height) >> 3; y++) {
-            int y1 = y * 8 - yScroll;
-            int y2 = y1 + 8;
-            if (y1 < 0) {
-                y1 = 0;
-            }
-            if (y2 > height) {
-                y2 = height;
-            }
-            for (int x = xScroll >> 3; x <= (xScroll + width);
-                 x++) {
-                int x1 = x * 8 - xScroll;
-                int x2 = x1 + 8;
-                if (x1 < 0) {
-                    x1 = 0;
-                }
-                if (x2 > width) {
-                    x2 = width;
-                }
-                pixels[x + y * width] = 0xff00ff;
+        for (int y = 0; y < height; y++) {
+            int yy = y;
+            /*if (yScroll >= height || yScroll < 0) {
+                break;
+            }*/
+
+            for (int x = 0; x < width; x++) {
+                int xx = x;
+                /*if (xScroll >= width || xScroll < 0) {
+                    break;
+                }*/
+                int tileIndex = (x >> 4) + (y >> 4) * 64;
+                pixels[x + y * width] = tiles[tileIndex];
             }
         }
 
