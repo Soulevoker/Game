@@ -1,10 +1,9 @@
 package com.reapersrage.gfx;
 
 public class Screen {
+    public int yScroll, xScroll;
     private int width, height;
     private int[] pixels;
-
-    public int yScroll, xScroll;
 
     public Screen(int width, int height) {
         this.width = width;
@@ -13,23 +12,24 @@ public class Screen {
     }
 
     public void render() {
-        for (int y = 0; y < height; y++) {
+        for (int y = yScroll >> 3; y <= (yScroll + height) >> 3; y++) {
             int y1 = y * 8 - yScroll;
             int y2 = y1 + 8;
             if (y1 < 0) {
-                y = 0;
+                y1 = 0;
             }
             if (y2 > height) {
-                y = height;
+                y2 = height;
             }
-            for (int x = 0; x < width; x++) {
+            for (int x = xScroll >> 3; x <= (xScroll + width);
+                 x++) {
                 int x1 = x * 8 - xScroll;
                 int x2 = x1 + 8;
                 if (x1 < 0) {
-                    x = 0;
+                    x1 = 0;
                 }
                 if (x2 > width) {
-                    x = width;
+                    x2 = width;
                 }
                 pixels[x + y * width] = 0xff00ff;
             }
@@ -38,7 +38,9 @@ public class Screen {
     }
 
     public void clear() {
-
+        for (int i = 0; i < pixels.length; i++) {
+            pixels[i] = 0;
+        }
     }
 
     /**

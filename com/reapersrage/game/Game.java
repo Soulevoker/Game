@@ -106,7 +106,7 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-        screen.xScroll--;
+        screen.xScroll++;
         //screen.yScroll++;
     }
 
