@@ -1,15 +1,12 @@
 package com.reapersrage.game;
 
 import com.reapersrage.gfx.Screen;
-import com.reapersrage.gfx.SpriteSheet;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
 
@@ -109,7 +106,7 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-        //screen.xScroll--;
+        screen.xScroll--;
         //screen.yScroll++;
     }
 

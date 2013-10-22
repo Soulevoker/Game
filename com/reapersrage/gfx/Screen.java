@@ -4,6 +4,8 @@ public class Screen {
     private int width, height;
     private int[] pixels;
 
+    public int yScroll, xScroll;
+
     public Screen(int width, int height) {
         this.width = width;
         this.height = height;
@@ -12,7 +14,23 @@ public class Screen {
 
     public void render() {
         for (int y = 0; y < height; y++) {
+            int y1 = y * 8 - yScroll;
+            int y2 = y1 + 8;
+            if (y1 < 0) {
+                y = 0;
+            }
+            if (y2 > height) {
+                y = height;
+            }
             for (int x = 0; x < width; x++) {
+                int x1 = x * 8 - xScroll;
+                int x2 = x1 + 8;
+                if (x1 < 0) {
+                    x = 0;
+                }
+                if (x2 > width) {
+                    x = width;
+                }
                 pixels[x + y * width] = 0xff00ff;
             }
         }
@@ -32,12 +50,12 @@ public class Screen {
     public int getPixel(int index) {
         return this.pixels[index];
     }
-    
+
     public int getScreenPixelAmount() {
         return this.pixels.length;
     }
-    
-    public int[] getScreenPixels {
+
+    public int[] getScreenPixels() {
         return this.pixels;
     }
 
