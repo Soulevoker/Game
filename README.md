@@ -13,8 +13,6 @@ You are part of a rebellion, and you are sent to steal...intel, government asset
 
 /********* Starting off **********/
 
-INTELLIGENT A.I. 
-
 Motivation for joining rebellion - U.S. Diplomacy disintegrates into Communism which causes Anarchy to spread throughout the states  
 
 economy destroyed
