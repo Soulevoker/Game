@@ -3,7 +3,7 @@ package com.reapersrage.gfx;
 import java.util.Random;
 
 public class Screen {
-    private static final int MAP_WIDTH = 8;
+    private static final int MAP_WIDTH = 64;
     private static final int MAP_MASK = MAP_WIDTH - 1;
     public int yScroll, xScroll;
     private int width, height;

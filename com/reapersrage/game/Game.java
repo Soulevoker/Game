@@ -1,5 +1,6 @@
 package com.reapersrage.game;
 
+import com.reapersrage.Input.Keyboard;
 import com.reapersrage.gfx.Screen;
 
 import javax.swing.*;
@@ -19,7 +20,9 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private int tickCount;
     private Screen screen;
+    private static Keyboard key;
     private Thread gameThread;
+    private int xScroll, yScroll;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -37,6 +40,10 @@ public class Game extends Canvas implements Runnable {
         frame.setVisible(true);
 
         game.start();
+
+        key = new Keyboard();
+
+        game.addKeyListener(key);
     }
 
     public synchronized void start() {
@@ -106,17 +113,30 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-
+        key.update();
+        if (key.up) {
+            yScroll--;
+        }
+        if (key.down) {
+            yScroll++;
+        }
+        if (key.left) {
+            xScroll--;
+        }
+        if (key.right) {
+            xScroll++;
+        }
     }
-          int i = 0;
+
     public void render() {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
             this.createBufferStrategy(3);
+            requestFocus();
             return;
         }
         screen.clear();
-        screen.render(i++, 0);
+        screen.render(xScroll, yScroll);
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
