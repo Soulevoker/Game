@@ -14,15 +14,10 @@ public class Sprite {
         this.x = x * size;
         this.y = y * size;
         this.sheet = sheet;
-        load();
         for (int y0 = 0; y0 < size; y0++) {
             for (int x0 = 0; x0 < size; x0++) {
                 pixels[x0 + y0 * size] = sheet.pixels[(x0 + this.x) + (y0 + this.y) * sheet.width];
             }
         }
-    }
-
-    private void load() {
-
     }
 }
