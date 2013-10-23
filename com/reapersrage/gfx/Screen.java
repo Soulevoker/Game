@@ -34,7 +34,8 @@ public class Screen {
                     break;
                 }*/
                 int tileIndex = ((relativeX >> 4) & MAP_MASK) + ((relativeY >> 4) & MAP_MASK) * MAP_WIDTH;
-                pixels[x + y * width] = tiles[tileIndex];
+                //pixels[x + y * width] = tiles[tileIndex];
+                pixels[x + y * width] = Sprite.grass.pixels[(x&15) + (y&15) * Sprite.grass.SIZE];
             }
         }
 
