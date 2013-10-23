@@ -106,10 +106,9 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-        screen.xScroll++;
-        screen.yScroll--;
-    }
 
+    }
+          int i = 0;
     public void render() {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
@@ -117,9 +116,9 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         screen.clear();
-        screen.render();
+        screen.render(i++, 0);
 
-        for (int i =0; i < pixels.length; i++) {
+        for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
         }
 

@@ -3,7 +3,8 @@ package com.reapersrage.gfx;
 import java.util.Random;
 
 public class Screen {
-    private static final int MAP_WIDTH = 64;
+    private static final int MAP_WIDTH = 8;
+    private static final int MAP_MASK = MAP_WIDTH - 1;
     public int yScroll, xScroll;
     private int width, height;
     private int[] pixels;
@@ -15,23 +16,24 @@ public class Screen {
         this.height = height;
         pixels = new int[width * height];
         for (int i =0; i < tiles.length; i ++)  {
-            tiles[i] = random.nextInt(0xffFFff);
+            tiles[i] = random.nextInt(0xffffff);
         }
+        tiles[0] = 0x000000;
     }
     //TODO: Render Sprite Maps, and implement tile loading
-    public void render() {
+    public void render(int xOffset, int yOffset) {
         for (int y = 0; y < height; y++) {
-            int yy = y;
+            int relativeY = y + yOffset;
             /*if (yScroll >= height || yScroll < 0) {
                 break;
             }*/
 
             for (int x = 0; x < width; x++) {
-                int xx = x;
+                int relativeX = x + xOffset;
                 /*if (xScroll >= width || xScroll < 0) {
                     break;
                 }*/
-                int tileIndex = (x >> 4) + (y >> 4) * 64;
+                int tileIndex = ((relativeX >> 4) & MAP_MASK) + ((relativeY >> 4) & MAP_MASK) * MAP_WIDTH;
                 pixels[x + y * width] = tiles[tileIndex];
             }
         }
