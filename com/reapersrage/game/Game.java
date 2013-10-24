@@ -1,6 +1,6 @@
 package com.reapersrage.game;
 
-import com.reapersrage.Input.Keyboard;
+import com.reapersrage.input.Keyboard;
 import com.reapersrage.gfx.Screen;
 
 import javax.swing.*;

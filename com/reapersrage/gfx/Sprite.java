@@ -7,6 +7,7 @@ public class Sprite {
     private SpriteSheet sheet;
 
     public static Sprite grass = new Sprite(16, 0, 0, new SpriteSheet("/textures/spritesheet.png"));
+    public static Sprite jim = new Sprite(16, 1, 0, new SpriteSheet("/textures/spritesheet.png"));
 
     public Sprite(int size, int x, int y, SpriteSheet sheet) {
         SIZE = size;

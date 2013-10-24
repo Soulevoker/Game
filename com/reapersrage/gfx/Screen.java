@@ -24,18 +24,18 @@ public class Screen {
     public void render(int xOffset, int yOffset) {
         for (int y = 0; y < height; y++) {
             int relativeY = y + yOffset;
-            /*if (yScroll >= height || yScroll < 0) {
-                break;
-            }*/
+            if (relativeY >= height || relativeY < 0) {
+                continue;
+            }
 
             for (int x = 0; x < width; x++) {
                 int relativeX = x + xOffset;
-                /*if (xScroll >= width || xScroll < 0) {
-                    break;
-                }*/
+                if (relativeX >= width || relativeX < 0) {
+                    continue;
+                }
                 int tileIndex = ((relativeX >> 4) & MAP_MASK) + ((relativeY >> 4) & MAP_MASK) * MAP_WIDTH;
                 //pixels[x + y * width] = tiles[tileIndex];
-                pixels[x + y * width] = Sprite.grass.pixels[(x&15) + (y&15) * Sprite.grass.SIZE];
+                    pixels[relativeX + relativeY * width] = Sprite.grass.pixels[(x&15) + (y&15) * Sprite.grass.SIZE];
             }
         }
 
