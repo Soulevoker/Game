@@ -11,13 +11,14 @@ import java.util.Random;
  * Time: 5:57 PM
  * Copyright © Reapers' Rage 2013
  */
-public class RandomLevel extends Level {
+public abstract class RandomLevel extends Level {
 
     private Random random = new Random();
 
     public RandomLevel(int width, int height) {
         super(width, height);
     }
+
     protected void generateLevel() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -25,18 +26,13 @@ public class RandomLevel extends Level {
             }
         }
     }
-    @Override
-    protected void update() {
-
-    }
 
     @Override
-    protected void render(int xScroll, int yScroll, Screen screen) {
-
-    }
+    protected abstract void update();
 
     @Override
-    protected void time() {
+    protected abstract void render(int xScroll, int yScroll, Screen screen);
 
-    }
+    @Override
+    protected abstract void time();
 }
