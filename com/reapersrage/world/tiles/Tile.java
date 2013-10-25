@@ -13,6 +13,7 @@ import com.reapersrage.gfx.Sprite;
 public abstract class Tile {
 
     public static Tile grass = new GrassTile(Sprite.grass);
+    public static Tile voidTile = new VoidTile(Sprite.grass);
 
     public int x, y;
     public Sprite sprite;
@@ -21,7 +22,9 @@ public abstract class Tile {
         this.sprite = sprite;
     }
 
-    protected abstract void render(int x, int y, Screen screen);
+    protected void render(int x, int y, Screen screen) {
+        screen.renderTile(x, y, this);
+    }
 
     protected boolean solid() {
         return false;

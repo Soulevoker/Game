@@ -6,12 +6,12 @@ import com.reapersrage.gfx.Sprite;
  * Created with IntelliJ IDEA.
  * User: Soulevoker
  * Date: 10/24/13
- * Time: 6:29 PM
+ * Time: 8:19 PM
  * Copyright © Reapers' Rage 2013
  */
-public class GrassTile extends Tile {
+public class VoidTile extends Tile {
 
-    public GrassTile(Sprite sprite) {
+    public VoidTile(Sprite sprite) {
         super(sprite);
     }
 }

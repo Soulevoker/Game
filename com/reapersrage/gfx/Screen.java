@@ -7,11 +7,12 @@ import java.util.Random;
 public class Screen {
     private static final int MAP_WIDTH = 64;
     private static final int MAP_MASK = MAP_WIDTH - 1;
-    public int yScroll, xScroll;
     private int width, height;
     private int[] pixels;
     int[] tiles = new int[MAP_WIDTH * MAP_WIDTH];
     Random random = new Random();
+
+    public int xOffset, yOffset;
 
     public Screen(int width, int height) {
         this.width = width;
@@ -45,6 +46,8 @@ public class Screen {
     }
 
     public void renderTile(int xp, int yp, Tile tile) {
+        xp -= xOffset;
+        yp -= yOffset;
         for (int y = 0; y < tile.sprite.SIZE; y++) {
             int ya = y + yp;
             for (int x = 0; x < tile.sprite.SIZE; x++) {
@@ -89,5 +92,10 @@ public class Screen {
 
     public int getHeight() {
         return height;
+    }
+
+    public void setOffsets(int xOffset, int yOffset) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
     }
 }
