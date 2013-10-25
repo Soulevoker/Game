@@ -36,7 +36,12 @@ public abstract class Level {
 
     protected abstract void update();
 
-    protected abstract void render(int xScroll, int yScroll, Screen screen);
+    protected void render(int xScroll, int yScroll, Screen screen) {
+        int x0 = xScroll >> 4;
+        int x1 = (xScroll + screen.getWidth()) >> 4;
+        int y0 = yScroll >> 4;
+        int y1 = (yScroll + screen.getHeight()) >> 4;
+    }
 
     protected abstract void time();
 }

@@ -1,7 +1,5 @@
 package com.reapersrage.world.level;
 
-import com.reapersrage.gfx.Screen;
-
 import java.util.Random;
 
 /**
@@ -29,9 +27,6 @@ public abstract class RandomLevel extends Level {
 
     @Override
     protected abstract void update();
-
-    @Override
-    protected abstract void render(int xScroll, int yScroll, Screen screen);
 
     @Override
     protected abstract void time();
