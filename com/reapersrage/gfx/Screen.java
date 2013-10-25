@@ -82,4 +82,12 @@ public class Screen {
     public int[] getScreenPixels() {
         return this.pixels;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
