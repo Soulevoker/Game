@@ -9,9 +9,9 @@ import java.util.Random;
  * Time: 5:57 PM
  * Copyright © Reapers' Rage 2013
  */
-public abstract class RandomLevel extends Level {
+public class RandomLevel extends Level {
 
-    private Random random = new Random();
+    private static Random random = new Random();
 
     public RandomLevel(int width, int height) {
         super(width, height);
@@ -26,8 +26,12 @@ public abstract class RandomLevel extends Level {
     }
 
     @Override
-    protected abstract void update();
+    protected void update() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
     @Override
-    protected abstract void time();
+    protected void time() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

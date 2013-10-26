@@ -1,7 +1,9 @@
 package com.reapersrage.game;
 
-import com.reapersrage.input.Keyboard;
 import com.reapersrage.gfx.Screen;
+import com.reapersrage.input.Keyboard;
+import com.reapersrage.world.level.Level;
+import com.reapersrage.world.level.RandomLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +22,7 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private int tickCount;
     private Screen screen;
+    private Level level;
     private static Keyboard key;
     private Thread gameThread;
     private int xScroll, yScroll;
@@ -64,6 +67,7 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         screen = new Screen(WIDTH, HEIGHT);
+        level = new RandomLevel(64, 64);
        /* try {
             screen = new Screen(WIDTH, HEIGHT,
                     new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
@@ -86,7 +90,7 @@ public class Game extends Canvas implements Runnable {
             long now = System.nanoTime();
             unprocessed += (now - lastTime) / nsPerTick;
             lastTime = now;
-            boolean shouldRender = false;
+            boolean shouldRender = true;
             while (unprocessed > 1) {
                 ticks++;
                 tick();
@@ -136,7 +140,8 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         screen.clear();
-        screen.render(xScroll, yScroll);
+        //screen.render(xScroll, yScroll);
+        level.render(xScroll, yScroll, screen);
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
