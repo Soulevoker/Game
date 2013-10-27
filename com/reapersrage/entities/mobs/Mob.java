@@ -15,7 +15,24 @@ public abstract class Mob extends Entity {
     protected Sprite sprite;
     protected int dir;
 
-    public void move() {
+    public void move(int xa, int ya) {
+        if (xa > 0) {
+            dir = 1;
+        }
+        if (xa < 0) {
+            dir = 3;
+        }
+        if (ya > 0) {
+            dir = 1;
+        }
+        if (ya < 0) {
+            dir = 0;
+        }
+
+        if (!collision()) {
+            x += xa;
+            y += ya;
+        }
     }
 
     public void update() {
@@ -27,5 +44,9 @@ public abstract class Mob extends Entity {
 
     private boolean collision() {
         return false;
+    }
+
+    public int getDir() {
+        return dir;
     }
 }

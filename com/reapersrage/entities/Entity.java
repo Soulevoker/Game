@@ -13,7 +13,8 @@ import java.util.Random;
  * Copyright © Reapers' Rage 2013
  */
 public abstract class Entity {
-    public int x, y;
+    protected int x;
+    protected int y;
     private boolean removed = false;
     protected Level level;
     protected Random random;
@@ -35,5 +36,13 @@ public abstract class Entity {
 
     public boolean isRemoved() {
         return removed;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

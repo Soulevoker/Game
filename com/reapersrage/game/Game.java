@@ -1,5 +1,6 @@
 package com.reapersrage.game;
 
+import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
 import com.reapersrage.world.level.Level;
@@ -23,6 +24,7 @@ public class Game extends Canvas implements Runnable {
     private int tickCount;
     private Screen screen;
     private Level level;
+    private Player player;
     private static Keyboard key;
     private Thread gameThread;
     private int xScroll, yScroll;
@@ -68,6 +70,7 @@ public class Game extends Canvas implements Runnable {
     public void init() {
         screen = new Screen(WIDTH, HEIGHT);
         level = new RandomLevel(64, 64);
+        player = new Player(key);
        /* try {
             screen = new Screen(WIDTH, HEIGHT,
                     new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
@@ -118,18 +121,7 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         tickCount++;
         key.update();
-        if (key.up) {
-            yScroll--;
-        }
-        if (key.down) {
-            yScroll++;
-        }
-        if (key.left) {
-            xScroll--;
-        }
-        if (key.right) {
-            xScroll++;
-        }
+        player.update();
     }
 
     public void render() {
@@ -141,7 +133,7 @@ public class Game extends Canvas implements Runnable {
         }
         screen.clear();
         //screen.render(xScroll, yScroll);
-        level.render(xScroll, yScroll, screen);
+        level.render(player.getX(), player.getY(), screen);
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
@@ -149,6 +141,9 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Verdana", 0, 50));
+        g.drawString("X: " + player.getX() + " Y: " + player.getY() + " Dir: " + player.getDir(), 700, 650); //DEBUG
         g.dispose();
         bs.show();
     }
