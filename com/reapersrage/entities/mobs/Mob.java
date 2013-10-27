@@ -1,0 +1,27 @@
+package com.reapersrage.entities.mobs;
+
+import com.reapersrage.entities.Entity;
+import com.reapersrage.gfx.Sprite;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: Soulevoker
+ * Date: 10/27/13
+ * Time: 1:08 PM
+ * Copyright © Reapers' Rage 2013
+ */
+public abstract class Mob extends Entity {
+
+    protected Sprite sprite;
+    protected int dir;
+
+    public void move() {
+    }
+
+    public void update() {
+    }
+
+    private boolean collision() {
+        return false;
+    }
+}
