@@ -12,8 +12,8 @@ import com.reapersrage.gfx.Sprite;
  */
 public abstract class Tile {
 
-    public static Tile grass = new GrassTile(Sprite.grass);
-    public static Tile voidTile = new VoidTile(Sprite.voidSprite);
+    public static final Tile grass = new GrassTile(Sprite.grass);
+    public static final Tile voidTile = new VoidTile(Sprite.voidSprite);
 
     public int x, y;
     public Sprite sprite;

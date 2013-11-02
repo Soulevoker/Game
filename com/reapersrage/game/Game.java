@@ -18,6 +18,7 @@ public class Game extends Canvas implements Runnable {
     static final int WIDTH = HEIGHT * 16 / 9;
     static final int SCALE = 3;
     static final String NAME = "Untitled Game";
+    private static Keyboard key;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private boolean running = false;
@@ -25,7 +26,6 @@ public class Game extends Canvas implements Runnable {
     private Screen screen;
     private Level level;
     private Player player;
-    private static Keyboard key;
     private Thread gameThread;
     private int xScroll, yScroll;
 
@@ -102,8 +102,8 @@ public class Game extends Canvas implements Runnable {
             }
             try {
                 Thread.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
             }
             if (shouldRender) {
                 frames++;

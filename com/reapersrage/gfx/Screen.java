@@ -2,6 +2,7 @@ package com.reapersrage.gfx;
 
 import com.reapersrage.world.tiles.Tile;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Screen {
@@ -85,7 +86,7 @@ public class Screen {
     }
 
     public int[] getScreenPixels() {
-        return this.pixels;
+        return Arrays.copyOf(pixels, pixels.length);
     }
 
     public int getWidth() {
