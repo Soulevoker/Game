@@ -1,6 +1,8 @@
 package com.reapersrage.entities.mobs;
 
+import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
+import com.reapersrage.world.tiles.Tile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,7 +44,7 @@ public class Player extends Mob {
         }
     }
 
-    public void render() {
-
+    public void render(Screen screen) {
+        Tile.playerTile.render(getX(), getY(), screen);
     }
 }

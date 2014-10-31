@@ -15,9 +15,9 @@ public abstract class Mob extends Entity {
     protected Sprite sprite;
     protected int dir;
 
-    public void move(int xa, int ya) {
+    public void move(double xa, double ya) {
         if (xa > 0) {
-            dir = 1;
+            dir = 2;
         }
         if (xa < 0) {
             dir = 3;

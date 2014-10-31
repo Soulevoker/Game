@@ -8,7 +8,7 @@ public class Sprite {
 
     public static final Sprite grass = new Sprite(16, 0, 0, new SpriteSheet("/com/reapersrage/res/textures/spritesheet.png"));
     public static final Sprite voidSprite = new Sprite(16, 0);
-    public static Sprite jim = new Sprite(16, 1, 0, new SpriteSheet("/com/reapersrage/res/textures/spritesheet.png"));
+    public static final Sprite playerSprite = new Sprite(16, 1, 0, new SpriteSheet("/com/reapersrage/res/textures/spritesheet.png"));
 
     public Sprite(int size, int x, int y, SpriteSheet sheet) {
         SIZE = size;

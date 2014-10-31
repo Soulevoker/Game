@@ -14,6 +14,7 @@ public abstract class Tile {
 
     public static final Tile grass = new GrassTile(Sprite.grass);
     public static final Tile voidTile = new VoidTile(Sprite.voidSprite);
+    public static final Tile playerTile = new PlayerTile(Sprite.playerSprite);
 
     public int x, y;
     public Sprite sprite;

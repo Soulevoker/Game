@@ -133,7 +133,9 @@ public class Game extends Canvas implements Runnable {
         }
         screen.clear();
         //screen.render(xScroll, yScroll);
-        level.render(player.getX(), player.getY(), screen);
+        //level.render(player.getX(), player.getY(), screen); This will move the entire level with directional button
+        level.render(0, 0, screen); // Render the level
+        player.render(screen); //Render the Player
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
