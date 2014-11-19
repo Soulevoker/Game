@@ -16,8 +16,8 @@ import java.awt.image.DataBufferInt;
 public class Game extends Canvas implements Runnable {
 
     //width and height of game screen
-	static final int HEIGHT = 240;
-    static final int WIDTH = HEIGHT * 16 / 9;
+	static final int HEIGHT = (240/16)*16;
+    static final int WIDTH = ((HEIGHT * 16 / 9)/16)*16;
     static final int SCALE = 3;
     
     static final String NAME = "DOODLE ARENA WARS 2015";

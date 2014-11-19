@@ -24,6 +24,8 @@ public class Player extends Mob {
         this.y = y;
         this.input = input;
     }
+    
+    
 
     public void update() {
         int xa = 0, ya = 0;
@@ -34,7 +36,7 @@ public class Player extends Mob {
         if (input.down) {
             ya++;
         }
-        if (input.left) {
+        if (input.left && getX()>0) {
             xa--;
         }
         if (input.right) {
