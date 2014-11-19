@@ -7,10 +7,11 @@ import java.util.Random;
 
 public class Screen {
     private static final int MAP_WIDTH = 64;
+    private static final int MAP_HEIGHT = 64;
     private static final int MAP_MASK = MAP_WIDTH - 1;
     private int width, height;
     private int[] pixels;
-    int[] tiles = new int[MAP_WIDTH * MAP_WIDTH];
+    int[] tiles = new int[MAP_WIDTH * MAP_HEIGHT];
     Random random = new Random();
 
     public int xOffset, yOffset;

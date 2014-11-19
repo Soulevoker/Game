@@ -27,7 +27,8 @@ public class Player extends Mob {
 
     public void update() {
         int xa = 0, ya = 0;
-        if (input.up) {
+        
+        if (input.up &&  getY() > 0) {
             ya--;
         }
         if (input.down) {

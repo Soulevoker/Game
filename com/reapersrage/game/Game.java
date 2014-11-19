@@ -14,10 +14,12 @@ import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable {
 
-    static final int HEIGHT = 240;
+    //width and height of game screen
+	static final int HEIGHT = 240;
     static final int WIDTH = HEIGHT * 16 / 9;
     static final int SCALE = 3;
-    static final String NAME = "Untitled Game";
+    
+    static final String NAME = "DOODLE ARENA WARS 2015";
     private static Keyboard key;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -82,7 +84,7 @@ public class Game extends Canvas implements Runnable {
     public void run() {
         long lastTime = System.nanoTime();
         double unprocessed = 0D;
-        double nsPerTick = 1000000000D / 60D;
+        double nsPerTick = 5000000000D / 60D;
         int frames = 0;
         int ticks = 0;
         long lastTimer1 = System.currentTimeMillis();
