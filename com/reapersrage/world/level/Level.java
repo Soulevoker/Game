@@ -57,6 +57,8 @@ public abstract class Level {
         if (tiles[x + y * width] == 0) {
             return Tile.grass;
         }
+        if (tiles[x+y*width]==4)
+        	return Tile.rockOnGrassTile;
         return Tile.voidTile;
     }
 

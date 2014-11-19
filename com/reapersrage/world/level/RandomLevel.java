@@ -23,6 +23,9 @@ public class RandomLevel extends Level {
                 tiles[x + y * width] = random.nextInt(4);
             }
         }
+        
+        tiles[20]=4;
+        tiles[64]=4;
     }
 
     @Override
