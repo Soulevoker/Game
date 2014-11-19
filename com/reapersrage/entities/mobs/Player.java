@@ -36,11 +36,7 @@ public class Player extends Mob {
         if (input.down) {
             ya++;
         }
-<<<<<<< HEAD
-        if (input.left && getX() > 0) {
-=======
         if (input.left && getX()>0) {
->>>>>>> origin/master
             xa--;
         }
         if (input.right) {
