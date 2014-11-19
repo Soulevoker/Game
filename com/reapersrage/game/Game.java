@@ -7,6 +7,7 @@ import com.reapersrage.world.level.Level;
 import com.reapersrage.world.level.RandomLevel;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -33,9 +34,11 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-        game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-        game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        
+        //not being used
+        game.setMinimumSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
+        game.setMaximumSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
+        game.setPreferredSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
 
         JFrame frame = new JFrame(NAME);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -80,14 +83,47 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }*/
     }
-
+    
     public void run() {
+    	int frames = 0;
+        int ticks = 0;
+        int frameRate = 50;
+        
+        init();
+    	
+    	 while (running) {
+    		 long frameStart = System.currentTimeMillis();
+    		 ticks++;
+             tick();
+             frames++;
+             render();
+             
+             long frameLength = System.currentTimeMillis() - frameStart;
+             
+             if(frameLength < frameRate){
+            	 try {
+					gameThread.sleep(frameRate-frameLength);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+             }
+             
+    		 
+    	 }
+    	
+    }
+
+    /*public void run() {
         long lastTime = System.nanoTime();
         double unprocessed = 0D;
         double nsPerTick = 5000000000D / 60D;
         int frames = 0;
         int ticks = 0;
         long lastTimer1 = System.currentTimeMillis();
+        
+        
 
         init();
 
@@ -118,7 +154,7 @@ public class Game extends Canvas implements Runnable {
                 ticks = 0;
             }
         }
-    }
+    }*/
 
     public void tick() {
         tickCount++;
