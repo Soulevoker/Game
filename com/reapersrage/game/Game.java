@@ -17,14 +17,21 @@ public class Game extends Canvas implements Runnable {
 
     //width and height of game screen
 	static final int HEIGHT = (240/16)*16;
-    static final int WIDTH = ((HEIGHT * 16 / 9)/16)*16;
+    //Make sure we have a 16:9 aspect ratio
+	static final int WIDTH = ((HEIGHT * 16 / 9)/16)*16;
+    //Scale the pixels by 3
     static final int SCALE = 3;
-    
+    //Name of the game to display on windows
     static final String NAME = "DOODLE ARENA WARS 2015";
+    //Keyboard class for input
     private static Keyboard key;
+    //Image buffer to display
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    //Array of pixels
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    //Is the game running
     private boolean running = false;
+    //Number of ticks for something
     private int tickCount;
     private Screen screen;
     private Level level;
@@ -36,17 +43,22 @@ public class Game extends Canvas implements Runnable {
         Game game = new Game();
         
         //not being used
-        game.setMinimumSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
-        game.setMaximumSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
+        //game.setMinimumSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
+        //game.setMaximumSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
+        //Set the dimensions of the screen
         game.setPreferredSize(new Dimension((WIDTH - WIDTH%16)*SCALE, HEIGHT * SCALE));
-
+		//New
         JFrame frame = new JFrame(NAME);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //I don't know what this does
         frame.setLayout(new BorderLayout());
         frame.add(game, BorderLayout.CENTER);
+        //Makes it render correctly
         frame.pack();
         frame.setResizable(false);
+        //Make the windows open in the center of the screen
         frame.setLocationRelativeTo(null);
+        //Make the screen actually appear
         frame.setVisible(true);
 
         game.start();
@@ -115,46 +127,6 @@ public class Game extends Canvas implements Runnable {
     	
     }
 
-    /*public void run() {
-        long lastTime = System.nanoTime();
-        double unprocessed = 0D;
-        double nsPerTick = 5000000000D / 60D;
-        int frames = 0;
-        int ticks = 0;
-        long lastTimer1 = System.currentTimeMillis();
-        
-        
-
-        init();
-
-        while (running) {
-            long now = System.nanoTime();
-            unprocessed += (now - lastTime) / nsPerTick;
-            lastTime = now;
-            boolean shouldRender = true;
-            while (unprocessed > 1) {
-                ticks++;
-                tick();
-                unprocessed -= 1;
-                shouldRender = true;
-            }
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
-            }
-            if (shouldRender) {
-                frames++;
-                render();
-            }
-            if (System.currentTimeMillis() - lastTimer1 > 1000) {
-                lastTimer1 += 1000;
-                System.out.println(ticks + " Ticks " + frames + " Frames");
-                frames = 0;
-                ticks = 0;
-            }
-        }
-    }*/
 
     public void tick() {
         tickCount++;
@@ -183,7 +155,8 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Verdana", 0, 50));
-        g.drawString("X: " + player.getX() + " Y: " + player.getY() + " Dir: " + player.getDir(), 700, 650); //DEBUG
+        //Display the player's position on the screen, bottom-right -- scales to size
+        g.drawString("X: " + player.getX() + " Y: " + player.getY() + " Dir: " + player.getDir(), (int)(WIDTH-150)*SCALE, (int)(HEIGHT)*SCALE); //DEBUG
         g.dispose();
         bs.show();
     }
