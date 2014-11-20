@@ -9,65 +9,94 @@ import com.reapersrage.world.level.RandomLevel;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable {
 
+	// Make sure we have a 16:9 aspect ratio
+	static final int WIDTH = 800;
 	// width and height of game screen
-	static final int HEIGHT = 240;
-	static final int WIDTH = HEIGHT * 16 / 9;
-	static final int SCALE = 3;
-
-	private final int FRAME_RATE = 20;
-
+	static final int HEIGHT = 600;
+	// Name of the game to display on windows
 	static final String NAME = "DOODLE ARENA WARS 2015";
+	// Keyboard class for input
 	private static Keyboard key;
+	// Image buffer to display
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
+	// Array of pixels
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
 			.getData();
+	// Is the game running
 	private boolean running = false;
+	// Number of ticks for something
 	private int tickCount;
 	private Screen screen;
 	private Level level;
 	private Player player;
 	private Thread gameThread;
-	private int xScroll, yScroll;
+	// Frame rate (FPS)
+	static final int FRAMERATE = 50;
+
+	JFrame frame;
+	Canvas canvas;
+	BufferStrategy bufferStrategy;
+
+	public Game() {
+		JFrame frame = new JFrame(NAME);
+
+		// Sets up Jpanel
+		JPanel panel = (JPanel) frame.getContentPane();
+		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		panel.setLayout(null);
+
+		// sets up the canvas we will be rendering to
+		canvas = new Canvas();
+		canvas.setBounds(0, 0, WIDTH, HEIGHT);
+		canvas.setIgnoreRepaint(true);
+
+		// adds the canvas to jpanel
+		panel.add(canvas);
+
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		// Makes it render correctly
+		frame.pack();
+		frame.setResizable(false);
+		// Make the windows open in the center of the screen
+		frame.setLocationRelativeTo(null);
+		// Make the screen actually appear
+		frame.setVisible(true);
+
+		// Does magic
+		canvas.createBufferStrategy(2);
+		bufferStrategy = canvas.getBufferStrategy();
+		canvas.requestFocus();
+
+	}
 
 	public static void main(String[] args) {
 		Game game = new Game();
 
-		// not being used
-		game.setMinimumSize(new Dimension((WIDTH - WIDTH % 16) * SCALE, HEIGHT
-				* SCALE));
-		game.setMaximumSize(new Dimension((WIDTH - WIDTH % 16) * SCALE, HEIGHT
-				* SCALE));
-		game.setPreferredSize(new Dimension((WIDTH - WIDTH % 16) * SCALE,
-				HEIGHT * SCALE));
-
-		JFrame frame = new JFrame(NAME);
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setLayout(new BorderLayout());
-		frame.add(game, BorderLayout.CENTER);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		key = new Keyboard();
+		game.addKeyListener(key);
 
 		game.start();
 
-		key = new Keyboard();
-
-		game.addKeyListener(key);
 	}
 
+	// Starts the game
 	public synchronized void start() {
+		// The game is running
 		running = true;
+		// New thread to run the game
 		gameThread = new Thread(this, NAME);
+		// Start the game thread
 		gameThread.start();
-		// new Thread(this).start();
+
 	}
 
 	public synchronized void stop() {
@@ -92,70 +121,45 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void run() {
-
-		// Initializes game.
 		init();
-
-		// Game Loop.
 		while (running) {
-
-			// sets start if frame.
 			long frameStart = System.currentTimeMillis();
-
-			// gameUpdate updates the game, gameRender renders update to screen.
-			gameUpdate();
-			gameRender();
-
-			// frameLength is set to the time it take to update and render to
-			// screen.
+			tick();
+			render();
 			long frameLength = System.currentTimeMillis() - frameStart;
-
-			// checks to see that we haven't exceeded our framerate.
-			if (frameLength < (1000 / FRAME_RATE)) {
+			if (frameLength < FRAMERATE) {
 				try {
-					// sleeps for correct amount of time to keep consistent
-					// framerate.
-					gameThread.sleep((1000 / FRAME_RATE) - frameLength);
+					gameThread.sleep(FRAMERATE - frameLength);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
-
 		}
-
 	}
 
-	public void gameUpdate() {
+	public void tick() {
+		tickCount++;
 		key.update();
 		player.update();
 	}
 
-	public void gameRender() {
-		BufferStrategy bs = getBufferStrategy();
-		if (bs == null) {
-			this.createBufferStrategy(3);
-			requestFocus();
-			return;
-		}
+	public void render() {
+		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
+		g.clearRect(0, 0, WIDTH, HEIGHT);
+		test(g);
+		g.dispose();
+		bufferStrategy.show();
+		
+		
 		screen.clear();
-		// screen.render(xScroll, yScroll);
-		// level.render(player.getX(), player.getY(), screen); This will move
-		// the entire level with directional button
-		level.render(0, 0, screen); // Render the level
+
 		player.render(screen); // Render the Player
 
-		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = screen.getPixel(i);
-		}
-
-		Graphics g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Verdana", 0, 50));
-		g.drawString("X: " + player.getX() + " Y: " + player.getY() + " Dir: "
-				+ player.getDir(), 700, 650); // DEBUG
-		g.dispose();
-		bs.show();
 	}
+	
+	protected void test(Graphics2D g){
+	      g.fillRect(0, 0, 200, 200);
+	   }
+	
 }
