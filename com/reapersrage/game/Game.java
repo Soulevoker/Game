@@ -14,6 +14,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable {
+	
+	//test update
+	//test
+	//test
 
     //width and height of game screen
 	static final int HEIGHT = 240;

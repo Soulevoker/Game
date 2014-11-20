@@ -22,17 +22,16 @@ public class Keyboard implements KeyListener {
         right = keys[KeyEvent.VK_RIGHT] | keys[KeyEvent.VK_D];
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
+   
     public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
     }
 
-    @Override
+   
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
     }
