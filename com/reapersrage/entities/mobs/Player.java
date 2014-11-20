@@ -38,7 +38,7 @@ public class Player extends Mob {
 			xa++;
 		}
 		if (xa != 0 || ya != 0) {
-			move(xa, ya);
+			move(xa, ya);	//calls move(double,double) with ints?
 		}
 	}
 

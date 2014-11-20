@@ -11,11 +11,12 @@ public class SpriteSheet {
 	public SpriteSheet(String path) {
 		BufferedImage image;
 		try {
+			//get temporary BufferedImage
 			image = ImageIO.read(SpriteSheet.class.getResourceAsStream(path));
-			width = image.getWidth();
-			height = image.getHeight();
+			width = image.getWidth();	//set width
+			height = image.getHeight();	//set height
 			// Set pixels
-			pixels = image.getRGB(0, 0, width, height, null, 0, width);
+			pixels = image.getRGB(0, 0, width, height, null, 0, width);	//RETURNS SINGLE ARRAY?
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
