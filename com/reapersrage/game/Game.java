@@ -14,8 +14,12 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
+	
+     static final int MAP_WIDTH = 20;
+     static final int MAP_HEIGHT = 20;
 
 	// Make sure we have a 16:9 aspect ratio
 	static final int WIDTH = 800;
@@ -25,18 +29,11 @@ public class Game extends Canvas implements Runnable {
 	static final String NAME = "DOODLE ARENA WARS 2015";
 	// Keyboard class for input
 	private static Keyboard key;
-	// Image buffer to display
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
-			BufferedImage.TYPE_INT_RGB);
-	// Array of pixels
-	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
-			.getData();
 	// Is the game running
 	private boolean running = false;
-	// Number of ticks for something
-	private int tickCount;
+	
 	private Screen screen;
-	private Level level;
+	private static Level level;
 	private Player player;
 	private Thread gameThread;
 	// Frame rate (FPS)
@@ -63,11 +60,12 @@ public class Game extends Canvas implements Runnable {
 		panel.add(canvas);
 
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		// Makes it render correctly
-		frame.pack();
+
 		frame.setResizable(false);
 		// Make the windows open in the center of the screen
 		frame.setLocationRelativeTo(null);
+		// Makes it render correctly
+		frame.pack();
 		// Make the screen actually appear
 		frame.setVisible(true);
 
@@ -108,23 +106,22 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	public void init() {
+	public void init() throws IOException {
+		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
-		level = new RandomLevel(64, 64);
-		player = new Player(key);
-		/*
-		 * try { screen = new Screen(WIDTH, HEIGHT, new
-		 * SpriteSheet(ImageIO.read(
-		 * Game.class.getResourceAsStream("/icons.png")))); } catch (IOException
-		 * e) { e.printStackTrace(); }
-		 */
+		player = new Player(0,0,key);
+	
 	}
 
 	public void run() {
-		init();
+		try {
+			init();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		while (running) {
 			long frameStart = System.currentTimeMillis();
-			tick();
+			update();
 			render();
 			long frameLength = System.currentTimeMillis() - frameStart;
 			if (frameLength < FRAMERATE) {
@@ -138,28 +135,51 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	public void tick() {
-		tickCount++;
+	public void update() {
 		key.update();
 		player.update();
 	}
 
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-		g.clearRect(0, 0, WIDTH, HEIGHT);
-		test(g);
+	
+		screen.drawBackground(g);
+		
+		player.drawPlayer(g);
+		
 		g.dispose();
 		bufferStrategy.show();
 		
 		
-		screen.clear();
-
-		player.render(screen); // Render the Player
 
 	}
+
+	public static Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	public static int getMapWidth() {
+		return MAP_WIDTH;
+	}
+
+	public static int getMapHeight() {
+		return MAP_HEIGHT;
+	}
+
+	public  int getWidth() {
+		return WIDTH;
+	}
+
+	public  int getHeight() {
+		return HEIGHT;
+	}
 	
-	protected void test(Graphics2D g){
-	      g.fillRect(0, 0, 200, 200);
-	   }
+	
+	
+	
 	
 }

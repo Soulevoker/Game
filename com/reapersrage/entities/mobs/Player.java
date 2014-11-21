@@ -1,8 +1,14 @@
 package com.reapersrage.entities.mobs;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
-import com.reapersrage.world.tiles.Tile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,6 +20,8 @@ import com.reapersrage.world.tiles.Tile;
 public class Player extends Mob {
 
     private Keyboard input;
+    private BufferedImage Image;
+
 
     public Player(Keyboard input) {
         this.input = input;
@@ -23,6 +31,13 @@ public class Player extends Mob {
         this.x = x;
         this.y = y;
         this.input = input;
+        try {
+			Image = ImageIO
+					.read(GameTile.class
+							.getResourceAsStream("/com/reapersrage/res/textures/jim.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     public void update() {
@@ -44,8 +59,9 @@ public class Player extends Mob {
             move(xa, ya);
         }
     }
-
-    public void render(Screen screen) {
-        Tile.playerTile.render(getX(), getY(), screen);
+    
+    public void drawPlayer(Graphics2D g){
+    	g.drawImage(Image, x, y, null);
     }
+
 }

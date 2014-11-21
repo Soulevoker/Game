@@ -15,23 +15,15 @@ public class RandomLevel extends Level {
 
     public RandomLevel(int width, int height) {
         super(width, height);
+        generateLevel();
     }
 
     protected void generateLevel() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                tiles[x + y * width] = random.nextInt(4);
+        for (int y = 0; y < mapheight; y++) {
+            for (int x = 0; x < mapwidth; x++) {
+                tiles[y][x] = random.nextInt(3);
             }
         }
     }
 
-    @Override
-    protected void update() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void time() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 }
