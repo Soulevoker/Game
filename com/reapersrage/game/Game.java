@@ -17,9 +17,9 @@ import java.awt.image.DataBufferInt;
 import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
-	
-     static final int MAP_WIDTH = 20;
-     static final int MAP_HEIGHT = 20;
+
+	static final int MAP_WIDTH = 20;
+	static final int MAP_HEIGHT = 20;
 
 	// Make sure we have a 16:9 aspect ratio
 	static final int WIDTH = 800;
@@ -32,6 +32,9 @@ public class Game extends Canvas implements Runnable {
 	// Is the game running
 	private boolean running = false;
 	
+	private static String buttonPressed;
+	private int playerDir;
+
 	private Screen screen;
 	private static Level level;
 	private Player player;
@@ -39,48 +42,54 @@ public class Game extends Canvas implements Runnable {
 	// Frame rate (FPS)
 	static final int FRAMERATE = 50;
 
-	JFrame frame;
+	private int dir;
+
+	JFrame container;
+	JPanel panel;
 	Canvas canvas;
 	BufferStrategy bufferStrategy;
 
 	public Game() {
-		JFrame frame = new JFrame(NAME);
+		buttonPressed = "";
+		playerDir = 0;
+		
+		//initializes jframe
+		container = new JFrame(NAME);
 
-		// Sets up Jpanel
-		JPanel panel = (JPanel) frame.getContentPane();
+		//initialized jpane;
+		panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setLayout(null);
 
-		// sets up the canvas we will be rendering to
-		canvas = new Canvas();
-		canvas.setBounds(0, 0, WIDTH, HEIGHT);
-		canvas.setIgnoreRepaint(true);
+		//sets boundaries of panel and adds canvas to panel
+		setBounds(0, 0, WIDTH, HEIGHT);
+		panel.add(this);
 
-		// adds the canvas to jpanel
-		panel.add(canvas);
+		setIgnoreRepaint(true);
 
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		//more jframe stuff
+		container.setResizable(false);
+		container.pack();
+		container.setVisible(true);
 
-		frame.setResizable(false);
-		// Make the windows open in the center of the screen
-		frame.setLocationRelativeTo(null);
-		// Makes it render correctly
-		frame.pack();
-		// Make the screen actually appear
-		frame.setVisible(true);
+		//adds key listener
+		addKeyListener(new Keyboard());
 
-		// Does magic
-		canvas.createBufferStrategy(2);
-		bufferStrategy = canvas.getBufferStrategy();
-		canvas.requestFocus();
+		//requests focus for our keylistener
+		requestFocus();
+
+		//does stuff
+		createBufferStrategy(2);
+		bufferStrategy = getBufferStrategy();
 
 	}
 
 	public static void main(String[] args) {
 		Game game = new Game();
 
-		key = new Keyboard();
-		game.addKeyListener(key);
+		/*
+		 * key = new Keyboard(); game.addKeyListener(key);
+		 */
 
 		game.start();
 
@@ -109,8 +118,8 @@ public class Game extends Canvas implements Runnable {
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
-		player = new Player(0,0,key);
-	
+		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
+
 	}
 
 	public void run() {
@@ -136,22 +145,40 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		key.update();
-		player.update();
+		ButtonPressed();
+		player.update(playerDir);
 	}
 
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-	
+
 		screen.drawBackground(g);
-		
+
 		player.drawPlayer(g);
-		
+
 		g.dispose();
 		bufferStrategy.show();
-		
-		
 
+	}
+	
+	public void ButtonPressed(){
+		switch (buttonPressed) {
+		case "down":
+			playerDir = 1;
+			break;
+		case "up":
+			playerDir = 2;
+			break;
+		case "left":
+			playerDir = 3;
+			break;
+		case "right":
+			playerDir = 4;
+			break;
+		default:
+			playerDir = 0;
+			break;
+		}
 	}
 
 	public static Level getLevel() {
@@ -170,16 +197,31 @@ public class Game extends Canvas implements Runnable {
 		return MAP_HEIGHT;
 	}
 
-	public  int getWidth() {
+	public int getWidth() {
 		return WIDTH;
 	}
 
-	public  int getHeight() {
+	public int getHeight() {
 		return HEIGHT;
+	}
+
+	public String getButtonPressed() {
+		return buttonPressed;
+	}
+
+	public static void setButtonPressed(String b) {
+		buttonPressed = b;
+	}
+
+	public int getPlayerDir() {
+		return playerDir;
+	}
+
+	public void setPlayerDir(int playerDir) {
+		this.playerDir = playerDir;
 	}
 	
 	
-	
-	
-	
+
 }
+

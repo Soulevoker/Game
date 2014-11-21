@@ -21,7 +21,11 @@ public class RandomLevel extends Level {
     protected void generateLevel() {
         for (int y = 0; y < mapheight; y++) {
             for (int x = 0; x < mapwidth; x++) {
-                tiles[y][x] = random.nextInt(3);
+            	int q = random.nextInt(3);
+            	if(q == 2){
+            		q = random.nextInt(3);
+            	}
+                tiles[y][x] = q;
             }
         }
     }
