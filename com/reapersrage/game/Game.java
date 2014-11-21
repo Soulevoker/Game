@@ -5,6 +5,7 @@ import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
 import com.reapersrage.world.level.Level;
 import com.reapersrage.world.level.RandomLevel;
+import com.reapersrage.input.Buttons;
 
 import javax.swing.*;
 
@@ -31,10 +32,11 @@ public class Game extends Canvas implements Runnable {
 	private static Keyboard key;
 	// Is the game running
 	private boolean running = false;
-	
+	private static Buttons buttonsPressed;
 	private static String buttonPressed;
 	private int playerDir;
-
+        //Directions the player can move in: {Up, Down, Left, Right}
+        private boolean[] playerDirs;
 	private Screen screen;
 	private static Level level;
 	private Player player;
@@ -51,8 +53,9 @@ public class Game extends Canvas implements Runnable {
 
 	public Game() {
 		buttonPressed = "";
-		playerDir = 0;
-		
+                buttonsPressed = new Buttons();
+		//playerDir = 0;
+                playerDirs = new boolean[4];
 		//initializes jframe
 		container = new JFrame(NAME);
 
@@ -146,7 +149,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		ButtonPressed();
-		player.update(playerDir);
+		player.update(playerDirs);
 	}
 
 	public void render() {
@@ -162,7 +165,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void ButtonPressed(){
-		switch (buttonPressed) {
+		/*switch (buttonPressed) {
 		case "down":
 			playerDir = 1;
 			break;
@@ -178,7 +181,11 @@ public class Game extends Canvas implements Runnable {
 		default:
 			playerDir = 0;
 			break;
-		}
+		}*/
+                playerDirs[0] = buttonsPressed.up;
+                playerDirs[1] = buttonsPressed.down;
+                playerDirs[2] = buttonsPressed.left;
+                playerDirs[3] = buttonsPressed.right;
 	}
 
 	public static Level getLevel() {
@@ -211,7 +218,34 @@ public class Game extends Canvas implements Runnable {
 
 	public static void setButtonPressed(String b) {
 		buttonPressed = b;
+                if(b.equals("up")){
+                    buttonsPressed.up = true;
+                }
+                if(b.equals("down")){
+                    buttonsPressed.down = true;
+                }
+                if(b.equals("left")){
+                    buttonsPressed.left = true;
+                }
+                if(b.equals("right")){
+                    buttonsPressed.right = true;
+                }
 	}
+        
+        public static void setButtonReleased(String b){
+                if(b.equals("up")){
+                    buttonsPressed.up = false;
+                }
+                if(b.equals("down")){
+                    buttonsPressed.down = false;
+                }
+                if(b.equals("left")){
+                    buttonsPressed.left = false;
+                }
+                if(b.equals("right")){
+                    buttonsPressed.right = false;
+                }
+        }
 
 	public int getPlayerDir() {
 		return playerDir;

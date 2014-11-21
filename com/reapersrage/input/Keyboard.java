@@ -32,7 +32,21 @@ public class Keyboard extends KeyAdapter {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		Game.setButtonPressed("");
+		if (e.getKeyCode() == KeyEvent.VK_DOWN
+				|| e.getKeyCode() == KeyEvent.VK_S) {
+			Game.setButtonReleased("down");
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+			Game.setButtonReleased("up");
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT
+				|| e.getKeyCode() == KeyEvent.VK_A) {
+			Game.setButtonReleased("left");
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT
+				|| e.getKeyCode() == KeyEvent.VK_D) {
+			Game.setButtonReleased("right");
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {

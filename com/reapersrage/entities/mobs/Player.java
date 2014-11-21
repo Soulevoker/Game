@@ -67,6 +67,29 @@ public class Player {
 		}
 
 	}
+        //Updates the player direction from a list of possible directions
+        //Array approach allows us to move diagnally
+        //Array: {up, down, left, right}
+        //Note to self: THE TOP RIGHT CORNER IS 0,0
+        public void update(boolean[] dirs){
+            if(dirs[0]){
+                //Up
+                y -= 5;
+            }
+            if(dirs[1]){
+                //Down
+                y += 5;
+            }
+            if(dirs[2]){
+                //Left
+                x -= 5;
+            }
+            if(dirs[3]){
+                //Right
+                x += 5;
+            }
+            
+        }
 
 	public void drawPlayer(Graphics2D g) {
 		g.drawImage(RImage, x, y, null);
