@@ -28,13 +28,13 @@ public class Player extends Mob {
 		if (input.up && getY() > 0) {
 			ya--;
 		}
-		if (input.down) {
+		if (input.down && getY()<14) {
 			ya++;
 		}
 		if (input.left && getX() > 0) {
 			xa--;
 		}
-		if (input.right) {
+		if (input.right && getX() < 25) {
 			xa++;
 		}
 		if (xa != 0 || ya != 0) {
