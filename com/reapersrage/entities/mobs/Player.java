@@ -24,13 +24,20 @@ public class Player {
 	private int dir;
 	private int width;
 	private int height;
+        //Pixels for the player to move every update
+        private int speed;
 
 	public Player(int x, int y, int width, int height) {
 		dir = 0;
+                //Initial x position (pixels)
 		this.x = x;
+                //Initial y position (pixels)
 		this.y = y;
+                //Widith and height of player 
 		this.width = width;
 		this.height = height;
+                //Defult to a speed of 5
+                this.speed = 5;
 		try {
 			OImage = ImageIO
 					.read(GameTile.class
@@ -45,52 +52,48 @@ public class Player {
 		}
 	}
 
-	public void update(int dir) {
-		switch (dir) {
-		case 1:
-			y += 5;
-			break;
-		case 2:
-			y -= 5;
-			break;
-		case 3:
-			x -= 5;
-			break;
-		case 4:
-			x += 5;
-			break;
-
-		default:
-
-			break;
-
-		}
-
-	}
         //Updates the player direction from a list of possible directions
         //Array approach allows us to move diagnally
         //Array: {up, down, left, right}
         //Note to self: THE TOP RIGHT CORNER IS 0,0
         public void update(boolean[] dirs){
-            if(dirs[0]){
+            if(dirs[0] && !collision(x, y - speed)[1]){
                 //Up
-                y -= 5;
+                y -= speed;
             }
-            if(dirs[1]){
+            if(dirs[1] && !collision(x, y + speed)[1]){
                 //Down
-                y += 5;
+                y += speed;
             }
-            if(dirs[2]){
+            if(dirs[2] && !collision(x - speed, y)[0]){
                 //Left
-                x -= 5;
+                x -= speed;
             }
-            if(dirs[3]){
+            if(dirs[3] && !collision(x + speed, y)[0]){
                 //Right
-                x += 5;
+                x += speed;
             }
             
         }
+                
+        public void setSpeed(int newSpeed){
+            this.speed = newSpeed;
+        }
 
+        //Checks for a collision in both x and y and return an array of booleans indicating such
+        public boolean[] collision(int x, int y){
+            boolean[] collisions =  new boolean[]{false, false};
+            
+            if(x < 0 || x + width > Game.getStaticWidth()){
+                collisions[0] = true;
+            }
+            if(y < 0 || y + height > Game.getStaticHeight()){
+                collisions[1] = true;
+            }
+            
+            return collisions;
+        }
+        
 	public void drawPlayer(Graphics2D g) {
 		g.drawImage(RImage, x, y, null);
 	}

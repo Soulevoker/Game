@@ -34,7 +34,6 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
-	private int playerDir;
         //Directions the player can move in: {Up, Down, Left, Right}
         private boolean[] playerDirs;
 	private Screen screen;
@@ -165,24 +164,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void ButtonPressed(){
-		/*switch (buttonPressed) {
-		case "down":
-			playerDir = 1;
-			break;
-		case "up":
-			playerDir = 2;
-			break;
-		case "left":
-			playerDir = 3;
-			break;
-		case "right":
-			playerDir = 4;
-			break;
-		default:
-			playerDir = 0;
-			break;
-		}*/
-                playerDirs[0] = buttonsPressed.up;
+		playerDirs[0] = buttonsPressed.up;
                 playerDirs[1] = buttonsPressed.down;
                 playerDirs[2] = buttonsPressed.left;
                 playerDirs[3] = buttonsPressed.right;
@@ -197,7 +179,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public static int getMapWidth() {
-		return MAP_WIDTH;
+		return MAP_WIDTH;            
 	}
 
 	public static int getMapHeight() {
@@ -211,9 +193,14 @@ public class Game extends Canvas implements Runnable {
 	public int getHeight() {
 		return HEIGHT;
 	}
+        
+        //I needed static methods for width and height and didn't want to get rid of the old ones
+        public static int getStaticWidth() {
+		return WIDTH;
+	}
 
-	public String getButtonPressed() {
-		return buttonPressed;
+	public static int getStaticHeight() {
+		return HEIGHT;
 	}
 
 	public static void setButtonPressed(String b) {
@@ -247,15 +234,8 @@ public class Game extends Canvas implements Runnable {
                 }
         }
 
-	public int getPlayerDir() {
-		return playerDir;
+	public boolean[] getPlayerDir() {
+		return playerDirs;
 	}
-
-	public void setPlayerDir(int playerDir) {
-		this.playerDir = playerDir;
-	}
-	
-	
-
 }
 
