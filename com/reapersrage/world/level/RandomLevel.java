@@ -1,6 +1,7 @@
 package com.reapersrage.world.level;
 
 import com.reapersrage.entities.mobs.Fountain;
+import com.reapersrage.entities.mobs.Ghost;
 import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.mobs.Spike;
@@ -44,6 +45,7 @@ public class RandomLevel extends Level {
         MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
         //One of the fountains is a mimic that actually drains health
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
+        MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
 
     }
 

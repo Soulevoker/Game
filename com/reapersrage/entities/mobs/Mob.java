@@ -41,6 +41,7 @@ public class Mob {
         private int damageOnHit; //damage player takes on impact
         private int dps; //damage per second
         private String name; //name of the mob
+        private boolean[] wall; //will the mob hit the wall?
         
         public Mob (int x, int y, int width, int height, int damageOnHit, int dps, String name){
                 dir = 0;
@@ -51,6 +52,7 @@ public class Mob {
 		this.height = height;
                 this.damageOnHit = damageOnHit;
                 this.dps = dps;
+                this.wall = new boolean[4];
 		String fileName = "/com/reapersrage/res/textures/";
                 fileName = fileName + name + ".png";
                 try {
@@ -142,6 +144,70 @@ public class Mob {
             int pixel = RImage.getRGB(x,y);
             if ( (pixel>>24) == 0x00) return true;
             else return false;
+        }
+        //Move the mob by dx and dy
+        public void move(int dx, int dy){
+            boolean[] collision = checkCollision(x, y, new double[]{dx, dy});
+            //if we aren't colliding on the X axis
+            int xNew = x;
+            int yNew = y;
+            if(!collision[0]){
+                xNew += dx;
+            }
+            //if we aren't colliding on the Y axis
+            if(!collision[1]){
+                yNew += dy;
+            }
+            //If we've hit a wall, set the position to just touch the wall and set veloicty to 0
+            if(wall[0]){
+                //North
+                yNew = 0;
+            }
+            else if(wall[1]){
+                //East
+                xNew = Game.getStaticWidth() - width;
+            }
+            else if(wall[2]){
+                //South
+                yNew = Game.getStaticHeight() - height;
+            }
+            else if(wall[3]){
+                //West
+                xNew = 0;
+            }
+            this.x = xNew;
+            this.y = yNew;
+        }
+        
+        //Will collide with x or y?
+        public boolean[] checkCollision(int x, int y, double[] v){
+            boolean[] collisions =  new boolean[]{false, false};            
+            wall[0] = false;
+            wall[1] = false;
+            wall[2] = false;
+            wall[3] = false;
+            //WEST wall
+            if(x + (int)v[0] < 0){
+                collisions[0] = true;
+                wall[3] = true;
+            }
+            //EAST wall
+            else if(x + (int)v[0] + width > Game.getStaticWidth()){
+                collisions[0] = true;
+                wall[1] = true;
+            }
+            //NORTH wall
+            if(y + (int)v[1] < 0){
+                collisions[1] = true;
+                wall[0] = true;
+            }
+            //SOUTH Wall
+            else if(y + (int)v[1] + height > Game.getStaticHeight()){
+                collisions[1] = true;
+                wall[2] = true;
+            }
+            
+            return collisions;
         }
         
         public int getX(){
