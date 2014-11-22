@@ -21,27 +21,30 @@ public class Player {
 	//O = original R = resized
 	private BufferedImage OImage;
 	private BufferedImage RImage;
-	private int dir;
 	private int width;
 	private int height;
         //Pixels for the player to move every update
-        private int[] speed= new int[2];
-        private final int START_SPEED = 5;
-        //How long the player has been moving in each cardinal direction
-        //UP/DOWN LEFT/RIGHT
-        private int[] acceleration = new int[2];
-
+        private double[] velocity = new double[2];
+        //private final int START_SPEED = 5;
+        //How much to accelerate the player by key presses
+        private double acceleration;
+        //How much the player slows down due to the map
+        private double friction;
+        
+        
 	public Player(int x, int y, int width, int height) {
-		dir = 0;
-                //Initial x position (pixels)
+		//Initial x position (pixels)
 		this.x = x;
                 //Initial y position (pixels)
 		this.y = y;
                 //Widith and height of player 
 		this.width = width;
 		this.height = height;
-                //Defult to a speed of 5
-                this.speed = new int[]{5, 5};
+                //Velocty increase per update
+                this.acceleration = .2;
+                this.friction = .5;
+                this.velocity = new double[]{0.0,0.0};
+                
 		try {
 			OImage = ImageIO
 					.read(GameTile.class
@@ -61,56 +64,51 @@ public class Player {
         //Array: {up, down, left, right}
         //Note to self: THE TOP RIGHT CORNER IS 0,0
         public void update(boolean[] dirs){
-            incrementSpeed();
+            parseInput(dirs);
             int xNew = x;
             int yNew = y;
-            if(dirs[0] && !collision(x, y - speed[1])[1]){
-                //Up
-                yNew = yNew - speed[1];
-            }
-            if(dirs[1] && !collision(x, y + speed[1])[1]){
+            
+            if(!collision(x, y + (int)velocity[1])[1]){
                 //Down
-                yNew = yNew + speed[1];
+                yNew = yNew + (int)velocity[1];
             }
-            if(dirs[2] && !collision(x - speed[0], y)[0]){
-                //Left
-                xNew = xNew - speed[0];
-            }
-            if(dirs[3] && !collision(x + speed[0], y)[0]){
+            if(!collision(x + (int)velocity[0], y)[0]){
                 //Right
-                xNew = xNew + speed[0];
-            }
-            if(xNew == x){
-                //If we're still then acceleration is 0
-                acceleration[0] = 0;
-            } else{
-                //Acceleration goes up by 1 if velocity is positive
-                //Otherwise goes down by one
-                acceleration[0] += xNew > x ? 1 : -1;
-            }
-            if(yNew == y){
-                acceleration[1] = 0;
-            } else{
-                acceleration[1] += yNew > y ? 1 : -1;
+                xNew = xNew + (int)velocity[0];
             }
             
             x = xNew;
             y = yNew;
         }
         
-        //Increment both the x and y speeds based on acceleration
-        public void incrementSpeed(){
-            if(acceleration[0] == 0){
-                speed[0] = START_SPEED;
-            } else{
-                speed[0] += 1;
+        //Parses the keypresses
+        //If the key is pressed, increments the velocity by acceleration
+        //velocity gets updated based on the inputs and acceleration
+        public void parseInput(boolean[] dirs){
+            //For each direction, check input
+            if(dirs[0]){
+                //Up
+                velocity[1] -= acceleration;
             }
-            if(acceleration[1] == 0){
-                speed[1] = START_SPEED;
-            } else{
-                speed[1] += 1;
+            if(dirs[1]){
+                //Down
+                 velocity[1] += acceleration;
             }
-            
+            if(dirs[2]){
+                //Left
+                velocity[0] -= acceleration;
+            }
+            if(dirs[3]){
+                //Right
+                velocity[0] += acceleration;
+            }
+            //if not accelerating in y direction
+            if(!dirs[0] && !dirs[1] && velocity[1] != 0){
+                velocity[1] -= velocity[1] > 0 ? friction : -friction;
+            }
+            if(!dirs[2] && !dirs[3] && velocity[0] != 0){
+                velocity[0] -= velocity[0] > 0 ? friction : -friction;
+            }
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such

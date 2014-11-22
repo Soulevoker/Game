@@ -168,8 +168,6 @@ public class Game extends Canvas implements Runnable {
 	
 	public void ButtonPressed(){
 		playerDirs[0] = buttonsPressed.up;
-		
-		
                 playerDirs[1] = buttonsPressed.down;
                 playerDirs[2] = buttonsPressed.left;
                 playerDirs[3] = buttonsPressed.right;
