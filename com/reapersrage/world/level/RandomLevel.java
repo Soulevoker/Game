@@ -38,11 +38,12 @@ public class RandomLevel extends Level {
         this.MobList = new ArrayList<>();
         MobList.add(new Mob(100, 100,80 , 80, 1, 1, "spike"));
         MobList.add(new Mob(300,150,80,80,-1,1,"foutain"));
+        MobList.add(new Mob(random.nextInt(500),random.nextInt(500),80,80,10,1,"spike"));
     }
 
     public void update(Player player){
         String collisionDebug = "<html>Mobs";
-        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: ("+player.getVelX()+","+player.getVelY()+") "+"<br>"+"Health: "+player.getHealth()+"</html>";
+        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"</html>";
                 
         Iterator<Mob> mobIterator = MobList.iterator();
         while(mobIterator.hasNext()){
