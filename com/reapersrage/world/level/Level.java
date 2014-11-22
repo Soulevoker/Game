@@ -1,6 +1,8 @@
 package com.reapersrage.world.level;
 
+import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.gfx.Screen;
+import java.awt.Graphics2D;
 
 
 /**
@@ -24,6 +26,10 @@ public abstract class Level {
     public int getTile(int y, int x){
     	return tiles[y][x];
     }
+    
+    public abstract void renderMobs(Graphics2D g);
+    
+    public abstract void update(Player player);
 
 
     
