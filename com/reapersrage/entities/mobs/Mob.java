@@ -41,18 +41,20 @@ public class Mob {
         private int damageOnHit; //damage player takes on impact
         private int dps; //damage per second
         
-        public Mob (int x, int y, int width, int height, int damageOnHit, int dps){
-            dir = 0;
+        public Mob (int x, int y, int width, int height, int damageOnHit, int dps, String name){
+                dir = 0;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
                 this.damageOnHit = damageOnHit;
                 this.dps = dps;
-		try {
+		String fileName = "/com/reapersrage/res/textures/";
+                fileName = fileName + name + ".png";
+                try {
 			OImage = ImageIO
 					.read(GameTile.class
-							.getResourceAsStream("/com/reapersrage/res/textures/spike.png"));
+							.getResourceAsStream(fileName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,11 +109,12 @@ public class Mob {
            
             
             //checks if any pixel in mob overlaps with any pixel in player
-            for (int i=mobXrange[0] ; i<=mobXrange[1]; i++){
-                for (int j=mobYrange[0]; j<=mobYrange[1]; j++){
+            for (int i=mobXrange[0] ; i<mobXrange[1]; i++){
+                for (int j=mobYrange[0]; j<mobYrange[1]; j++){
                     for (int k=personXrange[0]; k<=personXrange[1]; k++ ){
                         for (int l=personYrange[0]; l<=personYrange[1]; l++){
-                            if ((i==k) && (j==l)) return true;
+                            //The pixels of the mob and player must overlap  AND  the mob must not be transparent at that point
+                            if (((i==k) && (j==l)) && !isTransparent(i-mobXrange[0],j-mobYrange[0])) return true;
                             
                         }
                     }
@@ -130,6 +133,13 @@ public class Mob {
             //boolean timeToHit = (currentTime%(1000/dps)<10);
             boolean timeToHit = true;
             if (timeToHit) person.changeHealth(-damageOnHit);
+        }
+        
+        //checks if the mob sprite is transparent at give x,y. Transparent pixels do not count as part of the hitbox
+        public boolean isTransparent(int x, int y){
+            int pixel = RImage.getRGB(x,y);
+            if ( (pixel>>24) == 0x00) return true;
+            else return false;
         }
         
         public int getX(){

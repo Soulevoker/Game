@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private static Level level;
 	private Player player;
-        private Mob spikeMob;
+        
 	private Thread gameThread;
 	// Frame rate (FPS)
 	static final int FRAMERATE = 50;
@@ -57,6 +57,11 @@ public class Game extends Canvas implements Runnable {
 	JPanel panel;
 	Canvas canvas;
 	BufferStrategy bufferStrategy;
+        
+        //Mobs on Screen. Should move to level later or some sort of mob generator
+        private Mob spikeMob;
+        private Mob foutainMob;
+        //private Mob spikeMob2;
         
         //Strings for debug
         private String collisionDebug;
@@ -140,7 +145,9 @@ public class Game extends Canvas implements Runnable {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
-                spikeMob = new Mob(100, 100,80 , 80, 1, 1);
+                spikeMob = new Mob(100, 100,80 , 80, 1, 1, "spike");
+                foutainMob = new Mob(300,150,80,80,-1,1,"foutain");
+                
 
 	}
 
@@ -171,6 +178,7 @@ public class Game extends Canvas implements Runnable {
 		ButtonPressed();
 		player.update(playerDirs);
                 spikeMob.update(player);
+                foutainMob.update(player);
                 
                 collisionDebug = "Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")" + " Collision: "+spikeMob.isCollided(player);
                 debugPanel.setLabel1(collisionDebug);
@@ -185,7 +193,9 @@ public class Game extends Canvas implements Runnable {
 		screen.drawBackground(g);
                 //what goes last stays on top
                 spikeMob.drawMob(g);
-		player.drawPlayer(g);
+		foutainMob.drawMob(g);
+                player.drawPlayer(g);
+                
                
 		g.dispose();
 		bufferStrategy.show();
