@@ -31,11 +31,11 @@ public class Mob {
 	protected int dir;
 	protected int width;
 	protected int height;
-        
-        boolean imortalObject;
+        protected boolean destroyed;
+        protected boolean imortalObject;
         
         //for Chest
-        private int gold;
+        protected int gold;
         
         //Attributes of the player
         //private int health;
@@ -58,6 +58,7 @@ public class Mob {
                 this.damageOnHit = damageOnHit;
                 this.dps = dps;
                 this.wall = new boolean[4];
+                this.destroyed = false;
 		String fileName = "/com/reapersrage/res/textures/";
                 fileName = fileName + name + ".png";
                 try {
@@ -290,9 +291,14 @@ public class Mob {
             this.health += h;
         }
         public boolean isDestroyed() {
-            return (this.health < 0); 
+            return destroyed || this.health <= 0; 
         }
         
+        public void destroy(){
+            destroyed = true;
+        }
         
-
+        public String getType(){
+            return name;
+        }
 }

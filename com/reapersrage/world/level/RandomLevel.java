@@ -1,12 +1,6 @@
 package com.reapersrage.world.level;
 
-import com.reapersrage.entities.mobs.Fountain;
-import com.reapersrage.entities.mobs.Ghost;
-import com.reapersrage.entities.mobs.Mob;
-import com.reapersrage.entities.mobs.Player;
-import com.reapersrage.entities.mobs.Spike;
-import com.reapersrage.entities.projectiles.Projectile;
-import com.reapersrage.entities.mobs.Chest;
+import com.reapersrage.entities.mobs.*;
 import com.reapersrage.game.Game;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -50,7 +44,7 @@ public class RandomLevel extends Level {
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,1,1,i++));
         MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
         //One of the fountains is a mimic that actually drains health
-        MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
+        MobList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
         MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
         MobList.add(new Chest(100,100,80,55,10,i++));
         for(int b=0; b<10; b++){
@@ -62,9 +56,11 @@ public class RandomLevel extends Level {
     public void update(Player player){
         Iterator<Mob> mobIterator = MobList.iterator();
         //Have each mob interact with the player
+        boolean isThereAChest = false;
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             currentMob.update(player);
+            if (currentMob.getType().equals("chest")) isThereAChest = true;
             if (currentMob.isDestroyed()){
                 mobIterator.remove();
             }
@@ -72,6 +68,9 @@ public class RandomLevel extends Level {
         //Display the debugging statistics
         displayDebug(player);
         if(System.currentTimeMillis()%1000<30)MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,0));
+        if(!isThereAChest){
+            MobList.add(new Chest(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,55,10,0));
+        }
     }
     
     public void renderMobs(Graphics2D g){

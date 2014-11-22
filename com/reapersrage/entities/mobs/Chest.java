@@ -29,4 +29,9 @@ public class Chest extends Mob {
     public String getName() {
         return "Chest " + id;
     }
+    
+    public void giveGold(Player player){
+        player.changeGold(this.gold);
+        this.destroy();
+    }
 }
