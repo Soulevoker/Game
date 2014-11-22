@@ -50,7 +50,7 @@ public class Player {
 		this.width = width;
 		this.height = height;
                 //Velocty increase per update
-                this.acceleration = .8;
+                this.acceleration = 8;
                 this.friction = 1;
                 this.velocity = new double[]{0.0,0.0};
                 this.MAX_V = 10.0;
@@ -125,21 +125,25 @@ public class Player {
                 //Up
                 if(-1.0*velocity[1] < MAX_V)
                     velocity[1] -= acceleration;
+                if (velocity[1] < -MAX_V) velocity[1]=-10;
             }
             if(dirs[1]){
                 //Down
                 if(velocity[1] < MAX_V)
                     velocity[1] += acceleration;
+                if(velocity[1] > MAX_V) velocity[1]=10;
             }
             if(dirs[2]){
                 //Left
                 if(-velocity[0] < MAX_V)
                     velocity[0] -= acceleration;
+                if(velocity[0] < -MAX_V) velocity[0] = -10;
             }
             if(dirs[3]){
                 //Right
                 if(velocity[0] < MAX_V)
                     velocity[0] += acceleration;
+                if(velocity[0] > MAX_V) velocity[0] = 10;
             }
             //if not accelerating in y direction
             if(!dirs[0] && !dirs[1] && velocity[1] != 0){
