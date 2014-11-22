@@ -31,10 +31,12 @@ public class Player {
         //Pixels for the player to move every update
         private double[] velocity = new double[2];
         //private final int START_SPEED = 5;
+        //Maximum velocity
+        private final double MAX_V;
         //How much to accelerate the player by key presses
-        private double acceleration;
+        private final double acceleration;
         //How much the player slows down due to the map
-        private double friction;
+        private final double friction;
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
         
@@ -51,6 +53,8 @@ public class Player {
                 this.acceleration = .5;
                 this.friction = .5;
                 this.velocity = new double[]{0.0,0.0};
+                this.MAX_V = 10.0;
+                
                 
 		try {
 			OImage = ImageIO
@@ -114,22 +118,22 @@ public class Player {
             //For each direction, check input
             if(dirs[0]){
                 //Up
-                if(-1.0*velocity[1] < 10.0)
+                if(-1.0*velocity[1] < MAX_V)
                     velocity[1] -= acceleration;
             }
             if(dirs[1]){
                 //Down
-                if(velocity[1] < 10.0)
+                if(velocity[1] < MAX_V)
                     velocity[1] += acceleration;
             }
             if(dirs[2]){
                 //Left
-                if(-velocity[0] < 10)
+                if(-velocity[0] < MAX_V)
                     velocity[0] -= acceleration;
             }
             if(dirs[3]){
                 //Right
-                if(velocity[0] < 10)
+                if(velocity[0] < MAX_V)
                     velocity[0] += acceleration;
             }
             //if not accelerating in y direction
