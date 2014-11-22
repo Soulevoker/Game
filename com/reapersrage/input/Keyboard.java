@@ -29,6 +29,9 @@ public class Keyboard extends KeyAdapter {
 				|| e.getKeyCode() == KeyEvent.VK_D) {
 			Game.setButtonPressed("right");
 		}
+                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                        Game.setButtonPressed("space");
+                }
                 
 	}
 
@@ -48,6 +51,9 @@ public class Keyboard extends KeyAdapter {
 				|| e.getKeyCode() == KeyEvent.VK_D) {
 			Game.setButtonReleased("right");
 		}
+                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                        Game.setButtonReleased("space");
+                }
 	}
 
 	public void keyTyped(KeyEvent e) {

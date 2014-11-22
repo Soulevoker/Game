@@ -59,26 +59,7 @@ public class Ghost extends Mob {
             }
 	}
     
-    //The displacement of the ghost from the player (direction only)
-    public double[] displacementFromPlayer(Player player){
-        double[] disp = new double[2];
-        disp[0] = player.getX() - this.x;
-        disp[1] = player.getY() - this.y;
-        double mag = Math.sqrt(disp[0]*disp[0] + disp[1]*disp[1]);
-        disp[0] = disp[0]/mag;
-        disp[1] = disp[1]/mag;
-        return disp;
-    }
-    //Displacement from player, scaled by mag
-    public double[] displacementFromPlayer(Player player, double magnitude){
-        double[] disp = new double[2];
-        disp[0] = player.getX() - this.x;
-        disp[1] = player.getY() - this.y;
-        double mag = Math.sqrt(disp[0]*disp[0] + disp[1]*disp[1]);
-        disp[0] = disp[0]/mag*magnitude;
-        disp[1] = disp[1]/mag*magnitude;
-        return disp;
-    }
+    
     
     //Shoots a fireball in the specified direction
     private void fireball(Player player){

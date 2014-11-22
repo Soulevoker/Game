@@ -6,17 +6,16 @@
 
 package com.reapersrage.entities.mobs;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Game;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
-import com.reapersrage.entities.mobs.Player;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 //creates a mob
 public class Mob {
@@ -106,6 +105,7 @@ public class Mob {
         public void update(Player person){
             if (isCollided(person)) dealDamage(person);
             if (isCollided(person)) giveGold(person);
+            
         }
         
         //checks to see if collided with player
@@ -218,11 +218,43 @@ public class Mob {
             return collisions;
         }
         
+        //The displacement of the ghost from the player (direction only)
+        public double[] displacementFromPlayer(Player player){
+            double[] disp = new double[2];
+            disp[0] = player.getX() - this.x;
+            disp[1] = player.getY() - this.y;
+            double mag = Math.sqrt(disp[0]*disp[0] + disp[1]*disp[1]);
+            disp[0] = disp[0]/mag;
+            disp[1] = disp[1]/mag;
+            return disp;
+        }
+        //Displacement from player, scaled by mag
+        public double[] displacementFromPlayer(Player player, double magnitude){
+            double[] disp = new double[2];
+            disp[0] = player.getX() - this.x;
+            disp[1] = player.getY() - this.y;
+            double mag = Math.sqrt(disp[0]*disp[0] + disp[1]*disp[1]);
+            disp[0] = disp[0]/mag*magnitude;
+            disp[1] = disp[1]/mag*magnitude;
+            return disp;
+        }
+        
+        public boolean projCollision(Projectile proj){
+            boolean collision = proj.isCollided(this);
+            return collision;
+        }
+        
         public int getX(){
              return x;
         }
         public int getY(){
             return y;
+        }
+        public int getWidth(){
+            return width;
+        }
+        public int getHeight(){
+            return height;
         }
         
         public String getName(){

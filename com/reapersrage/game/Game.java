@@ -61,8 +61,8 @@ public class Game extends Canvas implements Runnable {
 	public Game() {
 		buttonPressed = "";
                 buttonsPressed = new Buttons();
-		//playerDir = 0;
-                playerDirs = new boolean[4];
+		//Directions sent to the player
+                playerDirs = new boolean[5];
 		//initializes jframe
 		container = new JFrame(NAME);
 
@@ -191,6 +191,7 @@ public class Game extends Canvas implements Runnable {
                 playerDirs[1] = buttonsPressed.down;
                 playerDirs[2] = buttonsPressed.left;
                 playerDirs[3] = buttonsPressed.right;
+                playerDirs[4] = buttonsPressed.space;
 	}
 
 	public static Level getLevel() {
@@ -240,6 +241,9 @@ public class Game extends Canvas implements Runnable {
                 if(b.equals("right")){
                     buttonsPressed.right = true;
                 }
+                if(b.equals("space")){
+                    buttonsPressed.space = true;
+                }
 	}
         //When a button is released, set to false
         public static void setButtonReleased(String b){
@@ -254,6 +258,9 @@ public class Game extends Canvas implements Runnable {
                 }
                 if(b.equals("right")){
                     buttonsPressed.right = false;
+                }
+                if(b.equals("space")){
+                    buttonsPressed.space = false;
                 }
         }
         //Text for the debug console

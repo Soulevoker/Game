@@ -1,15 +1,19 @@
 package com.reapersrage.entities.mobs;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import com.reapersrage.entities.projectiles.FireBall;
+import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Game;
+import com.reapersrage.game.VectorMath;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import javax.imageio.ImageIO;
 
 /**
  * Created with IntelliJ IDEA. User: Soulevoker Date: 10/27/13 Time: 1:24 PM
@@ -23,7 +27,9 @@ public class Player {
 	private BufferedImage RImage;
 	private int width;
 	private int height;
-
+        
+        //Projectiles the player has fired
+        private ArrayList<Projectile> ProjList = new ArrayList<>();
         
         //Attributes of the player
         private int health;
@@ -83,6 +89,26 @@ public class Player {
             int xNew = x;
             int yNew = y;
             boolean[] collision = checkCollision(x, y, velocity);
+            //Movement of the player
+            move();
+            updateProjectiles();
+            
+        }
+        
+        public void updateProjectiles(){
+            Iterator<Projectile> projIterator = ProjList.iterator();
+            while(projIterator.hasNext()){
+                Projectile currProj = projIterator.next();
+                currProj.update();
+            }
+        }
+        
+        //Moves the player, stopping if we hit a wall
+        private void move(){
+            int xNew = x;
+            int yNew = y;
+            boolean[] collision = checkCollision(x, y, velocity);
+            //Movement of the player
             if(!collision[1]){
                 //Down
                 yNew = yNew + (int)velocity[1];
@@ -112,10 +138,10 @@ public class Player {
                 xNew = 0;
                 velocity[0] = 0;
             }
-            
             x = xNew;
             y = yNew;
         }
+            
         
         //Parses the keypresses
         //If the key is pressed, increments the velocity by acceleration
@@ -166,9 +192,11 @@ public class Player {
                 else if(velocity[0] > 0 && newVelocity < 0)
                     newVelocity = 0;
                 velocity[0] = newVelocity;
-               
             }
-            
+            //fire a projectile
+            if(dirs[4]){
+                fire(dirs);
+            }
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such
@@ -205,7 +233,13 @@ public class Player {
         
         //Draws the player
 	public void drawPlayer(Graphics2D g) {
-		g.drawImage(RImage, x, y, null);
+            g.drawImage(RImage, x, y, null);
+            Iterator<Projectile> projIterator = ProjList.iterator();
+            //Draw projectile
+            while(projIterator.hasNext()){
+                Projectile currProj = projIterator.next();
+                currProj.drawProj(g);
+            }
 	}
 	
         //Resizes the player (for buffs?)
@@ -260,5 +294,37 @@ public class Player {
            int pixel = RImage.getRGB(x,y);
            if ( (pixel>>24) == 0x00) return true;
            else return false; 
+        }
+        
+        
+        
+        private void fire(boolean[] dirs){
+            //if none of the keys are pressed
+            double[] currVel = new double[2];
+            if(!(dirs[0] || dirs[1] || dirs[2] || dirs[3])){
+                currVel = Arrays.copyOf(this.velocity, currVel.length);
+            } else {
+                if(dirs[0] && !dirs[1]){
+                    //Up and not down
+                    currVel[1] = -1;
+                } else if(dirs[1] && !dirs[0]) {
+                    //Down and not up
+                    currVel[1] = 1;   
+                } else {
+                    //Both up and down or neither
+                    currVel[1] = 0;
+                }
+                if(dirs[2] && !dirs[3]){
+                    //left and not right
+                    currVel[0] = -1;
+                } else if(dirs[3] && !dirs[2]) {
+                    //Right and not left
+                    currVel[0] = 1;   
+                } else {
+                    //Both left and right or neither
+                    currVel[0] = 0;
+                }
+            }
+            ProjList.add(new FireBall(this.x, this.y, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
         }
 }
