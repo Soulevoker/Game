@@ -50,7 +50,7 @@ public class Player {
 		this.width = width;
 		this.height = height;
                 //Velocty increase per update
-                this.acceleration = 8;
+                this.acceleration = .8;
                 this.friction = 1;
                 this.velocity = new double[]{0.0,0.0};
                 this.MAX_V = 10.0;
@@ -59,7 +59,7 @@ public class Player {
 		try {
 			OImage = ImageIO
 					.read(GameTile.class
-							.getResourceAsStream("/com/reapersrage/res/textures/jim.png"));
+							.getResourceAsStream("/com/reapersrage/res/textures/JimIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -248,5 +248,10 @@ public class Player {
         }
         public int getVelY(){
             return (int)velocity[1];
+        }
+        public boolean isTransparent(int x, int y){
+           int pixel = RImage.getRGB(x,y);
+           if ( (pixel>>24) == 0x00) return true;
+           else return false; 
         }
 }
