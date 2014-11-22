@@ -29,7 +29,7 @@ public class Projectile {
     private String name; //name of the mob
     private boolean[] wall; //has the projectile hit a wall?
     int id;
-    boolean destroyed;
+    public boolean destroyed;
 
     public Projectile(int x, int y, int width, int height, int damageOnHit, double[] dir, String name) {
         this.x = x;

@@ -26,8 +26,8 @@ public class Mob {
         protected int x;
 	protected int y;
 	//O = original R = resized
-	private BufferedImage OImage;
-	private BufferedImage RImage;
+	protected BufferedImage OImage;
+	protected BufferedImage RImage;
 	protected int dir;
 	protected int width;
 	protected int height;
