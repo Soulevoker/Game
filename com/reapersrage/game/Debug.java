@@ -54,6 +54,10 @@ public class Debug {
         //JLabel labelTemp = new JLabel(labelNew);
         LabelList.get(ListLoc).setText(labelNew);
     }
+    public void addLabel(int ListLoc, String LabelAdd){
+        String out = LabelList.get(ListLoc).getText()+ LabelAdd;
+        LabelList.get(ListLoc).setText(out);
+    }
         
         
 }

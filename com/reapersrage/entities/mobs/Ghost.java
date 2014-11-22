@@ -23,6 +23,7 @@ public class Ghost extends Mob {
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps, int id) {
         super(x, y, width, height, damageOnHit, dps, "ghost");
         this.id = id;
+        
     }
     
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps) {
@@ -75,8 +76,10 @@ public class Ghost extends Mob {
                 Projectile currentProj = projIterator.next();
                 out = out + "Proj "+i+":("+currentProj.getX()+","+currentProj.getY()+")";
             }
-        RandomLevel.
+        return out;
     }
+    
+  
     
     
     

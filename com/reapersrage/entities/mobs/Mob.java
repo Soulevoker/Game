@@ -286,6 +286,9 @@ public class Mob {
         public void changeHealth(int h){
             this.health += h;
         }
+        public boolean isDestroyed() {
+            return (this.health < 0); 
+        }
         
         
 

@@ -53,7 +53,9 @@ public class RandomLevel extends Level {
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
         MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
         MobList.add(new Chest(100,100,64,40,10,i++));
-
+        for(int b=0; b<10; b++){
+            MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
+        }
     }
 
     public void update(Player player){
@@ -62,6 +64,9 @@ public class RandomLevel extends Level {
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             currentMob.update(player);
+            if (currentMob.isDestroyed()){
+                mobIterator.remove();
+            }
         }
         //Display the debugging statistics
         displayDebug(player);
@@ -80,6 +85,7 @@ public class RandomLevel extends Level {
         String projectileDebug = "<html>Projectiles";
         String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"<br>Gold: "+player.getGold() +"</html>";
         Iterator<Mob> mobIterator = MobList.iterator();
+        
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
@@ -89,6 +95,6 @@ public class RandomLevel extends Level {
         projectileDebug = projectileDebug + "</html>";
         Game.setDebugText(0,playerDebug);
         Game.setDebugText(1, collisionDebug);
-        Game.setDebugText(2, projectileDebug);
+        //Game.setDebugText(2, projectileDebug);
     }
 }

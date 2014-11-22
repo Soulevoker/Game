@@ -39,6 +39,7 @@ public class Game extends Canvas implements Runnable {
 
         //Directions the player can move in: {Up, Down, Left, Right}
         private boolean[] playerDirs;
+        private boolean[] projDirs;
 	private Screen screen;
 	private static Level level;
 	private Player player;
@@ -62,7 +63,7 @@ public class Game extends Canvas implements Runnable {
 		buttonPressed = "";
                 buttonsPressed = new Buttons();
 		//Directions sent to the player
-                playerDirs = new boolean[5];
+                playerDirs = new boolean[9];
 		//initializes jframe
 		container = new JFrame(NAME);
 
@@ -169,6 +170,8 @@ public class Game extends Canvas implements Runnable {
 		ButtonPressed();
                 //Update the player, passing the buttons pressed
 		player.update(playerDirs);
+                //This kills the game
+                if (player.isDestroyed()) gameThread.destroy();
                 //Update the level
                 level.update(player);
 	}
@@ -192,6 +195,11 @@ public class Game extends Canvas implements Runnable {
                 playerDirs[2] = buttonsPressed.left;
                 playerDirs[3] = buttonsPressed.right;
                 playerDirs[4] = buttonsPressed.space;
+                
+                playerDirs[5] = buttonsPressed.projUp;
+                playerDirs[6] = buttonsPressed.projDown;
+                playerDirs[7] = buttonsPressed.projLeft;
+                playerDirs[8] = buttonsPressed.projRight;
 	}
 
 	public static Level getLevel() {
@@ -244,6 +252,18 @@ public class Game extends Canvas implements Runnable {
                 if(b.equals("space")){
                     buttonsPressed.space = true;
                 }
+                if(b.equals("projUp")){
+                    buttonsPressed.projUp = true;
+                }
+                if(b.equals("projDown")){
+                    buttonsPressed.projDown = true;
+                }
+                if(b.equals("projLeft")){
+                    buttonsPressed.projLeft = true;
+                }
+                if(b.equals("projRight")){
+                    buttonsPressed.projRight = true;
+                }
 	}
         //When a button is released, set to false
         public static void setButtonReleased(String b){
@@ -261,6 +281,18 @@ public class Game extends Canvas implements Runnable {
                 }
                 if(b.equals("space")){
                     buttonsPressed.space = false;
+                }
+                  if(b.equals("projUp")){
+                    buttonsPressed.projUp = false;
+                }
+                if(b.equals("projDown")){
+                    buttonsPressed.projDown = false;
+                }
+                if(b.equals("projLeft")){
+                    buttonsPressed.projLeft = false;
+                }
+                if(b.equals("projRight")){
+                    buttonsPressed.projRight = false;
                 }
         }
         //Text for the debug console

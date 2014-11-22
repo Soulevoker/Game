@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
-
+import com.reapersrage.game.Debug;
 /**
  * Created with IntelliJ IDEA. User: Soulevoker Date: 10/27/13 Time: 1:24 PM
  * Copyright © Reapers' Rage 2013
@@ -197,7 +197,8 @@ public class Player {
                 velocity[0] = newVelocity;
             }
             //fire a projectile
-            if(dirs[4]){
+            Game.debugPanel.setLabel(2, "<html><br> "+dirs[5]+"<br>"+dirs[6]+"<br>"+dirs[7]+"<br>"+dirs[8]+"</html>");
+            if(dirs[5]||dirs[6]||dirs[7]||dirs[8]){
                 fire(dirs);
             }
         }
@@ -304,34 +305,38 @@ public class Player {
         private void fire(boolean[] dirs){
             //if none of the keys are pressed
             double[] currVel = new double[2];
-            if(!(dirs[0] || dirs[1] || dirs[2] || dirs[3])){
-                currVel = Arrays.copyOf(this.velocity, currVel.length);
-            } else {
-                if(dirs[0] && !dirs[1]){
+//            if(!(dirs[5] || dirs[6] || dirs[7] || dirs[8])){
+//                currVel = Arrays.copyOf(this.velocity, currVel.length);
+            
+                if(dirs[5] && !dirs[6]){
                     //Up and not down
                     currVel[1] = -1;
-                } else if(dirs[1] && !dirs[0]) {
+                } else if(dirs[6] && !dirs[5]) {
                     //Down and not up
                     currVel[1] = 1;   
                 } else {
                     //Both up and down or neither
                     currVel[1] = 0;
                 }
-                if(dirs[2] && !dirs[3]){
+                if(dirs[7] && !dirs[8]){
                     //left and not right
                     currVel[0] = -1;
-                } else if(dirs[3] && !dirs[2]) {
+                } else if(dirs[8] && !dirs[7]) {
                     //Right and not left
                     currVel[0] = 1;   
                 } else {
                     //Both left and right or neither
                     currVel[0] = 0;
                 }
-            }
-            ProjList.add(new FireBall(this.x, this.y, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
+            
+            
+            ProjList.add(new FireBall(this.x+this.width-10, this.y, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
         }
         
         public Iterator getProjectiles(){
             return ProjList.iterator();
+        }
+        public boolean isDestroyed() {
+            return (this.health < 0); 
         }
 }

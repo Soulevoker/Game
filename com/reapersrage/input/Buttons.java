@@ -17,4 +17,9 @@ public final class Buttons {
     public static boolean left;
     public static boolean right;
     public static boolean space;
+    
+    public static boolean projUp;
+    public static boolean projDown;
+    public static boolean projLeft;
+    public static boolean projRight;
 }
