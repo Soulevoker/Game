@@ -35,12 +35,11 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
-//<<<<<<< HEAD
+
 	
         private int playerDir;
         
-//=======
-//>>>>>>> origin/newTile
+
         //Directions the player can move in: {Up, Down, Left, Right}
         private boolean[] playerDirs;
 	private Screen screen;
@@ -54,10 +53,15 @@ public class Game extends Canvas implements Runnable {
 	private int dir;
 
 	JFrame container;
+        //JFrame debugPanel; //for debuging purposes
 	JPanel panel;
 	Canvas canvas;
 	BufferStrategy bufferStrategy;
-
+        
+        //Strings for debug
+        private String collisionDebug;
+        
+        Debug debugPanel = new Debug();
 	public Game() {
 		buttonPressed = "";
                 buttonsPressed = new Buttons();
@@ -94,7 +98,8 @@ public class Game extends Canvas implements Runnable {
 		//does stuff
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
-
+                
+                
 	}
 
 	public static void main(String[] args) {
@@ -105,6 +110,7 @@ public class Game extends Canvas implements Runnable {
 		 */
 
 		game.start();
+                
 
 	}
 
@@ -157,12 +163,15 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
-
+        
+        //update routine
 	public void update() {
 		ButtonPressed();
 		player.update(playerDirs);
                 spikeMob.update(player);
-
+                
+                collisionDebug = "Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")" + " Collision: "+spikeMob.isCollided(player);
+                debugPanel.setLabel1(collisionDebug);
                 
                 
 	}
@@ -178,9 +187,8 @@ public class Game extends Canvas implements Runnable {
                
 		g.dispose();
 		bufferStrategy.show();
-                //System.out.println("Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")" + " Collision: "+spikeMob.isCollided(player));
-
-	}
+                
+        }
 	
 	public void ButtonPressed(){
 		playerDirs[0] = buttonsPressed.up;
@@ -256,5 +264,7 @@ public class Game extends Canvas implements Runnable {
 	public boolean[] getPlayerDir() {
 		return playerDirs;
 	}
+        
+        
 }
 

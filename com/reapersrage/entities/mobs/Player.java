@@ -142,6 +142,7 @@ public class Player {
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such
+        //for collisions with walls. Collisions with mobs is handeled by each individual mob
         public boolean[] checkCollision(int x, int y, double[] v){
             boolean[] collisions =  new boolean[]{false, false};            
             wall[0] = false;
