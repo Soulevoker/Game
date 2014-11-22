@@ -6,6 +6,7 @@ import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.mobs.Spike;
 import com.reapersrage.entities.projectiles.Projectile;
+import com.reapersrage.entities.mobs.Chest;
 import com.reapersrage.game.Game;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class RandomLevel extends Level {
         //One of the fountains is a mimic that actually drains health
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
         MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
+        MobList.add(new Chest(100,100,64,40,10,i++));
 
     }
 
@@ -73,7 +75,7 @@ public class RandomLevel extends Level {
     
     public void displayDebug(Player player){
         String collisionDebug = "<html>Mobs";
-        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"</html>";
+        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"<br>Gold: "+player.getGold() +"</html>";
         Iterator<Mob> mobIterator = MobList.iterator();
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
