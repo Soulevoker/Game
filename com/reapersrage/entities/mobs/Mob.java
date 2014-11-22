@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
+import java.util.Random;
 
 //creates a mob
 public class Mob {
@@ -47,6 +48,7 @@ public class Mob {
         private int dps; //damage per second
         private String name; //name of the mob
         private boolean[] wall; //will the mob hit the wall?
+        protected Random rand;
         
         public Mob (int x, int y, int width, int height, int damageOnHit, int dps, String name){
                 dir = 0;
@@ -59,6 +61,7 @@ public class Mob {
                 this.dps = dps;
                 this.wall = new boolean[4];
                 this.destroyed = false;
+                this.rand = new Random();
 		String fileName = "/com/reapersrage/res/textures/";
                 fileName = fileName + name + ".png";
                 try {

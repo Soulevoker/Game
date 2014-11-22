@@ -25,6 +25,11 @@ public class Spike extends Mob{
         this.imortalObject=true;
     }
     
+    public void update(Player person){
+        super.update(person);
+        super.move(this.rand.nextInt(3)-1,this.rand.nextInt(3)-1);
+        
+    }
     
     public String getName() {
         return "Spike " + id;
