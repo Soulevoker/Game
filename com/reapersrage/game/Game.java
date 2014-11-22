@@ -63,15 +63,14 @@ public class Game extends Canvas implements Runnable {
         //private Mob spikeMob;
         //private Mob foutainMob;
         //List to store the mobs
-        private ArrayList<Mob> MobList;
+        //private ArrayList<Mob> MobList;
         //private Mob spikeMob2;
         
         //Strings for debug
         private String collisionDebug;
         
-        Debug debugPanel = new Debug();
+        public static Debug debugPanel = new Debug();
 	public Game() {
-                this.MobList = new ArrayList<>();
 		buttonPressed = "";
                 buttonsPressed = new Buttons();
 		//playerDir = 0;
@@ -151,8 +150,7 @@ public class Game extends Canvas implements Runnable {
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
                 //spikeMob = new Mob(100, 100,80 , 80, 1, 1, "spike");
                 //foutainMob = new Mob(300,150,80,80,-1,1,"foutain");
-                MobList.add(new Mob(100, 100,80 , 80, 1, 1, "spike"));
-                MobList.add(new Mob(300,150,80,80,-1,1,"foutain"));
+                
 
 	}
 
@@ -182,22 +180,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		ButtonPressed();
 		player.update(playerDirs);
-                //spikeMob.update(player);
-                //foutainMob.update(player);
-                collisionDebug = "Health: "+player.getHealth()+
-                        " PlayerPos: ("+ player.getX()+","+player.getY() + ")";
-                Iterator<Mob> mobIterator = MobList.iterator();
-                while(mobIterator.hasNext()){
-                    Mob currentMob = mobIterator.next();
-                    currentMob.update(player);
-                    collisionDebug = collisionDebug + " Pos of " + currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"; 
-                }
-                //collisionDebug = "Health: "+player.getHealth()+
-                //        " PlayerPos: ("+ player.getX()+","+player.getY()+
-                //        ") SpikePos: ("+MobList.get(0).getX()+","+MobList.get(0).getY()+")" + " Collision: "+MobList.get(0).isCollided(player);
-                debugPanel.setLabel1(collisionDebug);
-                
-                
+                level.update(player);
 	}
 
         //Renders everything
@@ -208,10 +191,8 @@ public class Game extends Canvas implements Runnable {
                 //what goes last stays on top
                 //spikeMob.drawMob(g);
 		//foutainMob.drawMob(g);
-                Iterator<Mob> mobIterator = MobList.iterator();
-                while(mobIterator.hasNext()){
-                    mobIterator.next().drawMob(g);
-                }
+                level.renderMobs(g);
+                
                 player.drawPlayer(g);
                 
                
@@ -294,6 +275,10 @@ public class Game extends Canvas implements Runnable {
 	public boolean[] getPlayerDir() {
 		return playerDirs;
 	}
+        
+        public static void setDebugText(String text){
+                debugPanel.setLabel1(text);
+        }
         
         
 }

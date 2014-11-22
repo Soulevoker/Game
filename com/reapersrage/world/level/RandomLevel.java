@@ -1,5 +1,11 @@
 package com.reapersrage.world.level;
 
+import com.reapersrage.entities.mobs.Mob;
+import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.game.Game;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -12,7 +18,8 @@ import java.util.Random;
 public class RandomLevel extends Level {
 
     private static Random random = new Random();
-
+    private ArrayList<Mob> MobList = new ArrayList<>();
+    
     public RandomLevel(int width, int height) {
         super(width, height);
         generateLevel();
@@ -28,6 +35,29 @@ public class RandomLevel extends Level {
                 tiles[y][x] = q;
             }
         }
+        this.MobList = new ArrayList<>();
+        MobList.add(new Mob(100, 100,80 , 80, 1, 1, "spike"));
+        MobList.add(new Mob(300,150,80,80,-1,1,"foutain"));
     }
 
+    public void update(Player player){
+        String collisionDebug = "Health: "+player.getHealth()+
+                        " PlayerPos: ("+ player.getX()+","+player.getY() + ")";
+                
+        Iterator<Mob> mobIterator = MobList.iterator();
+        while(mobIterator.hasNext()){
+            Mob currentMob = mobIterator.next();
+            currentMob.update(player);
+            collisionDebug = collisionDebug + " Pos of " + currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"; 
+        }
+        Game.setDebugText(collisionDebug);
+                
+    }
+    
+    public void renderMobs(Graphics2D g){
+        Iterator<Mob> mobIterator = MobList.iterator();
+        while(mobIterator.hasNext()){
+            mobIterator.next().drawMob(g);
+        }
+    }
 }
