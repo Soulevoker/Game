@@ -70,6 +70,7 @@ public class Game extends Canvas implements Runnable {
 		setIgnoreRepaint(true);
 
 		//more jframe stuff
+		container.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		container.setResizable(false);
 		container.pack();
 		container.setVisible(true);
@@ -79,6 +80,8 @@ public class Game extends Canvas implements Runnable {
 
 		//requests focus for our keylistener
 		requestFocus();
+		
+		
 
 		//does stuff
 		createBufferStrategy(2);
@@ -165,6 +168,8 @@ public class Game extends Canvas implements Runnable {
 	
 	public void ButtonPressed(){
 		playerDirs[0] = buttonsPressed.up;
+		
+		
                 playerDirs[1] = buttonsPressed.down;
                 playerDirs[2] = buttonsPressed.left;
                 playerDirs[3] = buttonsPressed.right;
