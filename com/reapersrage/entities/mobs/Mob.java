@@ -23,14 +23,14 @@ public class Mob {
     
         //--------//
         ///TAKEN FROM PLAYER CLASS. 
-        private int x;
-	private int y;
+        protected int x;
+	protected int y;
 	//O = original R = resized
 	private BufferedImage OImage;
 	private BufferedImage RImage;
-	private int dir;
-	private int width;
-	private int height;
+	protected int dir;
+	protected int width;
+	protected int height;
         
         //for Chest
         private int gold;
@@ -40,7 +40,7 @@ public class Mob {
         //------//
         
         //Attributes of mob
-        private int health;
+        protected int health;
         private int damageOnHit; //damage player takes on impact
         private int dps; //damage per second
         private String name; //name of the mob

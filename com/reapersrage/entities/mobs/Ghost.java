@@ -24,10 +24,25 @@ public class Ghost extends Mob {
         return "Ghost " + id;
     }
     
+    //Move the ghost in the direction of the player
     public void update(Player person){
         if (isCollided(person)) dealDamage(person); 
-        this.move(rand.nextInt(10)-5,rand.nextInt(10)-5);
+        double[] disp = displacementFromPlayer(person);
+        this.move((int)(5*disp[0]),(int)(5*disp[1]));
         
     }
+    
+    //The displacement of the ghost from the player (direction only)
+    public double[] displacementFromPlayer(Player player){
+        double[] disp = new double[2];
+        disp[0] = player.getX() - this.x;
+        disp[1] = player.getY() - this.y;
+        double mag = Math.sqrt(disp[0]*disp[0] + disp[1]*disp[1]);
+        disp[0] = disp[0]/mag;
+        disp[1] = disp[1]/mag;
+        return disp;
+    }
+    
+    
     
 }
