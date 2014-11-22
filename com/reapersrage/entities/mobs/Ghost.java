@@ -47,6 +47,7 @@ public class Ghost extends Mob {
                 projIterator.remove();
             }
         }
+        projCollision(person);
         
     }
     

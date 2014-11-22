@@ -87,6 +87,20 @@ public class Projectile {
             person.changeHealth(-damageOnHit);
         }
     }
+    
+    //deals damage to mob
+    public void dealDamage(Mob mob) {
+        int damage = damageOnHit;
+        long currentTime = System.currentTimeMillis();
+
+        //if the current time is divisible by 1000/dps, do damage
+        //this is because milliseconds mod 1000 will be true once a second
+        //boolean timeToHit = (currentTime%(1000/dps)<10);
+        boolean timeToHit = true;
+        if (timeToHit) {
+            mob.changeHealth(-damageOnHit);
+        }
+    }
 
     public void destroy() {
         this.destroyed = true;

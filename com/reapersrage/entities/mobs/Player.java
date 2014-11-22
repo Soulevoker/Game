@@ -99,6 +99,9 @@ public class Player {
             Iterator<Projectile> projIterator = ProjList.iterator();
             while(projIterator.hasNext()){
                 Projectile currProj = projIterator.next();
+                if(currProj.destroyed){
+                projIterator.remove();
+            }
                 currProj.update();
             }
         }
@@ -326,5 +329,9 @@ public class Player {
                 }
             }
             ProjList.add(new FireBall(this.x, this.y, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
+        }
+        
+        public Iterator getProjectiles(){
+            return ProjList.iterator();
         }
 }

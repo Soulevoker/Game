@@ -15,6 +15,7 @@ import com.reapersrage.input.Keyboard;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 //creates a mob
@@ -105,8 +106,12 @@ public class Mob {
         public void update(Player person){
             if (isCollided(person)) dealDamage(person);
             if (isCollided(person)) giveGold(person);
+            projCollision(person);
+            
             
         }
+        
+        
         
         //checks to see if collided with player
         public boolean isCollided(Player person){
@@ -239,10 +244,22 @@ public class Mob {
             return disp;
         }
         
-        public boolean projCollision(Projectile proj){
-            boolean collision = proj.isCollided(this);
+        public boolean projCollision(Player player)
+        {
+            boolean collision = false;
+            Iterator<Projectile> projIterator = player.getProjectiles();
+            while(projIterator.hasNext()){
+                Projectile proj = projIterator.next();
+                if(proj.isCollided(this)){
+                    collision = true;
+                    proj.dealDamage(this);
+                    proj.destroy();
+                }
+            }
             return collision;
         }
+        
+        
         
         public int getX(){
              return x;
@@ -264,6 +281,10 @@ public class Mob {
         //for chest
         public void setGold(int gold) {
             this.gold = gold;
+        }
+        
+        public void changeHealth(int h){
+            this.health += h;
         }
         
         
