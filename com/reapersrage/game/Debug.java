@@ -39,7 +39,7 @@ public class Debug {
             
             LabelList.add(new JLabel("hello"));
             LabelList.add(new JLabel("hello"));
-            LabelList.add(new JLabel("Third"));
+            LabelList.add(new JLabel("Third Debug Frame"));
             Iterator<JLabel> labelIterator = LabelList.iterator();
             while(labelIterator.hasNext()){
                 debugPanel.add(labelIterator.next());

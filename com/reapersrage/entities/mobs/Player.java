@@ -93,18 +93,22 @@ public class Player {
             if(wall[0]){
                 //North
                 yNew = 0;
+                velocity[1] = 0;
             }
             else if(wall[1]){
                 //East
                 xNew = Game.getStaticWidth() - width;
+                velocity[0] = 0;
             }
             else if(wall[2]){
                 //South
                 yNew = Game.getStaticHeight() - height;
+                velocity[1] = 0;
             }
             else if(wall[3]){
                 //West
                 xNew = 0;
+                velocity[0] = 0;
             }
             
             x = xNew;
@@ -158,7 +162,7 @@ public class Player {
                 velocity[0] = newVelocity;
                
             }
-            Game.setDebugText(2, "<html>y: "+velocity[1] +"<br>x: " + velocity[0] + "</html>");
+            
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such
@@ -232,6 +236,14 @@ public class Player {
         public int getHeight(){
             return height;
         }
+        public int getVelX(){
+            return (int)velocity[0];
+        }
+        public int getVelY(){
+            return (int)velocity[1];
+        }
+        
+        
         
 
 }
