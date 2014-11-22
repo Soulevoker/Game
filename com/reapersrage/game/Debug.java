@@ -28,7 +28,7 @@ public class Debug {
             GridLayout experimentLayout = new GridLayout(0,3);
             this.LabelList = new ArrayList<JLabel>();
             debugPanel = new JFrame("Debug Panel");
-            debugPanel.setPreferredSize(new Dimension(150*4,100));
+            debugPanel.setPreferredSize(new Dimension(200*4,200));
             debugPanel.setResizable(false);
             debugPanel.pack();
             debugPanel.setVisible(true);

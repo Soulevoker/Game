@@ -135,7 +135,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
 	}
-
+        //Run the game
 	public void run() {
 		try {
 			init();
@@ -143,11 +143,16 @@ public class Game extends Canvas implements Runnable {
 			e1.printStackTrace();
 		}
 		while (running) {
+                        //Time where the grame started
 			long frameStart = System.currentTimeMillis();
-			update();
+			//Update all the objects
+                        update();
+                        //Render all the objects
 			render();
+                        //Determine how long it took the frame to update/render
 			long frameLength = System.currentTimeMillis() - frameStart;
 			if (frameLength < FRAMERATE) {
+                            //If that time is less than the desired frame length, sleep the remaining time
 				try {
 					gameThread.sleep(FRAMERATE - frameLength);
 				} catch (InterruptedException e) {
@@ -158,26 +163,29 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
         
-        //update routine
+        //Update routine
 	public void update() {
+                //Check which buttons are pressed
 		ButtonPressed();
+                //Update the player, passing the buttons pressed
 		player.update(playerDirs);
+                //Update the level
                 level.update(player);
 	}
 
         //Renders everything
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-
+                //Draw the background, mobs, and player; last is on top
 		screen.drawBackground(g);
                 level.renderMobs(g);                
                 player.drawPlayer(g);
-                               
-		//g.dispose();
+                //Actuall render it               
+		g.dispose();
 		bufferStrategy.show();
                 
         }
-	
+	//Determine which buttons are currently being pressed
 	public void ButtonPressed(){
 		playerDirs[0] = buttonsPressed.up;
                 playerDirs[1] = buttonsPressed.down;
@@ -217,7 +225,7 @@ public class Game extends Canvas implements Runnable {
 	public static int getStaticHeight() {
 		return HEIGHT;
 	}
-
+        //When a button is pressed, set to true
 	public static void setButtonPressed(String b) {
 		buttonPressed = b;
                 if(b.equals("up")){
@@ -233,7 +241,7 @@ public class Game extends Canvas implements Runnable {
                     buttonsPressed.right = true;
                 }
 	}
-        
+        //When a button is released, set to false
         public static void setButtonReleased(String b){
                 if(b.equals("up")){
                     buttonsPressed.up = false;
@@ -248,11 +256,7 @@ public class Game extends Canvas implements Runnable {
                     buttonsPressed.right = false;
                 }
         }
-
-	public boolean[] getPlayerDir() {
-		return playerDirs;
-	}
-        
+        //Text for the debug console
         public static void setDebugText(int Loc, String text){
                 debugPanel.setLabel(Loc,text);
         }

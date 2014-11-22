@@ -1,7 +1,9 @@
 package com.reapersrage.world.level;
 
+import com.reapersrage.entities.mobs.Fountain;
 import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.mobs.Spike;
 import com.reapersrage.game.Game;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -35,10 +37,13 @@ public class RandomLevel extends Level {
                 tiles[y][x] = q;
             }
         }
+        int i = 0;
         this.MobList = new ArrayList<>();
-        MobList.add(new Mob(100, 100,80 , 80, 1, 1, "spike"));
-        MobList.add(new Mob(300,150,80,80,-1,1,"foutain"));
-        MobList.add(new Mob(random.nextInt(500),random.nextInt(500),80,80,10,1,"spike"));
+        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80 , 80, 1, 1,i++));
+        MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,1,1,i++));
+        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
+        MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
+
     }
 
     public void update(Player player){

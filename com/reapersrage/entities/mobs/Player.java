@@ -51,7 +51,7 @@ public class Player {
 		this.height = height;
                 //Velocty increase per update
                 this.acceleration = .8;
-                this.friction = .5;
+                this.friction = 1;
                 this.velocity = new double[]{0.0,0.0};
                 this.MAX_V = 10.0;
                 
@@ -90,6 +90,7 @@ public class Player {
                 //Right
                 xNew = xNew + (int)velocity[0];
             }
+            //If we've hit a wall, set the position to just touch the wall and set veloicty to 0
             if(wall[0]){
                 //North
                 yNew = 0;
@@ -197,11 +198,12 @@ public class Player {
             return collisions;
         }
         
+        //Draws the player
 	public void drawPlayer(Graphics2D g) {
 		g.drawImage(RImage, x, y, null);
 	}
 	
-
+        //Resizes the player (for buffs?)
 	public BufferedImage resize(BufferedImage original, int scaledWidth, int scaledHeight)
 			throws IOException {
 
@@ -214,6 +216,7 @@ public class Player {
 		return RImage;
 	}
         
+        //Player's health
         public int getHealth(){
             return health;
         }
@@ -242,8 +245,4 @@ public class Player {
         public int getVelY(){
             return (int)velocity[1];
         }
-        
-        
-        
-
 }
