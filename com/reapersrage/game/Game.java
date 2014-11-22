@@ -1,6 +1,5 @@
 package com.reapersrage.game;
 
-import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
@@ -8,16 +7,10 @@ import com.reapersrage.input.Buttons;
 import com.reapersrage.input.Keyboard;
 import com.reapersrage.world.level.Level;
 import com.reapersrage.world.level.RandomLevel;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -54,7 +47,6 @@ public class Game extends Canvas implements Runnable {
 	// Frame rate (FPS)
 	static final int FRAMERATE = 50;
 
-	private int dir;
 
 	JFrame container;
         //JFrame debugPanel; //for debuging purposes
@@ -62,15 +54,8 @@ public class Game extends Canvas implements Runnable {
 	Canvas canvas;
 	BufferStrategy bufferStrategy;
         
-        //Mobs on Screen. Should move to level later or some sort of mob generator
-        //private Mob spikeMob;
-        //private Mob foutainMob;
-        //List to store the mobs
-        //private ArrayList<Mob> MobList;
-        //private Mob spikeMob2;
-        
         //Strings for debug
-        private String collisionDebug;
+        
         
         public static Debug debugPanel = new Debug();
 	public Game() {
@@ -106,14 +91,11 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();}
                 container.setIconImage(OImage);
                 
-
 		//adds key listener
 		addKeyListener(new Keyboard());
 
 		//requests focus for our keylistener
 		requestFocus();
-		
-		
 
 		//does stuff
 		createBufferStrategy(2);
@@ -124,14 +106,7 @@ public class Game extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 		Game game = new Game();
-
-		/*
-		 * key = new Keyboard(); game.addKeyListener(key);
-		 */
-
-		game.start();
-                
-
+		game.start();                
 	}
 
 	// Starts the game
@@ -142,7 +117,6 @@ public class Game extends Canvas implements Runnable {
 		gameThread = new Thread(this, NAME);
 		// Start the game thread
 		gameThread.start();
-
 	}
 
 	public synchronized void stop() {
@@ -160,10 +134,6 @@ public class Game extends Canvas implements Runnable {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
-                //spikeMob = new Mob(100, 100,80 , 80, 1, 1, "spike");
-                //foutainMob = new Mob(300,150,80,80,-1,1,"foutain");
-                
-
 	}
 
 	public void run() {
@@ -193,26 +163,6 @@ public class Game extends Canvas implements Runnable {
 		ButtonPressed();
 		player.update(playerDirs);
                 level.update(player);
-//<<<<<<< HEAD
-//                //spikeMob.update(player);
-//                //foutainMob.update(player);
-//                
-//                //collisionDebug = "<html>Mobs";
-//                //Iterator<Mob> mobIterator = MobList.iterator();
-//                //while(mobIterator.hasNext()){
-//                    //Mob currentMob = mobIterator.next();
-//                    //currentMob.update(player);
-//                    //collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
-//               // }
-//               
-//               // collisionDebug = collisionDebug+"</html>";
-//                debugPanel.setLabel(1,collisionDebug);
-//                //debugPanel.setLabel(0,"<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Health: "+player.getHealth()+"</html>");
-//                
-//                
-//=======
-//                level.update(player);
-//>>>>>>> origin/newTile
 	}
 
         //Renders everything
@@ -220,15 +170,10 @@ public class Game extends Canvas implements Runnable {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 
 		screen.drawBackground(g);
-                //what goes last stays on top
-                //spikeMob.drawMob(g);
-		//foutainMob.drawMob(g);
-                level.renderMobs(g);
-                
+                level.renderMobs(g);                
                 player.drawPlayer(g);
-                
-               
-		g.dispose();
+                               
+		//g.dispose();
 		bufferStrategy.show();
                 
         }

@@ -50,7 +50,7 @@ public class Player {
 		this.width = width;
 		this.height = height;
                 //Velocty increase per update
-                this.acceleration = .5;
+                this.acceleration = .8;
                 this.friction = .5;
                 this.velocity = new double[]{0.0,0.0};
                 this.MAX_V = 10.0;
@@ -138,11 +138,27 @@ public class Player {
             }
             //if not accelerating in y direction
             if(!dirs[0] && !dirs[1] && velocity[1] != 0){
-                velocity[1] -= velocity[1] > 0 ? friction : -friction;
+                double newVelocity = velocity[1];
+                newVelocity -= velocity[1] > 0 ? friction : -friction;
+                if(velocity[1] > 0 && newVelocity < 0)
+                    newVelocity = 0;
+                else if(velocity[1] < 0 && newVelocity > 0)
+                    newVelocity = 0;
+                velocity[1] = newVelocity;
+                 
             }
+            //If not accelerating in x
             if(!dirs[2] && !dirs[3] && velocity[0] != 0){
-                velocity[0] -= velocity[0] > 0 ? friction : -friction;
+                double newVelocity = velocity[0];
+                newVelocity -= velocity[0] > 0 ? friction : -friction;
+                if(velocity[0] < 0 && newVelocity > 0)
+                    newVelocity = 0;
+                else if(velocity[0] > 0 && newVelocity < 0)
+                    newVelocity = 0;
+                velocity[0] = newVelocity;
+               
             }
+            Game.setDebugText(2, "<html>y: "+velocity[1] +"<br>x: " + velocity[0] + "</html>");
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such
