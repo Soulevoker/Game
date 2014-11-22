@@ -92,9 +92,13 @@ public class Mob {
 //        public void changeHealth(int change) {
 //            health += change;
 //        }
+        
+        //updates the mob in respect to a given player
         public void update(Player person){
             if (isCollided(person)) dealDamage(person); 
         }
+        
+        //checks to see if collided with player
         public boolean isCollided(Player person){
             int[] mobXrange = {x,x+width};
             int[] personXrange = {person.getX(), person.getX()+person.getWidth()};
@@ -116,14 +120,15 @@ public class Mob {
             return false;
         }
         
+        //deals damage to player
         public void dealDamage(Player person){
             int damage = damageOnHit;
             long currentTime = System.currentTimeMillis();
             
             //if the current time is divisible by 1000/dps, do damage
             //this is because milliseconds mod 1000 will be true once a second
-            boolean timeToHit = (currentTime%(1000/dps)<10);
-            //boolean timeToHit = true;
+            //boolean timeToHit = (currentTime%(1000/dps)<10);
+            boolean timeToHit = true;
             if (timeToHit) person.changeHealth(-damageOnHit);
         }
         

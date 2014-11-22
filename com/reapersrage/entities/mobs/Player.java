@@ -66,7 +66,7 @@ public class Player {
 		}
                 
                 //sets initial health
-                health = 100;
+                health = 1000;
 	}
 
         //Updates the player direction from a list of possible directions

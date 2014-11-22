@@ -134,11 +134,13 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
+        //Objects to create 
+        //NOTE: TO MAKE THEM SHOW UP THEY MUST ALSO BE SET TO RENDER!
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
-                spikeMob = new Mob(100, 100,80 , 80, 10, 1);
+                spikeMob = new Mob(100, 100,80 , 80, 1, 1);
 
 	}
 
