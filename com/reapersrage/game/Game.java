@@ -2,6 +2,7 @@ package com.reapersrage.game;
 
 import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Buttons;
 import com.reapersrage.input.Keyboard;
@@ -17,6 +18,7 @@ import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game extends Canvas implements Runnable {
@@ -36,6 +38,7 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
+        private BufferedImage OImage;
 
 	
         private int playerDir;
@@ -95,6 +98,15 @@ public class Game extends Canvas implements Runnable {
 		container.setResizable(false);
 		container.pack();
 		container.setVisible(true);
+                
+                try {
+			OImage = ImageIO
+			.read(GameTile.class
+			.getResourceAsStream("/com/reapersrage/res/textures/JimIcon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();}
+                container.setIconImage(OImage);
+                
 
 		//adds key listener
 		addKeyListener(new Keyboard());
@@ -184,18 +196,18 @@ public class Game extends Canvas implements Runnable {
 		player.update(playerDirs);
                 //spikeMob.update(player);
                 //foutainMob.update(player);
-                collisionDebug = "Health: "+player.getHealth()+
-                        " PlayerPos: ("+ player.getX()+","+player.getY() + ")";
+                
+                collisionDebug = "<html>Mobs";
                 Iterator<Mob> mobIterator = MobList.iterator();
                 while(mobIterator.hasNext()){
                     Mob currentMob = mobIterator.next();
                     currentMob.update(player);
-                    collisionDebug = collisionDebug + " Pos of " + currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"; 
+                    collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
                 }
-                //collisionDebug = "Health: "+player.getHealth()+
-                //        " PlayerPos: ("+ player.getX()+","+player.getY()+
-                //        ") SpikePos: ("+MobList.get(0).getX()+","+MobList.get(0).getY()+")" + " Collision: "+MobList.get(0).isCollided(player);
-                debugPanel.setLabel1(collisionDebug);
+               
+                collisionDebug = collisionDebug+"</html>";
+                debugPanel.setLabel(1,collisionDebug);
+                debugPanel.setLabel(0,"<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Health: "+player.getHealth()+"</html>");
                 
                 
 	}
