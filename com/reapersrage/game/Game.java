@@ -161,9 +161,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		ButtonPressed();
 		player.update(playerDirs);
-                if (player.getX() == spikeMob.getX() && player.getY() == spikeMob.getX()){
-                    spikeMob.dealDamage(player);
-                }
+                spikeMob.attack(player);
                 
                 
 	}
