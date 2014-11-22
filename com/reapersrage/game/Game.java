@@ -133,7 +133,7 @@ public class Game extends Canvas implements Runnable {
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
-		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
+		player = new Player(0, 0, 64, 64);
 	}
         //Run the game
 	public void run() {
