@@ -5,6 +5,7 @@ import com.reapersrage.entities.mobs.Ghost;
 import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.mobs.Spike;
+import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Game;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -21,7 +22,10 @@ import java.util.Random;
 public class RandomLevel extends Level {
 
     private static Random random = new Random();
+    //Stores all the mobs
     private ArrayList<Mob> MobList = new ArrayList<>();
+    //Stores all the projectiles
+   
     
     public RandomLevel(int width, int height) {
         super(width, height);

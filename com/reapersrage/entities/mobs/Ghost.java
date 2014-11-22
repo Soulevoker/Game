@@ -1,5 +1,8 @@
 package com.reapersrage.entities.mobs;
 
+import com.reapersrage.entities.projectiles.FireBall;
+import com.reapersrage.entities.projectiles.Projectile;
+import java.util.ArrayList;
 import java.util.Random;
 /**
  *
@@ -9,7 +12,11 @@ public class Ghost extends Mob {
     int id;
     //For movement and damage
     Random rand = new Random();
-    //contrcutor for a ghost mob
+    
+    //List to store the ghost's projectiles
+    private ArrayList<Projectile> ProjList = new ArrayList<>();
+    
+    //contrcutor for a ghost mob 
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps, int id) {
         super(x, y, width, height, damageOnHit, dps, "ghost");
         this.id = id;
@@ -29,6 +36,7 @@ public class Ghost extends Mob {
         if (isCollided(person)) dealDamage(person); 
         double[] disp = displacementFromPlayer(person);
         this.move((int)(5*disp[0]),(int)(5*disp[1]));
+        fireball(person);
         
     }
     
@@ -41,6 +49,11 @@ public class Ghost extends Mob {
         disp[0] = disp[0]/mag;
         disp[1] = disp[1]/mag;
         return disp;
+    }
+    
+    //Shoots a fireball in the specified direction
+    private void fireball(Player player){
+        ProjList.add(new FireBall(this.x, this.y, 20, 20, 100, displacementFromPlayer(player)));
     }
     
     
