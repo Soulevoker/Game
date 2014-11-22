@@ -32,6 +32,9 @@ public class Mob {
 	private int width;
 	private int height;
         
+        //for Chest
+        private int gold;
+        
         //Attributes of the player
         //private int health;
         //------//
@@ -101,7 +104,8 @@ public class Mob {
         
         //updates the mob in respect to a given player
         public void update(Player person){
-            if (isCollided(person)) dealDamage(person); 
+            if (isCollided(person)) dealDamage(person);
+            if (isCollided(person)) giveGold(person);
         }
         
         //checks to see if collided with player
@@ -137,6 +141,10 @@ public class Mob {
             //boolean timeToHit = (currentTime%(1000/dps)<10);
             boolean timeToHit = true;
             if (timeToHit) person.changeHealth(-damageOnHit);
+        }
+        
+        public void giveGold(Player person) {
+            person.changeGold(gold);
         }
         
         //checks if the mob sprite is transparent at give x,y. Transparent pixels do not count as part of the hitbox
@@ -219,6 +227,11 @@ public class Mob {
         
         public String getName(){
             return this.name;
+        }
+        
+        //for chest
+        public void setGold(int gold) {
+            this.gold = gold;
         }
         
         

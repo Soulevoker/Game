@@ -27,6 +27,7 @@ public class Player {
         
         //Attributes of the player
         private int health;
+        private int gold;
 
         //Pixels for the player to move every update
         private double[] velocity = new double[2];
@@ -224,11 +225,17 @@ public class Player {
         public int getHealth(){
             return health;
         }
+        public int getGold(){
+            return gold;
+        }
         
         //changes players health. Negative lowers health (damage)
         public void changeHealth(int change) {
             health += change;
         }
+        public void changeGold(int change) {
+            gold += change;
+        }    
         
         //get the position
          public int getX(){
