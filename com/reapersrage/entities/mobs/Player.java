@@ -24,18 +24,18 @@ public class Player {
 	private int dir;
 	private int width;
 	private int height;
-<<<<<<< HEAD
+
         
         //Attributes of the player
         private int health;
-=======
+
         //Pixels for the player to move every update
         private int[] speed= new int[2];
         private final int START_SPEED = 5;
         //How long the player has been moving in each cardinal direction
         //UP/DOWN LEFT/RIGHT
         private int[] acceleration = new int[2];
->>>>>>> origin/newTile
+//>>>>>>> origin/newTile
 
 	public Player(int x, int y, int width, int height) {
 		dir = 0;

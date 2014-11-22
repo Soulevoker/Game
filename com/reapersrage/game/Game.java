@@ -35,12 +35,12 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	
         private int playerDir;
         
-=======
->>>>>>> origin/newTile
+//=======
+//>>>>>>> origin/newTile
         //Directions the player can move in: {Up, Down, Left, Right}
         private boolean[] playerDirs;
 	private Screen screen;
