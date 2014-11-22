@@ -90,6 +90,29 @@ public class Mob {
 //        public void changeHealth(int change) {
 //            health += change;
 //        }
+        public void update(Player person){
+            
+        }
+        public boolean isCollided(Player person){
+            int[] mobXrange = {x,x+width};
+            int[] personXrange = {person.getX(), person.getX()+person.getWidth()};
+            int[] mobYrange = {y,y+height};
+            int[] personYrange = {person.getY(), person.getY()+person.getHeight()};
+           
+            
+            //checks if any pixel in mob overlaps with any pixel in player
+            for (int i=mobXrange[0] ; i<=mobXrange[1]; i++){
+                for (int j=mobYrange[0]; j<=mobYrange[1]; j++){
+                    for (int k=personXrange[0]; k<=personXrange[1]; k++ ){
+                        for (int l=personYrange[0]; l<=personYrange[1]; l++){
+                            if ((i==k) && (j==l)) return true;
+                            
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         
         public void dealDamage(Player person){
             int damage = damageOnHit;

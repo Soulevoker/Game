@@ -162,6 +162,7 @@ public class Game extends Canvas implements Runnable {
 		ButtonPressed();
 		player.update(playerDirs);
                 spikeMob.attack(player);
+
                 
                 
 	}
@@ -177,7 +178,7 @@ public class Game extends Canvas implements Runnable {
                
 		g.dispose();
 		bufferStrategy.show();
-                System.out.println("Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")");
+                System.out.println("Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")" + " Collision: "+spikeMob.isCollided(player));
 
 	}
 	
