@@ -32,6 +32,8 @@ public class Mob {
 	protected int width;
 	protected int height;
         
+        boolean imortalObject;
+        
         //for Chest
         private int gold;
         
@@ -104,6 +106,7 @@ public class Mob {
         
         //updates the mob in respect to a given player
         public void update(Player person){
+            if (imortalObject) this.health = 100000;
             if (isCollided(person)) dealDamage(person);
             if (isCollided(person)) giveGold(person);
             projCollision(person);

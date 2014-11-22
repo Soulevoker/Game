@@ -52,10 +52,11 @@ public class RandomLevel extends Level {
         //One of the fountains is a mimic that actually drains health
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
         MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
-        MobList.add(new Chest(100,100,64,40,10,i++));
+        MobList.add(new Chest(100,100,80,55,10,i++));
         for(int b=0; b<10; b++){
             MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
         }
+        
     }
 
     public void update(Player player){
@@ -70,6 +71,7 @@ public class RandomLevel extends Level {
         }
         //Display the debugging statistics
         displayDebug(player);
+        if(System.currentTimeMillis()%1000<30)MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,0));
     }
     
     public void renderMobs(Graphics2D g){

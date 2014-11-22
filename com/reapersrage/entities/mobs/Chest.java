@@ -16,12 +16,14 @@ public class Chest extends Mob {
         super(x, y, width, height, 0, 0, "chest");
         this.id = 0;
         setGold(gold);
+        this.imortalObject=true;
     }
 
     public Chest(int x, int y, int width, int height, int gold, int id) {
         super(x, y, width, height, 0, 0, "chest");
         this.id = id;
         setGold(gold);
+        this.imortalObject=true;
     }
 
     public String getName() {

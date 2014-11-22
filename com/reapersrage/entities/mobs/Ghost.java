@@ -23,12 +23,14 @@ public class Ghost extends Mob {
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps, int id) {
         super(x, y, width, height, damageOnHit, dps, "ghost");
         this.id = id;
+        this.imortalObject=false;
         
     }
     
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps) {
         super(x, y, width, height, damageOnHit, dps, "ghost");
         this.id = 0;
+        this.imortalObject=false;
     }
     
     public String getName() {

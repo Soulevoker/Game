@@ -77,7 +77,7 @@ public class Player {
 		}
                 
                 //sets initial health
-                health = 1000;
+                health = 1000000000;
 	}
 
         //Updates the player direction from a list of possible directions
@@ -330,7 +330,7 @@ public class Player {
                 }
             
             
-            ProjList.add(new FireBall(this.x+this.width-10, this.y, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
+            ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
         }
         
         public Iterator getProjectiles(){

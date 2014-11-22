@@ -16,11 +16,13 @@ public class Fountain extends Mob {
     public Fountain(int x, int y, int width, int height, int healingOnHit, int dps) {
         super(x, y, width, height, -healingOnHit, dps, "fountain");
         this.id = 0;
+        this.imortalObject=true;
     }
 
     public Fountain(int x, int y, int width, int height, int healingOnHit, int dps, int id) {
         super(x, y, width, height, -healingOnHit, dps, "fountain");
         this.id = id;
+        this.imortalObject=true;
     }
 
     public String getName() {
