@@ -24,6 +24,7 @@ public class Debug {
             debugPanel.pack();
             debugPanel.setVisible(true);
             debugPanel.setAlwaysOnTop(true);
+            debugPanel.setLocation(900,100);
             //String collisionStr = "Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")" + " Collision: "+spikeMob.isCollided(player);
             label1 = new JLabel("hello");
             debugPanel.add(label1);
