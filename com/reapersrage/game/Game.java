@@ -1,14 +1,12 @@
 package com.reapersrage.game;
 
-import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.mobs.Mob;
+import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.gfx.Screen;
+import com.reapersrage.input.Buttons;
 import com.reapersrage.input.Keyboard;
 import com.reapersrage.world.level.Level;
 import com.reapersrage.world.level.RandomLevel;
-import com.reapersrage.input.Buttons;
-
-import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,6 +15,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.*;
 
 public class Game extends Canvas implements Runnable {
 
@@ -59,8 +60,10 @@ public class Game extends Canvas implements Runnable {
 	BufferStrategy bufferStrategy;
         
         //Mobs on Screen. Should move to level later or some sort of mob generator
-        private Mob spikeMob;
-        private Mob foutainMob;
+        //private Mob spikeMob;
+        //private Mob foutainMob;
+        //List to store the mobs
+        private ArrayList<Mob> MobList;
         //private Mob spikeMob2;
         
         //Strings for debug
@@ -68,6 +71,7 @@ public class Game extends Canvas implements Runnable {
         
         Debug debugPanel = new Debug();
 	public Game() {
+                this.MobList = new ArrayList<>();
 		buttonPressed = "";
                 buttonsPressed = new Buttons();
 		//playerDir = 0;
@@ -145,9 +149,10 @@ public class Game extends Canvas implements Runnable {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
-                spikeMob = new Mob(100, 100,80 , 80, 1, 1, "spike");
-                foutainMob = new Mob(300,150,80,80,-1,1,"foutain");
-                
+                //spikeMob = new Mob(100, 100,80 , 80, 1, 1, "spike");
+                //foutainMob = new Mob(300,150,80,80,-1,1,"foutain");
+                MobList.add(new Mob(100, 100,80 , 80, 1, 1, "spike"));
+                MobList.add(new Mob(300,150,80,80,-1,1,"foutain"));
 
 	}
 
@@ -177,10 +182,19 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		ButtonPressed();
 		player.update(playerDirs);
-                spikeMob.update(player);
-                foutainMob.update(player);
-                
-                collisionDebug = "Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")" + " Collision: "+spikeMob.isCollided(player);
+                //spikeMob.update(player);
+                //foutainMob.update(player);
+                collisionDebug = "Health: "+player.getHealth()+
+                        " PlayerPos: ("+ player.getX()+","+player.getY() + ")";
+                Iterator<Mob> mobIterator = MobList.iterator();
+                while(mobIterator.hasNext()){
+                    Mob currentMob = mobIterator.next();
+                    currentMob.update(player);
+                    collisionDebug = collisionDebug + " Pos of " + currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"; 
+                }
+                //collisionDebug = "Health: "+player.getHealth()+
+                //        " PlayerPos: ("+ player.getX()+","+player.getY()+
+                //        ") SpikePos: ("+MobList.get(0).getX()+","+MobList.get(0).getY()+")" + " Collision: "+MobList.get(0).isCollided(player);
                 debugPanel.setLabel1(collisionDebug);
                 
                 
@@ -192,8 +206,12 @@ public class Game extends Canvas implements Runnable {
 
 		screen.drawBackground(g);
                 //what goes last stays on top
-                spikeMob.drawMob(g);
-		foutainMob.drawMob(g);
+                //spikeMob.drawMob(g);
+		//foutainMob.drawMob(g);
+                Iterator<Mob> mobIterator = MobList.iterator();
+                while(mobIterator.hasNext()){
+                    mobIterator.next().drawMob(g);
+                }
                 player.drawPlayer(g);
                 
                

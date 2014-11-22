@@ -40,9 +40,11 @@ public class Mob {
         private int health;
         private int damageOnHit; //damage player takes on impact
         private int dps; //damage per second
+        private String name; //name of the mob
         
         public Mob (int x, int y, int width, int height, int damageOnHit, int dps, String name){
                 dir = 0;
+                this.name = name;
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -149,6 +151,9 @@ public class Mob {
             return y;
         }
         
+        public String getName(){
+            return this.name;
+        }
         
         
 
