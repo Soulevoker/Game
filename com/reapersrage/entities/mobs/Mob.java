@@ -134,13 +134,7 @@ public class Mob {
             return y;
         }
         
-        public boolean attack(Player player){
-            if (player.getX() == this.getX()  && player.getY() == this.getX()){
-                    this.dealDamage(player);
-                    return true;
-                }
-            return false;
-        }
+        
         
 
 }

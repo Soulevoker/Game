@@ -35,6 +35,8 @@ public class Player {
         private double acceleration;
         //How much the player slows down due to the map
         private double friction;
+        //If the player is about to hit a wall NORTH EAST SOUTH WEST
+        private boolean[] wall = new boolean[4];
         
 
 	public Player(int x, int y, int width, int height) {
@@ -46,7 +48,7 @@ public class Player {
 		this.width = width;
 		this.height = height;
                 //Velocty increase per update
-                this.acceleration = .2;
+                this.acceleration = .5;
                 this.friction = .5;
                 this.velocity = new double[]{0.0,0.0};
                 
@@ -75,14 +77,30 @@ public class Player {
             parseInput(dirs);
             int xNew = x;
             int yNew = y;
-            
-            if(!collision(x, y + (int)velocity[1])[1]){
+            boolean[] collision = checkCollision(x, y, velocity);
+            if(!collision[1]){
                 //Down
                 yNew = yNew + (int)velocity[1];
             }
-            if(!collision(x + (int)velocity[0], y)[0]){
+            if(!collision[0]){
                 //Right
                 xNew = xNew + (int)velocity[0];
+            }
+            if(wall[0]){
+                //North
+                yNew = 0;
+            }
+            else if(wall[1]){
+                //East
+                xNew = Game.getStaticWidth() - width;
+            }
+            else if(wall[2]){
+                //South
+                yNew = Game.getStaticHeight() - height;
+            }
+            else if(wall[3]){
+                //West
+                xNew = 0;
             }
             
             x = xNew;
@@ -96,19 +114,23 @@ public class Player {
             //For each direction, check input
             if(dirs[0]){
                 //Up
-                velocity[1] -= acceleration;
+                if(-1.0*velocity[1] < 10.0)
+                    velocity[1] -= acceleration;
             }
             if(dirs[1]){
                 //Down
-                 velocity[1] += acceleration;
+                if(velocity[1] < 10.0)
+                    velocity[1] += acceleration;
             }
             if(dirs[2]){
                 //Left
-                velocity[0] -= acceleration;
+                if(-velocity[0] < 10)
+                    velocity[0] -= acceleration;
             }
             if(dirs[3]){
                 //Right
-                velocity[0] += acceleration;
+                if(velocity[0] < 10)
+                    velocity[0] += acceleration;
             }
             //if not accelerating in y direction
             if(!dirs[0] && !dirs[1] && velocity[1] != 0){
@@ -120,14 +142,31 @@ public class Player {
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such
-        public boolean[] collision(int x, int y){
-            boolean[] collisions =  new boolean[]{false, false};
-            
-            if(x < 0 || x + width > Game.getStaticWidth()){
+        public boolean[] checkCollision(int x, int y, double[] v){
+            boolean[] collisions =  new boolean[]{false, false};            
+            wall[0] = false;
+            wall[1] = false;
+            wall[2] = false;
+            wall[3] = false;
+            //WEST wall
+            if(x + (int)v[0] < 0){
                 collisions[0] = true;
+                wall[3] = true;
             }
-            if(y < 0 || y + height > Game.getStaticHeight()){
+            //EAST wall
+            else if(x + (int)v[0] + width > Game.getStaticWidth()){
+                collisions[0] = true;
+                wall[1] = true;
+            }
+            //NORTH wall
+            if(y + (int)v[1] < 0){
                 collisions[1] = true;
+                wall[0] = true;
+            }
+            //SOUTH Wall
+            else if(y + (int)v[1] + height > Game.getStaticHeight()){
+                collisions[1] = true;
+                wall[2] = true;
             }
             
             return collisions;
