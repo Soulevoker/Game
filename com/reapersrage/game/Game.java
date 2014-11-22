@@ -1,6 +1,7 @@
 package com.reapersrage.game;
 
 import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.mobs.Mob;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
 import com.reapersrage.world.level.Level;
@@ -34,12 +35,15 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
-	private int playerDir;
+	
+        private int playerDir;
+        
         //Directions the player can move in: {Up, Down, Left, Right}
         private boolean[] playerDirs;
 	private Screen screen;
 	private static Level level;
 	private Player player;
+        private Mob spikeMob;
 	private Thread gameThread;
 	// Frame rate (FPS)
 	static final int FRAMERATE = 50;
@@ -122,6 +126,7 @@ public class Game extends Canvas implements Runnable {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
+                spikeMob = new Mob(100, 100,80 , 80, 10);
 
 	}
 
@@ -150,17 +155,25 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		ButtonPressed();
 		player.update(playerDirs);
+                if (player.getX() == spikeMob.getX() && player.getY() == spikeMob.getX()){
+                    spikeMob.dealDamage(player);
+                }
+                
+                
 	}
 
+        //Renders everything
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 
 		screen.drawBackground(g);
-
+                //what goes last stays on top
+                spikeMob.drawMob(g);
 		player.drawPlayer(g);
-
+               
 		g.dispose();
 		bufferStrategy.show();
+                System.out.println("Health: "+player.getHealth()+" PlayerPos: ("+ player.getX()+","+player.getY()+") SpikePos: ("+spikeMob.getX()+","+spikeMob.getY()+")");
 
 	}
 	
