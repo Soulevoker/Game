@@ -29,6 +29,7 @@ public class Keyboard extends KeyAdapter {
 				|| e.getKeyCode() == KeyEvent.VK_D) {
 			Game.setButtonPressed("right");
 		}
+                
 	}
 
 	public void keyReleased(KeyEvent e) {

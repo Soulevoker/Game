@@ -23,6 +23,11 @@ public class Player {
 	private BufferedImage RImage;
 	private int width;
 	private int height;
+
+        
+        //Attributes of the player
+        private int health;
+
         //Pixels for the player to move every update
         private double[] velocity = new double[2];
         //private final int START_SPEED = 5;
@@ -31,7 +36,7 @@ public class Player {
         //How much the player slows down due to the map
         private double friction;
         
-        
+
 	public Player(int x, int y, int width, int height) {
 		//Initial x position (pixels)
 		this.x = x;
@@ -57,6 +62,9 @@ public class Player {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+                
+                //sets initial health
+                health = 100;
 	}
 
         //Updates the player direction from a list of possible directions
@@ -141,5 +149,23 @@ public class Player {
 		g2d.dispose();
 		return RImage;
 	}
+        
+        public int getHealth(){
+            return health;
+        }
+        
+        //changes players health. Negative lowers health (damage)
+        public void changeHealth(int change) {
+            health += change;
+        }
+        
+        //get the position
+         public int getX(){
+             return x;
+        }
+        public int getY(){
+            return y;
+        }
+        
 
 }
