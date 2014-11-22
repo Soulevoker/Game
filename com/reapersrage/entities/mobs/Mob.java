@@ -39,14 +39,16 @@ public class Mob {
         //Attributes of mob
         private int health;
         private int damageOnHit; //damage player takes on impact
+        private int dps; //damage per second
         
-        public Mob (int x, int y, int width, int height, int damageOnHit){
+        public Mob (int x, int y, int width, int height, int damageOnHit, int dps){
             dir = 0;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
                 this.damageOnHit = damageOnHit;
+                this.dps = dps;
 		try {
 			OImage = ImageIO
 					.read(GameTile.class
@@ -91,7 +93,7 @@ public class Mob {
 //            health += change;
 //        }
         public void update(Player person){
-            
+            if (isCollided(person)) dealDamage(person); 
         }
         public boolean isCollided(Player person){
             int[] mobXrange = {x,x+width};
@@ -116,7 +118,13 @@ public class Mob {
         
         public void dealDamage(Player person){
             int damage = damageOnHit;
-            person.changeHealth(-damageOnHit);
+            long currentTime = System.currentTimeMillis();
+            
+            //if the current time is divisible by 1000/dps, do damage
+            //this is because milliseconds mod 1000 will be true once a second
+            boolean timeToHit = (currentTime%(1000/dps)<10);
+            //boolean timeToHit = true;
+            if (timeToHit) person.changeHealth(-damageOnHit);
         }
         
         public int getX(){
