@@ -42,25 +42,20 @@ public class RandomLevel extends Level {
         MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80 , 80, 1, 1,i++));
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,1,1,i++));
         MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
+        //One of the fountains is a mimic that actually drains health
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
 
     }
 
     public void update(Player player){
-        String collisionDebug = "<html>Mobs";
-        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"</html>";
-                
         Iterator<Mob> mobIterator = MobList.iterator();
+        //Have each mob interact with the player
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             currentMob.update(player);
-            collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
         }
-        collisionDebug = collisionDebug+"</html>";
-        Game.setDebugText(0,playerDebug);
-        Game.setDebugText(1, collisionDebug);
-        
-                
+        //Display the debugging statistics
+        displayDebug(player);
     }
     
     public void renderMobs(Graphics2D g){
@@ -68,5 +63,18 @@ public class RandomLevel extends Level {
         while(mobIterator.hasNext()){
             mobIterator.next().drawMob(g);
         }
+    }
+    
+    public void displayDebug(Player player){
+        String collisionDebug = "<html>Mobs";
+        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"</html>";
+        Iterator<Mob> mobIterator = MobList.iterator();
+        while(mobIterator.hasNext()){
+            Mob currentMob = mobIterator.next();
+            collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
+        }
+        collisionDebug = collisionDebug+"</html>";
+        Game.setDebugText(0,playerDebug);
+        Game.setDebugText(1, collisionDebug);
     }
 }
