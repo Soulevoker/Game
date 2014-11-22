@@ -25,6 +25,7 @@ public class RandomLevel extends Level {
     private static Random random = new Random();
     //Stores all the mobs
     private ArrayList<Mob> MobList = new ArrayList<>();
+    //private ArrayList<Projectile> ProjectileList = new ArrayList<>();
     //Stores all the projectiles
    
     
@@ -73,16 +74,21 @@ public class RandomLevel extends Level {
         }
     }
     
+    //Debugging Information
     public void displayDebug(Player player){
         String collisionDebug = "<html>Mobs";
+        String projectileDebug = "<html>Projectiles";
         String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"<br>Gold: "+player.getGold() +"</html>";
         Iterator<Mob> mobIterator = MobList.iterator();
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
         }
+        
         collisionDebug = collisionDebug+"</html>";
+        projectileDebug = projectileDebug + "</html>";
         Game.setDebugText(0,playerDebug);
         Game.setDebugText(1, collisionDebug);
+        Game.setDebugText(2, projectileDebug);
     }
 }

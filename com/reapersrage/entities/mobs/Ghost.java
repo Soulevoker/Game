@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import com.reapersrage.world.level.RandomLevel;
 /**
  *
  * @author David
@@ -65,6 +66,16 @@ public class Ghost extends Mob {
     //Shoots a fireball in the specified direction
     private void fireball(Player player){
         ProjList.add(new FireBall(this.x, this.y, 20, 20, 100, displacementFromPlayer(player, 10)));
+    }
+    public String projDebug() {
+        String out = "";
+        Iterator<Projectile> projIterator = ProjList.iterator();
+        int i =0;
+            while(projIterator.hasNext()){
+                Projectile currentProj = projIterator.next();
+                out = out + "Proj "+i+":("+currentProj.getX()+","+currentProj.getY()+")";
+            }
+        RandomLevel.
     }
     
     
