@@ -103,6 +103,7 @@ public class Ghost extends Mob {
     }
     
     public void destroy(){
+        dropGold(1);
         destroyed = true;
         Ghost.NUM--;
     }

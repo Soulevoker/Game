@@ -51,7 +51,7 @@ public class Player {
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
         private final int DEF_HEALTH = 2000000;
-        private final int DEF_MANA = 100;
+        private final int DEF_MANA = 100000000;
         private Random random = new Random(); //so randum xD
 
         private boolean[] playerDirs;
@@ -391,7 +391,7 @@ public class Player {
                 double[] newDir = new double[2];
                     newDir[0] = (double)random.nextInt(40)-20;
                     newDir[1] = (double)random.nextInt(40)-20;
-                    ProjList.add(new FireBall(this.x+this.width-20, this.y+10,15,15,50,newDir));
+                    ProjList.add(new FireBall(this.x+this.width-20, this.y+10,15,15,500,newDir));
             }}
         }    
         

@@ -5,7 +5,7 @@ import com.reapersrage.entities.items.Item;
 import com.reapersrage.entities.mobs.*;
 import com.reapersrage.game.Game;
 import com.reapersrage.game.VectorMath;
-import com.reapersrage.res.sound.Sound;
+//import com.reapersrage.res.sound.Sound;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,8 +55,8 @@ public class RandomLevel extends Level {
         for(int b=0; b<10; b++){
             MobList.add(new Ghost(VectorMath.randomPos(Ghost.defWidth, Ghost.defHeight)));
         }
-        Sound bgMusic = new Sound();
-        bgMusic.music("bg");
+        //Sound bgMusic = new Sound();
+       // bgMusic.music("bg");
         
     }
 
@@ -68,10 +68,13 @@ public class RandomLevel extends Level {
             currentMob.update(player);
             
             if (currentMob.isDestroyed()){
+
                 if (currentMob.getType().equals("ghost")){
                     Game.debugPanel.addLabel(3,"Dropping gold!");
                     ItemList.add(new GoldPiece(currentMob.getPos(), 10));
                 }
+
+
                 mobIterator.remove();
             }
         }
@@ -116,6 +119,10 @@ public class RandomLevel extends Level {
         while(ItemIterator.hasNext()){
             ItemIterator.next().draw(g);
         }
+    }
+    
+    public void addItem(Item item){
+        ItemList.add(item);
     }
     
     //Debugging Information
