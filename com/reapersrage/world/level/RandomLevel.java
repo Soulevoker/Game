@@ -84,7 +84,7 @@ public class RandomLevel extends Level {
     public void displayDebug(Player player){
         String collisionDebug = "<html>Mobs";
         String projectileDebug = "<html>Projectiles";
-        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"<br>Gold: "+player.getGold() +"</html>";
+        String playerDebug = "<html>Player<br> Position: ("+player.getX()+","+player.getY()+")"+"<br>"+"Velocity: &lt;"+player.getVelX()+","+player.getVelY()+"> "+"<br>"+"Health: "+player.getHealth()+"<br>Gold: "+player.getGold()+"<br>"+(Game.getTicks()%50) +"</html>";
         Iterator<Mob> mobIterator = MobList.iterator();
         
         while(mobIterator.hasNext()){
