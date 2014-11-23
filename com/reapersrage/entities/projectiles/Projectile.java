@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
  *
  * @author David
  */
-public class Projectile {
+public abstract class Projectile {
 
     protected int x;
     protected int y;

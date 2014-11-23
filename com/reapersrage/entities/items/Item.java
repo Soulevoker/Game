@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
  *
  * @author David
  */
-public class Item {
+public abstract class Item {
 
     protected int x;
     protected int y;

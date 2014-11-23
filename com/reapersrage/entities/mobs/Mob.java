@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import java.util.Random;
 
 //creates a mob
-public class Mob {
+public abstract class Mob {
     
         //--------//
         ///TAKEN FROM PLAYER CLASS. 
