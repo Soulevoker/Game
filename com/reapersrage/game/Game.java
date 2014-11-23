@@ -142,7 +142,7 @@ public class Game extends Canvas implements Runnable {
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
-		player = new Player(0, 0, 64, 64);
+		player = new Player(5, 5, 64, 64);
 		gameover = new GameOverScreen(WIDTH, HEIGHT);
 		
 	}
@@ -232,7 +232,13 @@ public class Game extends Canvas implements Runnable {
 
 	//used to reset game will be fancier in future
 	private void resetGame() throws IOException {
-		init();
+		buttonsPressed = new Buttons();
+		buttonPressed = "";
+		for(int i = 0; i < playerDirs.length; i++){
+			playerDirs[i] = false;
+		}
+		
+		init();		
 	}
 
 
