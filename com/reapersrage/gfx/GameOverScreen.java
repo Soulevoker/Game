@@ -77,6 +77,7 @@ public class GameOverScreen{
 	    	
 	    }
 
+	  //this method allows you to move the selector up
 	public static void selectorIncrement() {
 		if(selector<1){
 		selector++;
@@ -84,6 +85,8 @@ public class GameOverScreen{
 			selector = 0;
 		}
 	}
+	
+	//this method allows you to move the selector down
 	public static void selectorDecrement() {
 		if(selector>0){
 		selector--;

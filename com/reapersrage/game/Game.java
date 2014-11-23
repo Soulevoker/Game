@@ -107,7 +107,9 @@ public class Game extends Canvas implements Runnable {
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
 		this.ticks = 0;
-		gameState = 2;
+		
+		//sets current state of the game
+		gameState = 1;
 
 	}
 
@@ -176,6 +178,7 @@ public class Game extends Canvas implements Runnable {
 
 	// Update routine
 	public void update() {
+		//gamestate = 1 when the game is being played
 		if(gameState == 1){
 		// Check which buttons are pressed
 		ButtonPressed();
@@ -193,9 +196,11 @@ public class Game extends Canvas implements Runnable {
 		ticks++;
 		debugPanel.setLabel(3, "" + ticks % 50);
 		}
+		//gamestate = 2 when the game is over
 		if(gameState == 2){
 			gameover.Update();
 		}
+		//game state becomes 55 before it become 1 so that we can reset the game
 		if(gameState == 55){
 			try {
 				resetGame();
@@ -225,6 +230,7 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
+	//used to reset game will be fancier in future
 	private void resetGame() throws IOException {
 		init();
 	}
