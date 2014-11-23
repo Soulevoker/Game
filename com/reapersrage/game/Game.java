@@ -180,9 +180,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 
 		player.update();
-                //This kills the game
-                if (player.isDestroyed()) gameThread.destroy();
-                //Update the level
+                
                 level.update(player);
                 ticks++;
 
@@ -193,22 +191,21 @@ public class Game extends Canvas implements Runnable {
 
 		//gamestate = 1 when the game is being played
 		if(gameState == 1){
-		// Check which buttons are pressed
-		//ButtonPressed();
-		// Update the player, passing the buttons pressed
-		player.update();
-		// This kills the game
-
-		//sets gamestate to gameover if player is destroyed
-		if (player.isDestroyed()) {
-			gameState = 2;
-		}
 		
-		// Update the level
-		level.update(player);
-		ticks++;
-		debugPanel.setLabel(3, "" + ticks % 50);
-		}
+                    // Update the player, passing the buttons pressed
+                    player.update();
+		
+
+                    //sets gamestate to gameover if player is destroyed
+                    if (player.isDestroyed()) {
+			gameState = 2;
+                    }
+		
+                    // Update the level
+                    level.update(player);
+                    ticks++;
+                    debugPanel.setLabel(3, "" + ticks % 50);
+                }
 		//gamestate = 2 when the game is over
 		if(gameState == 2){
 			gameover.Update();
