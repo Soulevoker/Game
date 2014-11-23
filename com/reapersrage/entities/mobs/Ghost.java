@@ -68,7 +68,7 @@ public class Ghost extends Mob {
     
     //Shoots a fireball in the specified direction
     private void fireball(Player player){
-        ProjList.add(new FireBall(this.x, this.y, 20, 20, 100, displacementFromPlayer(player, 10)));
+        ProjList.add(new FireBall(this.x, this.y, 40, 40, 100, displacementFromPlayer(player, 10)));
     }
     public String projDebug() {
         String out = "";
