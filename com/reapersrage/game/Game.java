@@ -175,7 +175,11 @@ public class Game extends Canvas implements Runnable {
                 //Update the level
                 level.update(player);
                 ticks++;
-                debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
+
+                //debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
+
+                //debugPanel.addLabel(0, ""+ticks % 50);
+
 	}
 
         //Renders everything
@@ -300,6 +304,9 @@ public class Game extends Canvas implements Runnable {
         //Text for the debug console
         public static void setDebugText(int Loc, String text){
                 debugPanel.setLabel(Loc,text);
+        }
+        public static int getTicks(){
+            return ticks;
         }
         
         
