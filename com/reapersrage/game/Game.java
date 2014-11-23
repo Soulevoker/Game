@@ -1,6 +1,7 @@
 package com.reapersrage.game;
 
 import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.gfx.GameOverScreen;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Buttons;
@@ -32,12 +33,13 @@ public class Game extends Canvas implements Runnable {
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
 	private BufferedImage OImage;
+	private GameOverScreen gameover;
 
 	private int playerDir;
 
 	// value which will decide if the game is main menu/game/ or game over
 	// screen
-	private int gameState;
+	private static int gameState;
 
 	// Directions the player can move in: {Up, Down, Left, Right}
 	private boolean[] playerDirs;
@@ -105,7 +107,7 @@ public class Game extends Canvas implements Runnable {
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
 		this.ticks = 0;
-		gameState = 1;
+		gameState = 2;
 
 	}
 
@@ -139,6 +141,8 @@ public class Game extends Canvas implements Runnable {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, 64, 64);
+		gameover = new GameOverScreen(WIDTH, HEIGHT);
+		
 	}
 
 	// Run the game
@@ -190,9 +194,18 @@ public class Game extends Canvas implements Runnable {
 		debugPanel.setLabel(3, "" + ticks % 50);
 		}
 		if(gameState == 2){
-			
+			gameover.Update();
+		}
+		if(gameState == 55){
+			try {
+				resetGame();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			gameState = 1;
 		}
 	}
+
 
 	// Renders everything
 	public void render() {
@@ -204,7 +217,7 @@ public class Game extends Canvas implements Runnable {
 		player.drawPlayer(g);
 		}
 		if(gameState == 2){
-			
+			gameover.drawBackground(g);
 		}
 
 		g.dispose();
@@ -212,6 +225,9 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
+	private void resetGame() throws IOException {
+		init();
+	}
 
 
 	// Determine which buttons are currently being pressed
@@ -323,6 +339,16 @@ public class Game extends Canvas implements Runnable {
 		if (b.equals("projRight")) {
 			buttonsPressed.projRight = false;
 		}
+	}
+	
+	
+
+	public static int getGameState() {
+		return gameState;
+	}
+
+	public static void setGameState(int gameState) {
+		Game.gameState = gameState;
 	}
 
 	// Text for the debug console

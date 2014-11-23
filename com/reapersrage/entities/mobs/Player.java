@@ -48,7 +48,7 @@ public class Player {
         private final double friction;
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
-        private final int DEF_HEALTH = 5000;
+        private final int DEF_HEALTH = 2000;
         private Random random = new Random(); //so randum xD
         
         private ImageResizer IR;
