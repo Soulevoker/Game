@@ -40,6 +40,7 @@ public class Debug {
             LabelList.add(new JLabel("1"));
             LabelList.add(new JLabel("2"));
             LabelList.add(new JLabel("3"));
+            LabelList.add(new JLabel("4"));
             
             Iterator<JLabel> labelIterator = LabelList.iterator();
             while(labelIterator.hasNext()){

@@ -38,5 +38,9 @@ public class Screen {
     }
     	
     }
+    
+    public void clean(){
+    	background = new GameTile[Game.getMapHeight()][Game.getMapWidth()];
+    }
    
 }

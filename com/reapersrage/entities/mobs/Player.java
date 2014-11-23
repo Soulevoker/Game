@@ -4,6 +4,7 @@ import com.reapersrage.entities.projectiles.FireBall;
 import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Debug;
 import com.reapersrage.game.Game;
+import com.reapersrage.game.ImageResizer;
 import com.reapersrage.game.VectorMath;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
@@ -48,13 +49,17 @@ public class Player {
         private final double friction;
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
-        private final int DEF_HEALTH = 5000;
+        private final int DEF_HEALTH = 2000;
         private Random random = new Random(); //so randum xD
+
         private boolean[] playerDirs;
         //This way there's no autofire
         private boolean alreadyFired;
         //This way there's no autoblink
         private boolean alreadyBlinked;
+
+        
+        private ImageResizer IR;
 
 
 	public Player(int x, int y, int width, int height) {
@@ -81,11 +86,15 @@ public class Player {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		try {
-			resize(OImage,this.width,this.height);
+			IR = new ImageResizer(OImage, this.width, this.height);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		RImage = IR.getResizedImage();
                 
                 //sets initial health
                 health = DEF_HEALTH;
@@ -274,18 +283,7 @@ public class Player {
             }
 	}
 	
-        //Resizes the player (for buffs?)
-	public BufferedImage resize(BufferedImage original, int scaledWidth, int scaledHeight)
-			throws IOException {
-
-		RImage = new BufferedImage(scaledWidth,
-				scaledHeight, original.getType());
-
-		Graphics2D g2d = RImage.createGraphics();
-		g2d.drawImage(OImage, 0, 0, scaledWidth, scaledHeight, null);
-		g2d.dispose();
-		return RImage;
-	}
+   
         
         //Player's health
         public int getHealth(){
@@ -375,5 +373,5 @@ public class Player {
         public boolean isDestroyed() {
             return (this.health < 0); 
         }
-        
+
 }
