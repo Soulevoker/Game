@@ -5,10 +5,12 @@ import com.reapersrage.entities.items.Item;
 import com.reapersrage.entities.mobs.*;
 import com.reapersrage.game.Game;
 import com.reapersrage.game.VectorMath;
+//import com.reapersrage.res.sound.Sound;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,7 +52,15 @@ public class RandomLevel extends Level {
         //One of the fountains is a mimic that actually drains health
         MobList.add(new MimicFountain());
         MobList.add(new Chest());
+
         MobList.add(new Ghost());
+
+        for(int b=0; b<10; b++){
+            MobList.add(new Ghost());
+        }
+        //Sound bgMusic = new Sound();
+       // bgMusic.music("bg");
+
         
     }
 
@@ -62,6 +72,13 @@ public class RandomLevel extends Level {
             currentMob.update(player);
             
             if (currentMob.isDestroyed()){
+
+                if (currentMob.getType().equals("ghost")){
+                    Game.debugPanel.addLabel(3,"Dropping gold!");
+                    ItemList.add(new GoldPiece(currentMob.getPos(), 10));
+                }
+
+
                 mobIterator.remove();
             }
         }
