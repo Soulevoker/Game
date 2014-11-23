@@ -7,6 +7,7 @@
 package com.reapersrage.entities.mobs;
 
 import com.reapersrage.entities.items.GoldPiece;
+import com.reapersrage.entities.items.Item;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Game;
@@ -93,24 +94,15 @@ public abstract class Mob {
         public Mob (int[] pos, int width, int height, int damageOnHit, int dps, String name){
             this(pos[0], pos[1], width, height, damageOnHit, dps, name);
         }
-        
-        
- 
+   
         public void drawMob(Graphics2D g) {
 		g.drawImage(RImage, x, y, null);
 	}
 	
-
-        
         public int getHealth(){
             return health;
         }
-        
-        //changes players health. Negative lowers health (damage)
-//        public void changeHealth(int change) {
-//            health += change;
-//        }
-        
+    
         //updates the mob in respect to a given player
         public void update(Player person){
             if (imortalObject) this.health = 100000;
@@ -122,8 +114,6 @@ public abstract class Mob {
             
             
         }
-        
-        
         
         //checks to see if collided with player
         public boolean isCollided(Player person){
@@ -271,8 +261,6 @@ public abstract class Mob {
             return collision;
         }
         
-        
-        
         public int getX(){
              return x;
         }
@@ -285,12 +273,9 @@ public abstract class Mob {
         public int getHeight(){
             return height;
         }
-        
         public String getName(){
             return this.name;
         }
-        
-        //for chest
         public void setGold(int gold) {
             this.gold = gold;
         }
@@ -317,5 +302,9 @@ public abstract class Mob {
         
         public void dropGold(int gold){
             Game.getLevel().addItem(new GoldPiece(new int[]{this.x,this.y}, gold));
+        }
+        
+        public void dropItem(Item item){
+            Game.getLevel().addItem(item);
         }
 }

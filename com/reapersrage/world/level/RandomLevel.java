@@ -50,9 +50,7 @@ public class RandomLevel extends Level {
         //One of the fountains is a mimic that actually drains health
         MobList.add(new MimicFountain());
         MobList.add(new Chest());
-        for(int b=0; b<10; b++){
-            MobList.add(new Ghost(VectorMath.randomPos(Ghost.defWidth, Ghost.defHeight)));
-        }
+        MobList.add(new Ghost());
         
     }
 
@@ -80,7 +78,7 @@ public class RandomLevel extends Level {
         //Display the debugging statistics
         displayDebug(player);
         //Algorithm for summon rate, it's REALLY shitty, need to be fixed
-        if(random.nextInt(Game.ticks+1) % 100 < (int)Math.sqrt((double)Game.ticks)/2 && Ghost.NUM < 10){
+        if(random.nextInt(100) < 5 && Ghost.NUM < 5){
            MobList.add(new Ghost());
         }
         //Add a new chests once all the chests have been collected

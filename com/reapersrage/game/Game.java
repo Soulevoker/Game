@@ -21,9 +21,9 @@ public class Game extends Canvas implements Runnable {
 	static final int MAP_HEIGHT = 20;
 
 	// Make sure we have a 16:9 aspect ratio
-	static final int WIDTH = 800;
+	static final int WIDTH = 1920;
 	// width and height of game screen
-	static final int HEIGHT = 600;
+	static final int HEIGHT = 1080;
 	// Name of the game to display on windows
 	static final String NAME = "DOODLE ARENA WARS 2015";
 	// Keyboard class for input
