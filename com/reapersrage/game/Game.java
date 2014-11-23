@@ -17,8 +17,8 @@ import javax.swing.*;
 
 public class Game extends Canvas implements Runnable {
 
-	static final int MAP_WIDTH = 20;
-	static final int MAP_HEIGHT = 20;
+	static final int MAP_WIDTH = 10;
+	static final int MAP_HEIGHT = 10;
 
 	// Make sure we have a 16:9 aspect ratio
 	static final int WIDTH = 800;
@@ -142,7 +142,7 @@ public class Game extends Canvas implements Runnable {
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
-		player = new Player(5, 5, 64, 64);
+		player = new Player(5, 5, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
 		gameover = new GameOverScreen(WIDTH, HEIGHT);
 		
 	}
@@ -178,11 +178,8 @@ public class Game extends Canvas implements Runnable {
 
 	// Update routine
 	public void update() {
-
-		player.update();
                 
-                level.update(player);
-                ticks++;
+               
 
                 //debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
 
@@ -194,7 +191,8 @@ public class Game extends Canvas implements Runnable {
 		
                     // Update the player, passing the buttons pressed
                     player.update();
-		
+                    level.update(player);
+                    ticks++;
 
                     //sets gamestate to gameover if player is destroyed
                     if (player.isDestroyed()) {

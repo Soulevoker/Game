@@ -22,6 +22,8 @@ public class Ghost extends Mob {
     public static int ID = 0;
     //Number of ghosts summoned
     public static int NUM = 0;
+
+    
     
     //List to store the ghost's projectiles
     private ArrayList<Projectile> ProjList = new ArrayList<>();
@@ -32,7 +34,6 @@ public class Ghost extends Mob {
         this.id = id;
         this.imortalObject=false;
         Ghost.NUM++;
-        
     }
     
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps) {

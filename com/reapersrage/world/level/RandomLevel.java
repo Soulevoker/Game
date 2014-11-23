@@ -46,18 +46,17 @@ public class RandomLevel extends Level {
         }
         int i = 0;
         this.MobList = new ArrayList<>();
-        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80 , 80, 1, 1,i++));
-        MobList.add(new Fountain());
-        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
+        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80), Game.getStaticWidth()/mapwidth, Game.getStaticHeight()/mapheight, 1, 1,i++));
+        MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
+        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1,i++));
         //One of the fountains is a mimic that actually drains health
-        MobList.add(new MimicFountain());
+        MobList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
         MobList.add(new Chest());
 
-        MobList.add(new Ghost());
-
+/*
         for(int b=0; b<10; b++){
-            MobList.add(new Ghost());
-        }
+            MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
+            }*/
         //Sound bgMusic = new Sound();
        // bgMusic.music("bg");
 
@@ -95,9 +94,9 @@ public class RandomLevel extends Level {
         //Display the debugging statistics
         displayDebug(player);
         //Algorithm for summon rate, it's REALLY shitty, need to be fixed
-        if(random.nextInt(100) < 5 && Ghost.NUM < 5){
+        /*if(random.nextInt(100) < 5 && Ghost.NUM < 5){
            MobList.add(new Ghost());
-        }
+        }*/
         //Add a new chests once all the chests have been collected
         if(Chest.NUM < 1){
             //Randomly add 10 chests
