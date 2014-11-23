@@ -43,6 +43,10 @@ public class Ghost extends Mob {
         double[] disp = displacementFromPlayer(person);
         this.move((int)(5*disp[0]),(int)(5*disp[1]));
         if(rand.nextInt(200) % 50 == 0) fireball(person);
+        updateProjectiles(person);        
+    }
+    
+    private void updateProjectiles(Player person){
         Iterator<Projectile> projIterator = ProjList.iterator();
         while(projIterator.hasNext()){
             Projectile currProj = projIterator.next();
@@ -52,7 +56,6 @@ public class Ghost extends Mob {
             }
         }
         projCollision(person);
-        
     }
     
     public void drawMob(Graphics2D g) {
