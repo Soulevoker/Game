@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable {
 	private Player player;
         
 	private Thread gameThread;
-	// Frame rate (FPS)
+	// Length of frame (ms)
 	static final int FRAMERATE = 50;
 
 
@@ -175,7 +175,7 @@ public class Game extends Canvas implements Runnable {
                 //Update the level
                 level.update(player);
                 ticks++;
-                debugPanel.setLabel(3, ""+ticks % 50);
+                debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
 	}
 
         //Renders everything
