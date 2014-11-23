@@ -67,7 +67,9 @@ public class RandomLevel extends Level {
         }
         //Display the debugging statistics
         displayDebug(player);
-        if(Game.ticks % 100 < (int)Math.sqrt((double)Game.ticks)) MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,0));
+        if(random.nextInt(Game.ticks+1) % 100 < (int)Math.sqrt((double)Game.ticks)/2 && MobList.size() < 10){
+            MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,0));
+        }
         if(!isThereAChest){
             MobList.add(new Chest(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,55,10,0));
         }

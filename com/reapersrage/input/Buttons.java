@@ -12,12 +12,12 @@ package com.reapersrage.input;
  */
 public final class Buttons {
 
+    //these can be held down
     public static boolean up;
     public static boolean down;
     public static boolean left;
     public static boolean right;
     public static boolean space;
-
     public static boolean projUp;
     public static boolean projDown;
     public static boolean projLeft;

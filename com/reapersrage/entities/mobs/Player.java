@@ -51,6 +51,10 @@ public class Player {
         private final int DEF_HEALTH = 5000;
         private Random random = new Random(); //so randum xD
         private boolean[] playerDirs;
+        //This way there's no autofire
+        private boolean alreadyFired;
+        //This way there's no autoblink
+        private boolean alreadyBlinked;
 
 
 	public Player(int x, int y, int width, int height) {
@@ -67,6 +71,8 @@ public class Player {
                 this.velocity = new double[]{0.0,0.0};
                 this.MAX_V = 10.0;
                 this.playerDirs = new boolean[10];
+                this.alreadyFired = false;
+                this.alreadyBlinked = false;
                 
 		try {
 			OImage = ImageIO
@@ -85,17 +91,10 @@ public class Player {
                 health = DEF_HEALTH;
 	}
 
-        //Updates the player direction from a list of possible directions
-        //Array approach allows us to move diagnally
-        //Array: {up, down, left, right}
-        //Note to self: THE TOP RIGHT CORNER IS 0,0
+        //Update the player each frame
         public void update(){
-            //boolean[] dirs = ButtonPressed(Buttons);
             parseInput();
-            int xNew = x;
-            int yNew = y;
-            boolean[] collision = checkCollision(x, y, velocity);
-            //Movement of the player
+            boolean[] collision = checkCollision(x, y, velocity); //check collisions before moving
             move();
             updateProjectiles();
             
@@ -209,17 +208,26 @@ public class Player {
             text += "projDown: " + Buttons.projDown + "<br>";
             text += "projLeft: " + Buttons.projLeft + "<br>";
             text += "projRight: " + Buttons.projRight + "<br>";
+            text += "alreadyFired: " + !(Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight);
             text = text + "</html>";
             Game.debugPanel.setLabel(2,text);
             //fire
-            if(Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight){
+            if((Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight) && !this.alreadyFired){
+                this.alreadyFired = true;
                 fire();
             }
+            if(this.alreadyFired && !(Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight)){
+                this.alreadyFired = false;
+            }
             //blink
-            if(Buttons.space) {
+            if(Buttons.space && !this.alreadyBlinked) {
+                this.alreadyBlinked = true;
                 int x1 = random.nextInt(Game.getStaticWidth() - width);
                 int y1 = random.nextInt(Game.getStaticHeight() - height);
                 setPos(x1,y1);
+            }
+            if(!Buttons.space && this.alreadyBlinked){
+                this.alreadyBlinked = false;
             }
         }
 
@@ -356,8 +364,8 @@ public class Player {
             }
             
             
-            if (willFire[0] || willFire[1]){ ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 15, 15, 10, VectorMath.scaleVector(currVel, 15)));
-            System.out.println("Fireing");
+            if (willFire[0] || willFire[1]){
+                ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 15, 15, 50, VectorMath.scaleVector(currVel, 15)));
             }
         }
         
@@ -368,20 +376,4 @@ public class Player {
             return (this.health < 0); 
         }
         
-        /*public boolean[] ButtonPressed(Buttons ButtonsPressed){
-		boolean[] playerDirs = new boolean[9];
-            
-                playerDirs[0] = ButtonsPressed.up;
-                playerDirs[1] = ButtonsPressed.down;
-                playerDirs[2] = ButtonsPressed.left;
-                playerDirs[3] = ButtonsPressed.right;
-                playerDirs[4] = ButtonsPressed.space;
-                
-                playerDirs[5] = ButtonsPressed.projUp;
-                playerDirs[6] = ButtonsPressed.projDown;
-                playerDirs[7] = ButtonsPressed.projLeft;
-                playerDirs[8] = ButtonsPressed.projRight;
-                
-                return playerDirs;
-	}*/
 }
