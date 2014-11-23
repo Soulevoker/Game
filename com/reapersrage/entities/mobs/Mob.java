@@ -6,6 +6,7 @@
 
 package com.reapersrage.entities.mobs;
 
+import com.reapersrage.entities.items.GoldPiece;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Game;
@@ -17,8 +18,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Iterator;
-import javax.imageio.ImageIO;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 //creates a mob
 public abstract class Mob {
@@ -312,5 +313,9 @@ public abstract class Mob {
         
         public int[] getPos(){
             return new int[]{this.x, this.y};
+        }
+        
+        public void dropGold(int gold){
+            Game.getLevel().addItem(new GoldPiece(new int[]{this.x,this.y}, gold));
         }
 }

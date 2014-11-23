@@ -64,10 +64,6 @@ public class RandomLevel extends Level {
             currentMob.update(player);
             
             if (currentMob.isDestroyed()){
-                if (currentMob.getType().equals("ghost")){
-                    System.out.println("Dropping gold!");
-                    ItemList.add(new GoldPiece(currentMob.getPos(), 10));
-                }
                 mobIterator.remove();
             }
         }
@@ -112,6 +108,10 @@ public class RandomLevel extends Level {
         while(ItemIterator.hasNext()){
             ItemIterator.next().draw(g);
         }
+    }
+    
+    public void addItem(Item item){
+        ItemList.add(item);
     }
     
     //Debugging Information

@@ -1,5 +1,6 @@
 package com.reapersrage.world.level;
 
+import com.reapersrage.entities.items.Item;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.gfx.Screen;
 import java.awt.Graphics2D;
@@ -30,6 +31,8 @@ public abstract class Level {
     public abstract void renderMobs(Graphics2D g);
     
     public abstract void renderItems(Graphics2D g);
+    
+    public abstract void addItem(Item item);
     
     public abstract void update(Player player);
 
