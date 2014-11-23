@@ -31,83 +31,87 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
-        private BufferedImage OImage;
+	private BufferedImage OImage;
 
-	
-        private int playerDir;
-        
+	private int playerDir;
 
-        //Directions the player can move in: {Up, Down, Left, Right}
-        private boolean[] playerDirs;
-        private boolean[] projDirs;
+	// value which will decide if the game is main menu/game/ or game over
+	// screen
+	private int gameState;
+
+	// Directions the player can move in: {Up, Down, Left, Right}
+	private boolean[] playerDirs;
+	private boolean[] projDirs;
 	private Screen screen;
 	private static Level level;
 	private Player player;
-        
+
 	private Thread gameThread;
 	// Frame rate (FPS)
 	static final int FRAMERATE = 50;
 
-
 	JFrame container;
-        //JFrame debugPanel; //for debuging purposes
+	// JFrame debugPanel; //for debuging purposes
 	JPanel panel;
 	Canvas canvas;
 	BufferStrategy bufferStrategy;
-        
-        //Strings for debug
-        public static int ticks;
-        
-        public static Debug debugPanel = new Debug();
+
+	// Strings for debug
+	public static int ticks;
+
+	public static Debug debugPanel = new Debug();
+
 	public Game() {
 		buttonPressed = "";
-                buttonsPressed = new Buttons();
-		//Directions sent to the player
-                playerDirs = new boolean[9];
-		//initializes jframe
+		buttonsPressed = new Buttons();
+		// Directions sent to the player
+		playerDirs = new boolean[9];
+		// initializes jframe
 		container = new JFrame(NAME);
 
-		//initialized jpane;
+		// initialized jpane;
 		panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setLayout(null);
 
-		//sets boundaries of panel and adds canvas to panel
+		// sets boundaries of panel and adds canvas to panel
 		setBounds(0, 0, WIDTH, HEIGHT);
 		panel.add(this);
 
 		setIgnoreRepaint(true);
 
-		//more jframe stuff
+		// more jframe stuff
 		container.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		container.setResizable(false);
 		container.pack();
 		container.setVisible(true);
-                
-                try {
+
+		try {
 			OImage = ImageIO
-			.read(GameTile.class
-			.getResourceAsStream("/com/reapersrage/res/textures/JimIcon.png"));
+					.read(GameTile.class
+							.getResourceAsStream("/com/reapersrage/res/textures/JimIcon.png"));
 		} catch (IOException e) {
-			e.printStackTrace();}
-                container.setIconImage(OImage);
-                
-		//adds key listener
+			e.printStackTrace();
+		}
+		container.setIconImage(OImage);
+
+		// adds key listener
 		addKeyListener(new Keyboard());
 
-		//requests focus for our keylistener
+		// requests focus for our keylistener
 		requestFocus();
 
-		//does stuff
+		// does stuff
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
-                this.ticks = 0;
-                
+		this.ticks = 0;
+		gameState = 1;
+
 	}
 
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.start();                
+		game.start();
 	}
 
 	// Starts the game
@@ -129,14 +133,15 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-        //Objects to create 
-        //NOTE: TO MAKE THEM SHOW UP THEY MUST ALSO BE SET TO RENDER!
+	// Objects to create
+	// NOTE: TO MAKE THEM SHOW UP THEY MUST ALSO BE SET TO RENDER!
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player(0, 0, 64, 64);
 	}
-        //Run the game
+
+	// Run the game
 	public void run() {
 		try {
 			init();
@@ -144,16 +149,17 @@ public class Game extends Canvas implements Runnable {
 			e1.printStackTrace();
 		}
 		while (running) {
-                        //Time where the grame started
+			// Time where the grame started
 			long frameStart = System.currentTimeMillis();
-			//Update all the objects
-                        update();
-                        //Render all the objects
+			// Update all the objects
+			update();
+			// Render all the objects
 			render();
-                        //Determine how long it took the frame to update/render
+			// Determine how long it took the frame to update/render
 			long frameLength = System.currentTimeMillis() - frameStart;
 			if (frameLength < FRAMERATE) {
-                            //If that time is less than the desired frame length, sleep the remaining time
+				// If that time is less than the desired frame length, sleep the
+				// remaining time
 				try {
 					gameThread.sleep(FRAMERATE - frameLength);
 				} catch (InterruptedException e) {
@@ -163,45 +169,63 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
-        
-        //Update routine
+
+	// Update routine
 	public void update() {
-                //Check which buttons are pressed
+		if(gameState == 1){
+		// Check which buttons are pressed
 		ButtonPressed();
-                //Update the player, passing the buttons pressed
+		// Update the player, passing the buttons pressed
 		player.update(playerDirs);
-                //This kills the game
-                if (player.isDestroyed()) gameThread.destroy();
-                //Update the level
-                level.update(player);
-                ticks++;
-                debugPanel.setLabel(3, ""+ticks % 50);
+		// This kills the game
+
+		//sets gamestate to gameover if player is destroyed
+		if (player.isDestroyed()) {
+			gameState = 2;
+		}
+		
+		// Update the level
+		level.update(player);
+		ticks++;
+		debugPanel.setLabel(3, "" + ticks % 50);
+		}
+		if(gameState == 2){
+			
+		}
 	}
 
-        //Renders everything
+	// Renders everything
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-                //Draw the background, mobs, and player; last is on top
+		// Draw the background, mobs, and player; last is on top
+		if(gameState == 1){
 		screen.drawBackground(g);
-                level.renderMobs(g);                
-                player.drawPlayer(g);
-                //Actuall render it               
+		level.renderMobs(g);
+		player.drawPlayer(g);
+		}
+		if(gameState == 2){
+			
+		}
+
 		g.dispose();
 		bufferStrategy.show();
-                
-        }
-	//Determine which buttons are currently being pressed
-	public void ButtonPressed(){
+
+	}
+
+
+
+	// Determine which buttons are currently being pressed
+	public void ButtonPressed() {
 		playerDirs[0] = buttonsPressed.up;
-                playerDirs[1] = buttonsPressed.down;
-                playerDirs[2] = buttonsPressed.left;
-                playerDirs[3] = buttonsPressed.right;
-                playerDirs[4] = buttonsPressed.space;
-                
-                playerDirs[5] = buttonsPressed.projUp;
-                playerDirs[6] = buttonsPressed.projDown;
-                playerDirs[7] = buttonsPressed.projLeft;
-                playerDirs[8] = buttonsPressed.projRight;
+		playerDirs[1] = buttonsPressed.down;
+		playerDirs[2] = buttonsPressed.left;
+		playerDirs[3] = buttonsPressed.right;
+		playerDirs[4] = buttonsPressed.space;
+
+		playerDirs[5] = buttonsPressed.projUp;
+		playerDirs[6] = buttonsPressed.projDown;
+		playerDirs[7] = buttonsPressed.projLeft;
+		playerDirs[8] = buttonsPressed.projRight;
 	}
 
 	public static Level getLevel() {
@@ -213,7 +237,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public static int getMapWidth() {
-		return MAP_WIDTH;            
+		return MAP_WIDTH;
 	}
 
 	public static int getMapHeight() {
@@ -227,81 +251,83 @@ public class Game extends Canvas implements Runnable {
 	public int getHeight() {
 		return HEIGHT;
 	}
-        
-        //I needed static methods for width and height and didn't want to get rid of the old ones
-        public static int getStaticWidth() {
+
+	// I needed static methods for width and height and didn't want to get rid
+	// of the old ones
+	public static int getStaticWidth() {
 		return WIDTH;
 	}
 
 	public static int getStaticHeight() {
 		return HEIGHT;
 	}
-        //When a button is pressed, set to true
+
+	// When a button is pressed, set to true
 	public static void setButtonPressed(String b) {
 		buttonPressed = b;
-                if(b.equals("up")){
-                    buttonsPressed.up = true;
-                }
-                if(b.equals("down")){
-                    buttonsPressed.down = true;
-                }
-                if(b.equals("left")){
-                    buttonsPressed.left = true;
-                }
-                if(b.equals("right")){
-                    buttonsPressed.right = true;
-                }
-                if(b.equals("space")){
-                    buttonsPressed.space = true;
-                }
-                if(b.equals("projUp")){
-                    buttonsPressed.projUp = true;
-                }
-                if(b.equals("projDown")){
-                    buttonsPressed.projDown = true;
-                }
-                if(b.equals("projLeft")){
-                    buttonsPressed.projLeft = true;
-                }
-                if(b.equals("projRight")){
-                    buttonsPressed.projRight = true;
-                }
+		if (b.equals("up")) {
+			buttonsPressed.up = true;
+		}
+		if (b.equals("down")) {
+			buttonsPressed.down = true;
+		}
+		if (b.equals("left")) {
+			buttonsPressed.left = true;
+		}
+		if (b.equals("right")) {
+			buttonsPressed.right = true;
+		}
+		if (b.equals("space")) {
+			buttonsPressed.space = true;
+		}
+		if (b.equals("projUp")) {
+			buttonsPressed.projUp = true;
+		}
+		if (b.equals("projDown")) {
+			buttonsPressed.projDown = true;
+		}
+		if (b.equals("projLeft")) {
+			buttonsPressed.projLeft = true;
+		}
+		if (b.equals("projRight")) {
+			buttonsPressed.projRight = true;
+		}
 	}
-        //When a button is released, set to false
-        public static void setButtonReleased(String b){
-                if(b.equals("up")){
-                    buttonsPressed.up = false;
-                }
-                if(b.equals("down")){
-                    buttonsPressed.down = false;
-                }
-                if(b.equals("left")){
-                    buttonsPressed.left = false;
-                }
-                if(b.equals("right")){
-                    buttonsPressed.right = false;
-                }
-                if(b.equals("space")){
-                    buttonsPressed.space = false;
-                }
-                  if(b.equals("projUp")){
-                    buttonsPressed.projUp = false;
-                }
-                if(b.equals("projDown")){
-                    buttonsPressed.projDown = false;
-                }
-                if(b.equals("projLeft")){
-                    buttonsPressed.projLeft = false;
-                }
-                if(b.equals("projRight")){
-                    buttonsPressed.projRight = false;
-                }
-        }
-        //Text for the debug console
-        public static void setDebugText(int Loc, String text){
-                debugPanel.setLabel(Loc,text);
-        }
-        
-        
-}
 
+	// When a button is released, set to false
+	public static void setButtonReleased(String b) {
+		if (b.equals("up")) {
+			buttonsPressed.up = false;
+		}
+		if (b.equals("down")) {
+			buttonsPressed.down = false;
+		}
+		if (b.equals("left")) {
+			buttonsPressed.left = false;
+		}
+		if (b.equals("right")) {
+			buttonsPressed.right = false;
+		}
+		if (b.equals("space")) {
+			buttonsPressed.space = false;
+		}
+		if (b.equals("projUp")) {
+			buttonsPressed.projUp = false;
+		}
+		if (b.equals("projDown")) {
+			buttonsPressed.projDown = false;
+		}
+		if (b.equals("projLeft")) {
+			buttonsPressed.projLeft = false;
+		}
+		if (b.equals("projRight")) {
+			buttonsPressed.projRight = false;
+		}
+	}
+
+	// Text for the debug console
+	public static void setDebugText(int Loc, String text) {
+		debugPanel.setLabel(Loc, text);
+	}
+
+}

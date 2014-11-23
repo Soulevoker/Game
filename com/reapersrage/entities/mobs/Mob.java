@@ -9,6 +9,7 @@ package com.reapersrage.entities.mobs;
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Game;
+import com.reapersrage.game.ImageResizer;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
@@ -26,6 +27,7 @@ public class Mob {
         ///TAKEN FROM PLAYER CLASS. 
         protected int x;
 	protected int y;
+	ImageResizer IR;
 	//O = original R = resized
 	protected BufferedImage OImage;
 	protected BufferedImage RImage;
@@ -71,11 +73,16 @@ public class Mob {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		try {
-			resize(OImage,this.width,this.height);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+                
+                try {
+					IR = new ImageResizer(OImage, width, height);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+			RImage = IR.getResizedImage();
+		
                 
                 //sets initial health
                 health = 100;
@@ -87,17 +94,6 @@ public class Mob {
 	}
 	
 
-	public BufferedImage resize(BufferedImage original, int scaledWidth, int scaledHeight)
-			throws IOException {
-
-		RImage = new BufferedImage(scaledWidth,
-				scaledHeight, original.getType());
-
-		Graphics2D g2d = RImage.createGraphics();
-		g2d.drawImage(OImage, 0, 0, scaledWidth, scaledHeight, null);
-		g2d.dispose();
-		return RImage;
-	}
         
         public int getHealth(){
             return health;

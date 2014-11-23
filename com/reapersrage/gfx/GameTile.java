@@ -8,12 +8,17 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.reapersrage.game.ImageResizer;
+
 public class GameTile {
 	private boolean isPassable;
 	private int x;
 	private int y;
 	private int tileWidth;
 	private int tileHeight;
+	
+	ImageResizer IR;
+	
 	private BufferedImage originalImage;
 	private BufferedImage resizedImage;
 
@@ -24,7 +29,8 @@ public class GameTile {
 		y = yLocation;
 		tileWidth = width;
 		tileHeight = height;
-		resizedImage = resize(originalImage, width, height);
+		IR = new ImageResizer(originalImage, tileWidth, tileHeight);
+		resizedImage = IR.getResizedImage();
 	}
 
 	private void setTile(int type) {
@@ -62,17 +68,6 @@ public class GameTile {
 		}
 	}
 
-	public BufferedImage resize(BufferedImage original, int scaledWidth, int scaledHeight)
-			throws IOException {
-
-		resizedImage = new BufferedImage(scaledWidth,
-				scaledHeight, original.getType());
-
-		Graphics2D g2d = resizedImage.createGraphics();
-		g2d.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
-		g2d.dispose();
-		return resizedImage;
-	}
 
 	public BufferedImage getImage() {
 		return resizedImage;
