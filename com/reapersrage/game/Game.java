@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable {
 	BufferStrategy bufferStrategy;
         
         //Strings for debug
-        
+        public static int ticks;
         
         public static Debug debugPanel = new Debug();
 	public Game() {
@@ -101,7 +101,7 @@ public class Game extends Canvas implements Runnable {
 		//does stuff
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
-                
+                this.ticks = 0;
                 
 	}
 
@@ -174,6 +174,8 @@ public class Game extends Canvas implements Runnable {
                 if (player.isDestroyed()) gameThread.destroy();
                 //Update the level
                 level.update(player);
+                ticks++;
+                debugPanel.setLabel(3, ""+ticks % 50);
 	}
 
         //Renders everything
