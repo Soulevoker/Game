@@ -46,6 +46,7 @@ public class Player {
         private final double friction;
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
+        private final int DEF_HEALTH = 5000;
         
 
 	public Player(int x, int y, int width, int height) {
@@ -77,7 +78,7 @@ public class Player {
 		}
                 
                 //sets initial health
-                health = 1000000000;
+                health = DEF_HEALTH;
 	}
 
         //Updates the player direction from a list of possible directions
