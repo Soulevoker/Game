@@ -12,73 +12,68 @@ import com.reapersrage.game.Game;
  */
 public class Keyboard extends KeyAdapter {
 
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            Buttons.setButtonPressed("down");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            Buttons.setButtonPressed("up");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            Buttons.setButtonPressed("left");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            Buttons.setButtonPressed("right");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            Buttons.setButtonPressed("space");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_W) {
+            Buttons.setButtonPressed("projUp");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            Buttons.setButtonPressed("projLeft");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            Buttons.setButtonPressed("projDown");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) {
+            Buttons.setButtonPressed("projRight");
+        }
+    }
 
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_DOWN
-				) {
-			Game.setButtonPressed("down");
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			Game.setButtonPressed("up");
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT
-				) {
-			Game.setButtonPressed("left");
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT
-				) {
-			Game.setButtonPressed("right");
-		}
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
-                        Game.setButtonPressed("space");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_W){
-                    Game.setButtonPressed("projUp");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    Game.setButtonPressed("projLeft");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_S){
-                    Game.setButtonPressed("projDown");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    Game.setButtonPressed("projRight");
-                }
-	}
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            Buttons.setButtonReleased("down");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            Buttons.setButtonReleased("up");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            Buttons.setButtonReleased("left");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            Buttons.setButtonReleased("right");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            Buttons.setButtonReleased("space");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_W) {
+            Buttons.setButtonReleased("projUp");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            Buttons.setButtonReleased("projLeft");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            Buttons.setButtonReleased("projDown");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) {
+            Buttons.setButtonReleased("projRight");
+        }
+    }
 
-	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			Game.setButtonReleased("down");
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP ) {
-			Game.setButtonReleased("up");
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			Game.setButtonReleased("left");
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			Game.setButtonReleased("right");
-		}
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
-                        Game.setButtonReleased("space");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_W){
-                    Game.setButtonReleased("projUp");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    Game.setButtonReleased("projLeft");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_S){
-                    Game.setButtonReleased("projDown");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    Game.setButtonReleased("projRight");
-                }
-	}
+    public void keyTyped(KeyEvent e) {
 
-	public void keyTyped(KeyEvent e) {
-
-	}
-
+    }
 
 }

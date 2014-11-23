@@ -166,10 +166,7 @@ public class Game extends Canvas implements Runnable {
         
         //Update routine
 	public void update() {
-                //Check which buttons are pressed
-		ButtonPressed();
-                //Update the player, passing the buttons pressed
-		player.update(buttonsPressed);
+		player.update();
                 //This kills the game
                 if (player.isDestroyed()) gameThread.destroy();
                 //Update the level
@@ -193,20 +190,7 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bufferStrategy.show();
                 
-        }
-	//Determine which buttons are currently being pressed
-	public void ButtonPressed(){
-		playerDirs[0] = buttonsPressed.up;
-                playerDirs[1] = buttonsPressed.down;
-                playerDirs[2] = buttonsPressed.left;
-                playerDirs[3] = buttonsPressed.right;
-                playerDirs[4] = buttonsPressed.space;
-                
-                playerDirs[5] = buttonsPressed.projUp;
-                playerDirs[6] = buttonsPressed.projDown;
-                playerDirs[7] = buttonsPressed.projLeft;
-                playerDirs[8] = buttonsPressed.projRight;
-	}
+        }	
 
 	public static Level getLevel() {
 		return level;
@@ -240,75 +224,13 @@ public class Game extends Canvas implements Runnable {
 	public static int getStaticHeight() {
 		return HEIGHT;
 	}
-        //When a button is pressed, set to true
-	public static void setButtonPressed(String b) {
-		buttonPressed = b;
-                if(b.equals("up")){
-                    buttonsPressed.up = true;
-                }
-                if(b.equals("down")){
-                    buttonsPressed.down = true;
-                }
-                if(b.equals("left")){
-                    buttonsPressed.left = true;
-                }
-                if(b.equals("right")){
-                    buttonsPressed.right = true;
-                }
-                if(b.equals("space")){
-                    buttonsPressed.space = true;
-                }
-                if(b.equals("projUp")){
-                    buttonsPressed.projUp = true;
-                }
-                if(b.equals("projDown")){
-                    buttonsPressed.projDown = true;
-                }
-                if(b.equals("projLeft")){
-                    buttonsPressed.projLeft = true;
-                }
-                if(b.equals("projRight")){
-                    buttonsPressed.projRight = true;
-                }
-	}
-        //When a button is released, set to false
-        public static void setButtonReleased(String b){
-                if(b.equals("up")){
-                    buttonsPressed.up = false;
-                }
-                if(b.equals("down")){
-                    buttonsPressed.down = false;
-                }
-                if(b.equals("left")){
-                    buttonsPressed.left = false;
-                }
-                if(b.equals("right")){
-                    buttonsPressed.right = false;
-                }
-                if(b.equals("space")){
-                    buttonsPressed.space = false;
-                }
-                  if(b.equals("projUp")){
-                    buttonsPressed.projUp = false;
-                }
-                if(b.equals("projDown")){
-                    buttonsPressed.projDown = false;
-                }
-                if(b.equals("projLeft")){
-                    buttonsPressed.projLeft = false;
-                }
-                if(b.equals("projRight")){
-                    buttonsPressed.projRight = false;
-                }
-        }
+        
         //Text for the debug console
         public static void setDebugText(int Loc, String text){
                 debugPanel.setLabel(Loc,text);
         }
         public static int getTicks(){
             return ticks;
-        }
-        
-        
+        } 
 }
 
