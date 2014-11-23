@@ -2,6 +2,7 @@ package com.reapersrage.world.level;
 
 import com.reapersrage.entities.mobs.*;
 import com.reapersrage.game.Game;
+import com.reapersrage.game.VectorMath;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,14 +42,13 @@ public class RandomLevel extends Level {
         int i = 0;
         this.MobList = new ArrayList<>();
         MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80 , 80, 1, 1,i++));
-        MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,1,1,i++));
+        MobList.add(new Fountain());
         MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
         //One of the fountains is a mimic that actually drains health
-        MobList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,-5,1,i++));
-        MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
-        MobList.add(new Chest(100,100,80,55,10,i++));
+        MobList.add(new MimicFountain());
+        MobList.add(new Chest());
         for(int b=0; b<10; b++){
-            MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,i++));
+            MobList.add(new Ghost(VectorMath.randomPos(Ghost.defWidth, Ghost.defHeight)));
         }
         
     }
@@ -56,22 +56,22 @@ public class RandomLevel extends Level {
     public void update(Player player){
         Iterator<Mob> mobIterator = MobList.iterator();
         //Have each mob interact with the player
-        boolean isThereAChest = false;
+        
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             currentMob.update(player);
-            if (currentMob.getType().equals("chest")) isThereAChest = true;
+            
             if (currentMob.isDestroyed()){
                 mobIterator.remove();
             }
         }
         //Display the debugging statistics
         displayDebug(player);
-        if(random.nextInt(Game.ticks+1) % 100 < (int)Math.sqrt((double)Game.ticks)/2 && MobList.size() < 10){
-            MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,80,10,1,0));
+        if(random.nextInt(Game.ticks+1) % 100 < (int)Math.sqrt((double)Game.ticks)/2 && Ghost.NUM < 10){
+           MobList.add(new Ghost());
         }
-        if(!isThereAChest){
-            MobList.add(new Chest(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),80,55,10,0));
+        if(Chest.NUM < 1){
+            MobList.add(new Chest());
         }
     }
     
@@ -93,6 +93,10 @@ public class RandomLevel extends Level {
             Mob currentMob = mobIterator.next();
             collisionDebug = collisionDebug +"<br>"+ currentMob.getName() + " (" + currentMob.getX() + ", " + currentMob.getY() + ")"+ " collision: " + currentMob.isCollided(player); 
         }
+        collisionDebug = collisionDebug + "<br> Ghost.NUM: " +  Ghost.NUM;
+        collisionDebug = collisionDebug + "<br> Fountain.NUM: " +  Fountain.NUM;
+        collisionDebug = collisionDebug + "<br> MimicFountain.NUM: " +  MimicFountain.NUM;
+        collisionDebug = collisionDebug + "<br> Chest.NUM: " +  Chest.NUM;
         
         collisionDebug = collisionDebug+"</html>";
         projectileDebug = projectileDebug + "</html>";

@@ -88,6 +88,12 @@ public class Mob {
                 health = 100;
         
         }
+        
+        public Mob (int[] pos, int width, int height, int damageOnHit, int dps, String name){
+            this(pos[0], pos[1], width, height, damageOnHit, dps, name);
+        }
+        
+        
  
         public void drawMob(Graphics2D g) {
 		g.drawImage(RImage, x, y, null);
@@ -107,8 +113,10 @@ public class Mob {
         //updates the mob in respect to a given player
         public void update(Player person){
             if (imortalObject) this.health = 100000;
-            if (isCollided(person)) dealDamage(person);
-            if (isCollided(person)) giveGold(person);
+            if (isCollided(person)){
+                dealDamage(person);
+                giveGold(person);
+            }
             projCollision(person);
             
             
@@ -290,7 +298,8 @@ public class Mob {
             this.health += h;
         }
         public boolean isDestroyed() {
-            return destroyed || this.health <= 0; 
+            if(health <= 0) destroy();
+            return destroyed; 
         }
         
         public void destroy(){
