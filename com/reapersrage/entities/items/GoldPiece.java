@@ -6,18 +6,38 @@
 
 package com.reapersrage.entities.items;
 
+import com.reapersrage.entities.mobs.Player;
+
 /**
  *
  * @author David
  */
 public class GoldPiece extends Item {
-
+    public static int NUM;
     public GoldPiece(int x, int y, int width, int height, int gold) {
         super(x, y, width, height, gold, "gold");
+        NUM++;
     }
     
     public GoldPiece(int[] pos, int width, int height, int gold) {
         super(pos[0], pos[1], width, height, gold, "gold");
+        NUM++;
+    }
+    
+    public GoldPiece(int[] pos, int amount){
+        this(pos, 10, 10, amount);
+    }
+    
+    public void update(Player person) {
+        if (isCollided(person)) {
+            giveGold(person);
+            destroy();
+        }
+    }
+    
+    public void destroy(){
+        this.destroyed = true;
+        NUM--;
     }
     
 }

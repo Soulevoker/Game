@@ -1,5 +1,7 @@
 package com.reapersrage.world.level;
 
+import com.reapersrage.entities.items.GoldPiece;
+import com.reapersrage.entities.items.Item;
 import com.reapersrage.entities.mobs.*;
 import com.reapersrage.game.Game;
 import com.reapersrage.game.VectorMath;
@@ -21,7 +23,8 @@ public class RandomLevel extends Level {
     //Stores all the mobs
     private ArrayList<Mob> MobList = new ArrayList<>();
     //private ArrayList<Projectile> ProjectileList = new ArrayList<>();
-    //Stores all the projectiles
+    //Store all the items
+    private ArrayList<Item> ItemList = new ArrayList<>();
    
     
     public RandomLevel(int width, int height) {
@@ -56,22 +59,44 @@ public class RandomLevel extends Level {
     public void update(Player player){
         Iterator<Mob> mobIterator = MobList.iterator();
         //Have each mob interact with the player
-        
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             currentMob.update(player);
             
             if (currentMob.isDestroyed()){
+                if (currentMob.getType().equals("ghost")){
+                    System.out.println("Dropping gold!");
+                    ItemList.add(new GoldPiece(currentMob.getPos(), 10));
+                }
                 mobIterator.remove();
+            }
+        }
+        Iterator<Item> ItemIterator = ItemList.iterator();
+        //Have each item interact with the player
+        while(ItemIterator.hasNext()){
+            Item currentItem = ItemIterator.next();
+            currentItem.update(player);
+            
+            if (currentItem.isDestroyed()){
+                ItemIterator.remove();
             }
         }
         //Display the debugging statistics
         displayDebug(player);
+        //Algorithm for summon rate, it's REALLY shitty, need to be fixed
         if(random.nextInt(Game.ticks+1) % 100 < (int)Math.sqrt((double)Game.ticks)/2 && Ghost.NUM < 10){
            MobList.add(new Ghost());
         }
+        //Add a new chests once all the chests have been collected
         if(Chest.NUM < 1){
-            MobList.add(new Chest());
+            //Randomly add 10 chests
+            if(random.nextInt(100) == 1){
+                for(int i = 0; i < 10; i++){
+                    MobList.add(new Chest());
+                }
+            } else{
+                MobList.add(new Chest());
+            }
         }
     }
     
@@ -79,6 +104,13 @@ public class RandomLevel extends Level {
         Iterator<Mob> mobIterator = MobList.iterator();
         while(mobIterator.hasNext()){
             mobIterator.next().drawMob(g);
+        }
+    }
+    
+    public void renderItems(Graphics2D g){
+        Iterator<Item> ItemIterator = ItemList.iterator();
+        while(ItemIterator.hasNext()){
+            ItemIterator.next().draw(g);
         }
     }
     

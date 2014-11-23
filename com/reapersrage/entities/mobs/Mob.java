@@ -309,4 +309,8 @@ public class Mob {
         public String getType(){
             return name;
         }
+        
+        public int[] getPos(){
+            return new int[]{this.x, this.y};
+        }
 }

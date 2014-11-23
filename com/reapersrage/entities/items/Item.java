@@ -7,8 +7,11 @@ package com.reapersrage.entities.items;
 
 import com.reapersrage.entities.mobs.Player;
 import com.reapersrage.game.ImageResizer;
+import com.reapersrage.gfx.GameTile;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -38,9 +41,27 @@ public class Item {
         this.height = height;
         this.gold = gold;
         this.name = name;
+        String fileName = "/com/reapersrage/res/textures/";
+        fileName = fileName + name + ".png";
+        try {
+            OImage = ImageIO
+                    .read(GameTile.class
+                            .getResourceAsStream(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            IR = new ImageResizer(OImage, width, height);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        RImage = IR.getResizedImage();
     }
 
-    public void drawMob(Graphics2D g) {
+    public void draw(Graphics2D g) {
         g.drawImage(RImage, x, y, null);
     }
 
@@ -86,23 +107,29 @@ public class Item {
     public void giveGold(Player person) {
         person.changeGold(gold);
     }
-    
-    public int getX(){
-             return x;
-        }
-        public int getY(){
-            return y;
-        }
-        public int getWidth(){
-            return width;
-        }
-        public int getHeight(){
-            return height;
-        }
-        
-        public String getName(){
-            return this.name;
-        }
-        
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
 
 }

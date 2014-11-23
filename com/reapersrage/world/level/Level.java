@@ -29,6 +29,8 @@ public abstract class Level {
     
     public abstract void renderMobs(Graphics2D g);
     
+    public abstract void renderItems(Graphics2D g);
+    
     public abstract void update(Player player);
 
 
