@@ -384,12 +384,15 @@ public class Player {
             }
         }
         private void blast (){
+            if (mana>=100){
+            mana-=100;  
+            
             for (int i=0; i<30; i++){
                 double[] newDir = new double[2];
                     newDir[0] = (double)random.nextInt(40)-20;
                     newDir[1] = (double)random.nextInt(40)-20;
                     ProjList.add(new FireBall(this.x+this.width-20, this.y+10,15,15,50,newDir));
-            }
+            }}
         }    
         
         
