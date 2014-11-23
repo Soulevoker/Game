@@ -169,7 +169,7 @@ public class Game extends Canvas implements Runnable {
                 //Check which buttons are pressed
 		ButtonPressed();
                 //Update the player, passing the buttons pressed
-		player.update(playerDirs);
+		player.update(buttonsPressed);
                 //This kills the game
                 if (player.isDestroyed()) gameThread.destroy();
                 //Update the level

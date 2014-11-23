@@ -2,10 +2,12 @@ package com.reapersrage.entities.mobs;
 
 import com.reapersrage.entities.projectiles.FireBall;
 import com.reapersrage.entities.projectiles.Projectile;
+import com.reapersrage.game.Debug;
 import com.reapersrage.game.Game;
 import com.reapersrage.game.VectorMath;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
+import com.reapersrage.input.Buttons;
 import com.reapersrage.input.Keyboard;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -13,9 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import javax.imageio.ImageIO;
-import com.reapersrage.game.Debug;
 import java.util.Random;
+import javax.imageio.ImageIO;
 /**
  * Created with IntelliJ IDEA. User: Soulevoker Date: 10/27/13 Time: 1:24 PM
  * Copyright © Reapers' Rage 2013
@@ -49,6 +50,7 @@ public class Player {
         private boolean[] wall = new boolean[4];
         private final int DEF_HEALTH = 5000;
         private Random random = new Random(); //so randum xD
+        private boolean[] playerDirs;
 
 
 	public Player(int x, int y, int width, int height) {
@@ -64,7 +66,7 @@ public class Player {
                 this.friction = 1;
                 this.velocity = new double[]{0.0,0.0};
                 this.MAX_V = 10.0;
-                
+                this.playerDirs = new boolean[10];
                 
 		try {
 			OImage = ImageIO
@@ -87,8 +89,9 @@ public class Player {
         //Array approach allows us to move diagnally
         //Array: {up, down, left, right}
         //Note to self: THE TOP RIGHT CORNER IS 0,0
-        public void update(boolean[] dirs){
-            parseInput(dirs);
+        public void update(Buttons buttons){
+            //boolean[] dirs = ButtonPressed(buttons);
+            parseInput(buttons);
             int xNew = x;
             int yNew = y;
             boolean[] collision = checkCollision(x, y, velocity);
@@ -152,34 +155,34 @@ public class Player {
         //Parses the keypresses
         //If the key is pressed, increments the velocity by acceleration
         //velocity gets updated based on the inputs and acceleration
-        public void parseInput(boolean[] dirs){
+        public void parseInput(Buttons buttons){
             //For each direction, check input
-            if(dirs[0]){
+            if(buttons.up){
                 //Up
                 if(-1.0*velocity[1] < MAX_V)
                     velocity[1] -= acceleration;
                 if (velocity[1] < -MAX_V) velocity[1] = -MAX_V;
             }
-            if(dirs[1]){
+            if(buttons.down){
                 //Down
                 if(velocity[1] < MAX_V)
                     velocity[1] += acceleration;
                 if(velocity[1] > MAX_V) velocity[1] = MAX_V;
             }
-            if(dirs[2]){
+            if(buttons.left){
                 //Left
                 if(-velocity[0] < MAX_V)
                     velocity[0] -= acceleration;
                 if(velocity[0] < -MAX_V) velocity[0] = -MAX_V;
             }
-            if(dirs[3]){
+            if(buttons.right){
                 //Right
                 if(velocity[0] < MAX_V)
                     velocity[0] += acceleration;
                 if(velocity[0] > MAX_V) velocity[0] = MAX_V;
             }
             //if not accelerating in y direction
-            if(!dirs[0] && !dirs[1] && velocity[1] != 0){
+            if(!buttons.up && !buttons.down && velocity[1] != 0){
                 double newVelocity = velocity[1];
                 newVelocity -= velocity[1] > 0 ? friction : -friction;
                 if(velocity[1] > 0 && newVelocity < 0)
@@ -190,7 +193,7 @@ public class Player {
                  
             }
             //If not accelerating in x
-            if(!dirs[2] && !dirs[3] && velocity[0] != 0){
+            if(!buttons.left && !buttons.right && velocity[0] != 0){
                 double newVelocity = velocity[0];
                 newVelocity -= velocity[0] > 0 ? friction : -friction;
                 if(velocity[0] < 0 && newVelocity > 0)
@@ -200,20 +203,20 @@ public class Player {
                 velocity[0] = newVelocity;
             }
             //fire a projectile
-            //Game.debugPanel.setLabel(2, "<html><br> "+dirs[4]+"<br>"+dirs[5]+"<br>"+dirs[6]+"<br>"+dirs[7]+"<br>"+dirs[8]+"</html>");
+            
             String text="<html>";
-            for (int j=0; j<9; j++){
-                text = text + "<br>";
-                text = text + "Dir " + j + " ";
-                text = text + dirs[j];
-                
-            }
+            text += "projUp: " + buttons.projUp + "<br>";
+            text += "projDown: " + buttons.projDown + "<br>";
+            text += "projLeft: " + buttons.projLeft + "<br>";
+            text += "projRight: " + buttons.projRight + "<br>";
             text = text + "</html>";
             Game.debugPanel.setLabel(2,text);
-            if(dirs[5]||dirs[6]||dirs[7]||dirs[8]){
-                fire(dirs);
+            //fire
+            if(buttons.projUp || buttons.projDown || buttons.projLeft || buttons.projRight){
+                fire(buttons);
             }
-            if(dirs[4]) {
+            //blink
+            if(buttons.space) {
                 int x1 = random.nextInt(Game.getStaticWidth() - width);
                 int y1 = random.nextInt(Game.getStaticHeight() - height);
                 setPos(x1,y1);
@@ -323,35 +326,39 @@ public class Player {
         
         
         
-        private void fire(boolean[] dirs){
-            //if none of the keys are pressed
+        private void fire(Buttons buttons){
+            
             double[] currVel = new double[2];
-//            if(!(dirs[5] || dirs[6] || dirs[7] || dirs[8])){
-//                currVel = Arrays.copyOf(this.velocity, currVel.length);
+            //Don't fire if velocity will be zero
+            boolean[] willFire = new boolean[]{true,true};
             
-                if(dirs[5] && !dirs[6]){
-                    //Up and not down
-                    currVel[1] = -1;
-                } else if(dirs[6] && !dirs[5]) {
-                    //Down and not up
-                    currVel[1] = 1;   
-                } else {
-                    //Both up and down or neither
-                    currVel[1] = 0;
-                }
-                if(dirs[7] && !dirs[8]){
-                    //left and not right
-                    currVel[0] = -1;
-                } else if(dirs[8] && !dirs[7]) {
-                    //Right and not left
-                    currVel[0] = 1;   
-                } else {
-                    //Both left and right or neither
-                    currVel[0] = 0;
-                }
+            if(buttons.projUp && !buttons.projDown){
+                //Up and not down
+                currVel[1] = -1;
+            } else if(buttons.projDown && !buttons.projUp) {
+                //Down and not up
+                currVel[1] = 1;   
+            } else {
+                //Both up and down or neither
+                //currVel[1] = 0;
+                willFire[1] = false;
+            }
+            if(buttons.projLeft && !buttons.projRight){
+                //left and not right
+                currVel[0] = -1;
+            } else if(buttons.projRight && !buttons.projLeft) {
+                //Right and not left
+                currVel[0] = 1;   
+            } else {
+                //Both left and right or neither
+                //currVel[0] = 0;
+                willFire[0] = false;
+            }
             
             
-            ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 15, 15, 10, VectorMath.scaleVector(currVel, 15)));
+            if (willFire[0] || willFire[1]){ ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 15, 15, 10, VectorMath.scaleVector(currVel, 15)));
+            System.out.println("Fireing");
+            }
         }
         
         public Iterator getProjectiles(){
@@ -360,4 +367,21 @@ public class Player {
         public boolean isDestroyed() {
             return (this.health < 0); 
         }
+        
+        /*public boolean[] ButtonPressed(Buttons buttonsPressed){
+		boolean[] playerDirs = new boolean[9];
+            
+                playerDirs[0] = buttonsPressed.up;
+                playerDirs[1] = buttonsPressed.down;
+                playerDirs[2] = buttonsPressed.left;
+                playerDirs[3] = buttonsPressed.right;
+                playerDirs[4] = buttonsPressed.space;
+                
+                playerDirs[5] = buttonsPressed.projUp;
+                playerDirs[6] = buttonsPressed.projDown;
+                playerDirs[7] = buttonsPressed.projLeft;
+                playerDirs[8] = buttonsPressed.projRight;
+                
+                return playerDirs;
+	}*/
 }
