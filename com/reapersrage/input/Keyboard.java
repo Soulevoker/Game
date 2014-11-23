@@ -42,6 +42,9 @@ public class Keyboard extends KeyAdapter {
         if (e.getKeyCode() == KeyEvent.VK_D) {
             Buttons.setButtonPressed("projRight");
         }
+        if (e.getKeyCode() == KeyEvent.VK_Q){
+            Buttons.setButtonPressed("Blast");
+        }
     }
 
     public void keyReleased(KeyEvent e) {
@@ -71,6 +74,9 @@ public class Keyboard extends KeyAdapter {
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
             Buttons.setButtonReleased("projRight");
+        }
+        if (e.getKeyCode() == KeyEvent.VK_Q) {
+            Buttons.setButtonReleased("Blast");
         }
     }
 

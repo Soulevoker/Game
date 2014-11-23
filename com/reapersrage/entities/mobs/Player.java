@@ -36,6 +36,7 @@ public class Player {
         
         //Attributes of the player
         private int health;
+        private int mana;
         private int gold;
 
         //Pixels for the player to move every update
@@ -50,6 +51,7 @@ public class Player {
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
         private final int DEF_HEALTH = 2000;
+        private final int DEF_MANA = 100;
         private Random random = new Random(); //so randum xD
 
         private boolean[] playerDirs;
@@ -57,12 +59,14 @@ public class Player {
         private boolean alreadyFired;
         //This way there's no autoblink
         private boolean alreadyBlinked;
+        private boolean alreadyBlast;
 
         
         private ImageResizer IR;
 
 
 	public Player(int x, int y, int width, int height) {
+                this.mana = DEF_MANA;
 		//Initial x position (pixels)
 		this.x = x;
                 //Initial y position (pixels)
@@ -78,6 +82,7 @@ public class Player {
                 this.playerDirs = new boolean[10];
                 this.alreadyFired = false;
                 this.alreadyBlinked = false;
+                this.alreadyBlast = false;
                 
 		try {
 			OImage = ImageIO
@@ -106,6 +111,8 @@ public class Player {
             boolean[] collision = checkCollision(x, y, velocity); //check collisions before moving
             move();
             updateProjectiles();
+            health+=1;
+            mana+=1;
             
         }
         
@@ -238,6 +245,13 @@ public class Player {
             if(!Buttons.space && this.alreadyBlinked){
                 this.alreadyBlinked = false;
             }
+            if(Buttons.blast && !this.alreadyBlast) {
+                this.alreadyBlast = true;
+                blast();
+            }
+            if(!Buttons.blast && this.alreadyBlast){
+                this.alreadyBlast = false;
+            }
         }
 
         //Checks for a collision in both x and y and return an array of booleans indicating such
@@ -291,6 +305,9 @@ public class Player {
         }
         public int getGold(){
             return gold;
+        }
+        public int getMana(){
+            return mana;
         }
         
         //changes players health. Negative lowers health (damage)
@@ -360,12 +377,21 @@ public class Player {
                 //currVel[0] = 0;
                 willFire[0] = false;
             }
-            
+           
             
             if (willFire[0] || willFire[1]){
                 ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 15, 15, 50, VectorMath.scaleVector(currVel, 15)));
             }
         }
+        private void blast (){
+            for (int i=0; i<30; i++){
+                double[] newDir = new double[2];
+                    newDir[0] = (double)random.nextInt(40)-20;
+                    newDir[1] = (double)random.nextInt(40)-20;
+                    ProjList.add(new FireBall(this.x+this.width-20, this.y+10,15,15,50,newDir));
+            }
+        }    
+        
         
         public Iterator getProjectiles(){
             return ProjList.iterator();

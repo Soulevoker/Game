@@ -22,6 +22,7 @@ public final class Buttons {
     public static boolean projDown;
     public static boolean projLeft;
     public static boolean projRight;
+    public static boolean blast;
 
     public static void setButtonPressed(String b) {
         //buttonPressed = b;
@@ -52,6 +53,9 @@ public final class Buttons {
         if (b.equals("projRight")) {
             Buttons.projRight = true;
         }
+        if (b.equals("Blast")){
+            Buttons.blast = true;
+        }
     }
 
     public static void setButtonReleased(String b) {
@@ -81,6 +85,9 @@ public final class Buttons {
         }
         if (b.equals("projRight")) {
             Buttons.projRight = false;
+        }
+        if (b.equals("Blast")){
+            Buttons.blast = false;
         }
     }
 }

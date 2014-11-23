@@ -25,7 +25,7 @@ public class Debug {
     
      //Initialize the debug panel
     public Debug(){
-            GridLayout experimentLayout = new GridLayout(0,3);
+            GridLayout experimentLayout = new GridLayout(0,4);
             this.LabelList = new ArrayList<JLabel>();
             debugPanel = new JFrame("Debug Panel");
             debugPanel.setPreferredSize(new Dimension(200*4,400));
