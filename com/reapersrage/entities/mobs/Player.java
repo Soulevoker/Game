@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import com.reapersrage.game.Debug;
+import java.util.Random;
 /**
  * Created with IntelliJ IDEA. User: Soulevoker Date: 10/27/13 Time: 1:24 PM
  * Copyright © Reapers' Rage 2013
@@ -47,7 +48,8 @@ public class Player {
         //If the player is about to hit a wall NORTH EAST SOUTH WEST
         private boolean[] wall = new boolean[4];
         private final int DEF_HEALTH = 5000;
-        
+        private Random random = new Random(); //so randum xD
+
 
 	public Player(int x, int y, int width, int height) {
 		//Initial x position (pixels)
@@ -198,9 +200,23 @@ public class Player {
                 velocity[0] = newVelocity;
             }
             //fire a projectile
-            Game.debugPanel.setLabel(2, "<html><br> "+dirs[5]+"<br>"+dirs[6]+"<br>"+dirs[7]+"<br>"+dirs[8]+"</html>");
+            //Game.debugPanel.setLabel(2, "<html><br> "+dirs[4]+"<br>"+dirs[5]+"<br>"+dirs[6]+"<br>"+dirs[7]+"<br>"+dirs[8]+"</html>");
+            String text="<html>";
+            for (int j=0; j<9; j++){
+                text = text + "<br>";
+                text = text + "Dir " + j + " ";
+                text = text + dirs[j];
+                
+            }
+            text = text + "</html>";
+            Game.debugPanel.setLabel(2,text);
             if(dirs[5]||dirs[6]||dirs[7]||dirs[8]){
                 fire(dirs);
+            }
+            if(dirs[4]) {
+                int x1 = random.nextInt(Game.getStaticWidth() - width);
+                int y1 = random.nextInt(Game.getStaticHeight() - height);
+                setPos(x1,y1);
             }
         }
 
@@ -300,6 +316,10 @@ public class Player {
            if ( (pixel>>24) == 0x00) return true;
            else return false; 
         }
+        public void setPos(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
         
         
         
@@ -331,7 +351,7 @@ public class Player {
                 }
             
             
-            ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 10, 10, 10, VectorMath.scaleVector(currVel, 15)));
+            ProjList.add(new FireBall(this.x+this.width-20, this.y+10, 15, 15, 10, VectorMath.scaleVector(currVel, 15)));
         }
         
         public Iterator getProjectiles(){
