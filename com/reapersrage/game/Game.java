@@ -1,6 +1,7 @@
 package com.reapersrage.game;
 
-import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.things.Player;
+import com.reapersrage.things.AllThings;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Keyboard;
 import com.reapersrage.world.level.Level;
@@ -37,7 +38,9 @@ public class Game extends Canvas implements Runnable {
 	private int tickCount;
 	private Screen screen;
 	private Level level;
-	private Player player;
+	//Player, add all object here
+	//private Player player;
+	private AllThings allThings;
 	private Thread gameThread;
 	//Frame rate (FPS)
 	static final int FRAMERATE = 50;
@@ -97,7 +100,9 @@ public class Game extends Canvas implements Runnable {
 	public void init() {
 		screen = new Screen(WIDTH, HEIGHT);
 		level = new RandomLevel(64, 64);
-		player = new Player(key);
+		//player = new Player(key);
+		allThings = new AllThings();
+		allThings.createDefaultPlayer(key);
 		/*
 		 * try { screen = new Screen(WIDTH, HEIGHT, new
 		 * SpriteSheet(ImageIO.read(
@@ -127,10 +132,12 @@ public class Game extends Canvas implements Runnable {
 	public void tick() {
 		tickCount++;
 		key.update();
-		player.update();
+		//player.update();
+		allThings.update();
 	}
 
 	public void render() {
+		Player player=allThings.getPlayerAt(0);
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			this.createBufferStrategy(3);
