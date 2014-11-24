@@ -283,36 +283,36 @@ public class Player {
 
 		if (Buttons.up) {
 			angle = 0;
-			gunAngle = 0;
+			//gunAngle = 0;
 		}
 		if (Buttons.down) {
 			angle = 180;
-			gunAngle = 180;
+			//gunAngle = 180;
 		}
 		if (Buttons.right) {
 			angle = 90;
-			gunAngle = 90;
+			//gunAngle = 90;
 		}
 		if (Buttons.left) {
 			angle = 270;
-			gunAngle = 270;
+			//gunAngle = 270;
 		}
 
 		if (Buttons.up && Buttons.right) {
 			angle = 60;
-			gunAngle = 60;
+			//gunAngle = 60;
 		}
 		if (Buttons.up && Buttons.left) {
 			angle = 300;
-			gunAngle = 300;
+			//gunAngle = 300;
 		}
 		if (Buttons.down && Buttons.right) {
 			angle = 120;
-			gunAngle = 120;
+			//gunAngle = 120;
 		}
 		if (Buttons.down && Buttons.left) {
 			angle = 240;
-			gunAngle = 240;
+			//gunAngle = 240;
 		}
 
 		if (Buttons.projUp) {

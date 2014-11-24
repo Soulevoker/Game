@@ -26,6 +26,7 @@ public class MimicFountain extends Fountain {
     
     public MimicFountain(int[] pos){
         super(pos, MimicFountain.defHealing);
+        this.imortalObject = false;
     }
     
     public MimicFountain(){
