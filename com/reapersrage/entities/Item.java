@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.reapersrage.entities.items;
+package com.reapersrage.entities;
 
-import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.Player;
 import com.reapersrage.game.ImageResizer;
 import com.reapersrage.gfx.GameTile;
 import java.awt.Graphics2D;
@@ -17,20 +17,9 @@ import javax.imageio.ImageIO;
  *
  * @author David
  */
-public abstract class Item {
+public abstract class Item extends Entity{
 
-    protected int x;
-    protected int y;
-    ImageResizer IR;
-    //O = original R = resized
-    protected BufferedImage OImage;
-    protected BufferedImage RImage;
     protected int dir;
-    protected int width;
-    protected int height;
-    protected boolean destroyed;
-    protected boolean imortalObject;
-
     protected int gold;
     private String name; //name of the item
 
@@ -68,39 +57,6 @@ public abstract class Item {
     public void update(Player person) {
         if (isCollided(person)) {
             giveGold(person);
-        }
-    }
-
-    public boolean isCollided(Player person) {
-        int[] itemXrange = {x, x + width};
-        int[] personXrange = {person.getX(), person.getX() + person.getWidth()};
-        int[] itemYrange = {y, y + height};
-        int[] personYrange = {person.getY(), person.getY() + person.getHeight()};
-
-        //checks if any pixel in mob overlaps with any pixel in player
-        for (int i = itemXrange[0]; i < itemXrange[1]; i++) {
-            for (int j = itemYrange[0]; j < itemYrange[1]; j++) {
-                for (int k = personXrange[0]; k < personXrange[1]; k++) {
-                    for (int l = personYrange[0]; l < personYrange[1]; l++) {
-                        //The pixels of the mob and player must overlap  AND  the mob must not be transparent at that point
-                        if (((i == k) && (j == l)) && !isTransparent(i - itemXrange[0], j - itemYrange[0]) && !(person.isTransparent(k - personXrange[0], l - personYrange[0]))) {
-                            return true;
-                        }
-
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    //checks if the mob sprite is transparent at give x,y. Transparent pixels do not count as part of the hitbox
-    public boolean isTransparent(int x, int y) {
-        int pixel = RImage.getRGB(x, y);
-        if ((pixel >> 24) == 0x00) {
-            return true;
-        } else {
-            return false;
         }
     }
 

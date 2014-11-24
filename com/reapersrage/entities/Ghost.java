@@ -1,7 +1,5 @@
-package com.reapersrage.entities.mobs;
+package com.reapersrage.entities;
 
-import com.reapersrage.entities.projectiles.FireBall;
-import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.VectorMath;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -77,12 +75,12 @@ public class Ghost extends Mob {
         projCollision(person);
     }
     
-    public void drawMob(Graphics2D g) {
+    public void draw(Graphics2D g) {
             g.drawImage(RImage, x, y, null);
             Iterator<Projectile> projIterator = ProjList.iterator();
             while(projIterator.hasNext()){
                 Projectile currProj = projIterator.next();
-                currProj.drawProj(g);
+                currProj.draw(g);
             }
 	}
     

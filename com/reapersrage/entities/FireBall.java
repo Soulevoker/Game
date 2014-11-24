@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.reapersrage.entities.projectiles;
+package com.reapersrage.entities;
 
 /**
  *

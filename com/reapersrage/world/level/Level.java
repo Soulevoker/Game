@@ -1,7 +1,7 @@
 package com.reapersrage.world.level;
 
-import com.reapersrage.entities.items.Item;
-import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.Item;
+import com.reapersrage.entities.Player;
 import com.reapersrage.gfx.Screen;
 import java.awt.Graphics2D;
 

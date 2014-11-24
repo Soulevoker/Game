@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.reapersrage.entities.items;
+package com.reapersrage.entities;
 
-import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.Player;
 
 /**
  *

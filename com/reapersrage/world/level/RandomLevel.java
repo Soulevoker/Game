@@ -1,8 +1,13 @@
 package com.reapersrage.world.level;
 
-import com.reapersrage.entities.items.GoldPiece;
-import com.reapersrage.entities.items.Item;
-import com.reapersrage.entities.mobs.*;
+import com.reapersrage.entities.Ghost;
+import com.reapersrage.entities.Chest;
+import com.reapersrage.entities.Player;
+import com.reapersrage.entities.Fountain;
+import com.reapersrage.entities.MimicFountain;
+import com.reapersrage.entities.Mob;
+import com.reapersrage.entities.GoldPiece;
+import com.reapersrage.entities.Item;
 import com.reapersrage.game.Game;
 import com.reapersrage.game.VectorMath;
 //import com.reapersrage.res.sound.Sound;
@@ -46,9 +51,9 @@ public class RandomLevel extends Level {
         }
         int i = 0;
         this.MobList = new ArrayList<>();
-        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80), Game.getStaticWidth()/mapwidth, Game.getStaticHeight()/mapheight, 1, 1,i++));
+        //MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80), Game.getStaticWidth()/mapwidth, Game.getStaticHeight()/mapheight, 1, 1,i++));
         MobList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
-        MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1,i++));
+        //MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1,i++));
         //One of the fountains is a mimic that actually drains health
         MobList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
         MobList.add(new Chest());
@@ -94,9 +99,9 @@ public class RandomLevel extends Level {
         //Display the debugging statistics
         displayDebug(player);
         //Algorithm for summon rate, it's REALLY shitty, need to be fixed
-        /*if(random.nextInt(100) < 5 && Ghost.NUM < 5){
+        if(random.nextInt(100) < 5 && Ghost.NUM < 5){
            MobList.add(new Ghost());
-        }*/
+        }
         //Add a new chests once all the chests have been collected
         if(Chest.NUM < 1){
             //Randomly add 10 chests
@@ -113,7 +118,7 @@ public class RandomLevel extends Level {
     public void renderMobs(Graphics2D g){
         Iterator<Mob> mobIterator = MobList.iterator();
         while(mobIterator.hasNext()){
-            mobIterator.next().drawMob(g);
+            mobIterator.next().draw(g);
         }
     }
     

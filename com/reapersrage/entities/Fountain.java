@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.reapersrage.entities.mobs;
+package com.reapersrage.entities;
 
 import com.reapersrage.game.VectorMath;
 

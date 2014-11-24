@@ -1,6 +1,6 @@
 package com.reapersrage.game;
 
-import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.Player;
 import com.reapersrage.gfx.GameOverScreen;
 import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;

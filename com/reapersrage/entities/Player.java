@@ -1,7 +1,5 @@
-package com.reapersrage.entities.mobs;
+package com.reapersrage.entities;
 
-import com.reapersrage.entities.projectiles.FireBall;
-import com.reapersrage.entities.projectiles.Projectile;
 import com.reapersrage.game.Debug;
 import com.reapersrage.game.Game;
 import com.reapersrage.game.ImageResizer;
@@ -393,7 +391,7 @@ public class Player {
 		// Draw projectile
 		while (projIterator.hasNext()) {
 			Projectile currProj = projIterator.next();
-			currProj.drawProj(g);
+			currProj.draw(g);
 		}
 	}
 

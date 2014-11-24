@@ -1,7 +1,7 @@
-package com.reapersrage.entities.projectiles;
+package com.reapersrage.entities;
 
-import com.reapersrage.entities.mobs.Mob;
-import com.reapersrage.entities.mobs.Player;
+import com.reapersrage.entities.Mob;
+import com.reapersrage.entities.Player;
 import com.reapersrage.game.Game;
 import com.reapersrage.gfx.GameTile;
 import java.awt.Graphics2D;
@@ -14,23 +14,24 @@ import javax.imageio.ImageIO;
  *
  * @author David
  */
-public abstract class Projectile {
+public abstract class Projectile extends com.reapersrage.entities.Entity {
 
-    protected int x;
-    protected int y;
+    //protected int x;
+    //protected int y;
     //O = original R = resized
-    private BufferedImage OImage;
-    private BufferedImage RImage;
+    //protected BufferedImage OImage;
+    //protected BufferedImage RImage;
     //Initial velocity of the projectile
+   
     protected double[] dir;
-    protected int width;
-    protected int height;
+    //protected int width;
+    //protected int height;
 
-    private int damageOnHit; //damage player takes on impact
-    private String name; //name of the mob
-    private boolean[] wall; //has the projectile hit a wall?
+    protected int damageOnHit; //damage player takes on impact
+    protected String name; //name of the mob
+    //private boolean[] wall; //has the projectile hit a wall?
     int id;
-    public boolean destroyed;
+    //public boolean destroyed;
 
     public Projectile(int x, int y, int width, int height, int damageOnHit, double[] dir, String name) {
         this.x = x;
@@ -70,7 +71,7 @@ public abstract class Projectile {
         return RImage;
     }
 
-    public void drawProj(Graphics2D g) {
+    public void draw(Graphics2D g) {
         g.drawImage(RImage, x, y, null);
     }
 
@@ -177,75 +178,10 @@ public abstract class Projectile {
         return false;
     }
 
-    //checks if the mob sprite is transparent at give x,y. Transparent pixels do not count as part of the hitbox
-    public boolean isTransparent(int x, int y) {
-        int pixel = RImage.getRGB(x, y);
-        if ((pixel >> 24) == 0x00) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
-    //Move the mob by dx and dy
-    public void move(int dx, int dy) {
-        boolean[] collision = checkCollision(x, y, new double[]{dx, dy});
-        //if we aren't colliding on the X axis
-        int xNew = x;
-        int yNew = y;
-        if (!collision[0]) {
-            xNew += dx;
-        }
-        //if we aren't colliding on the Y axis
-        if (!collision[1]) {
-            yNew += dy;
-        }
-        //If we've hit a wall, set the position to just touch the wall and set veloicty to 0
-        if (wall[0]) {
-            //North
-            yNew = 0;
-        } else if (wall[1]) {
-            //East
-            xNew = Game.getStaticWidth() - width;
-        } else if (wall[2]) {
-            //South
-            yNew = Game.getStaticHeight() - height;
-        } else if (wall[3]) {
-            //West
-            xNew = 0;
-        }
-        this.x = xNew;
-        this.y = yNew;
-    }
+  
 
-    //Will collide with x or y?
-    public boolean[] checkCollision(int x, int y, double[] v) {
-        boolean[] collisions = new boolean[]{false, false};
-        wall[0] = false;
-        wall[1] = false;
-        wall[2] = false;
-        wall[3] = false;
-        //WEST wall
-        if (x + (int) v[0] < 0) {
-            collisions[0] = true;
-            wall[3] = true;
-        } //EAST wall
-        else if (x + (int) v[0] + width > Game.getStaticWidth()) {
-            collisions[0] = true;
-            wall[1] = true;
-        }
-        //NORTH wall
-        if (y + (int) v[1] < 0) {
-            collisions[1] = true;
-            wall[0] = true;
-        } //SOUTH Wall
-        else if (y + (int) v[1] + height > Game.getStaticHeight()) {
-            collisions[1] = true;
-            wall[2] = true;
-        }
-
-        return collisions;
-    }
 
     public int getX() {
         return x;
