@@ -35,37 +35,13 @@ public abstract class Entity {
     /**
      * Checks whether or not there is a collision, pixel by pixel.
      */
-    public boolean isCollided(Player person) {
+    public boolean isCollided(Entity person) {
         int[] mobXrange = {x, x + width};
         int[] personXrange = {person.getX(), person.getX() + person.getWidth()};
         int[] mobYrange = {y, y + height};
         int[] personYrange = {person.getY(), person.getY() + person.getHeight()};
 
         //checks if any pixel in mob overlaps with any pixel in player
-        if (Math.abs(person.getX() - this.x) < person.getWidth() + this.width || Math.abs(person.getY() - this.y) < person.getHeight() + this.height) {
-            for (int i = mobXrange[0]; i < mobXrange[1]; i++) {
-                for (int j = mobYrange[0]; j < mobYrange[1]; j++) {
-                    for (int k = personXrange[0]; k < personXrange[1]; k++) {
-                        for (int l = personYrange[0]; l < personYrange[1]; l++) {
-                            //The pixels of the mob and player must overlap  AND  the mob must not be transparent at that point
-                            if (((i == k) && (j == l)) && !isTransparent(i - mobXrange[0], j - mobYrange[0]) && !(person.isTransparent(k - personXrange[0], l - personYrange[0]))) {
-                                return true;
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean isCollided(Mob person) {
-        int[] mobXrange = {x, x + width};
-        int[] personXrange = {person.getX(), person.getX() + person.getWidth()};
-        int[] mobYrange = {y, y + height};
-        int[] personYrange = {person.getY(), person.getY() + person.getHeight()};
-
         if (Math.abs(person.getX() - this.x) < person.getWidth() + this.width || Math.abs(person.getY() - this.y) < person.getHeight() + this.height) {
             for (int i = mobXrange[0]; i < mobXrange[1]; i++) {
                 for (int j = mobYrange[0]; j < mobYrange[1]; j++) {
@@ -178,5 +154,18 @@ public abstract class Entity {
     }
 
     public abstract void destroy();
+    
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+    public int getWidth(){
+        return width;
+    }
+    public int getHeight(){
+        return height;
+    }
 
 }

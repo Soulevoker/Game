@@ -229,7 +229,7 @@ public class Game extends Canvas implements Runnable {
 		screen.drawBackground(g);
 		level.renderMobs(g);
                 level.renderItems(g);
-		player.drawPlayer(g);
+		player.draw(g);
 		}
 		if(gameState == 2){
 			gameover.drawBackground(g);

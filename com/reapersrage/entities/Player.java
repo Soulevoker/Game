@@ -21,20 +21,15 @@ import javax.imageio.ImageIO;
  * Created with IntelliJ IDEA. User: Soulevoker Date: 10/27/13 Time: 1:24 PM
  * Copyright © Reapers' Rage 2013
  */
-public class Player {
-	private int x;
-	private int y;
+public class Player extends Entity {
+	
 	// O = original R = resized
-	private BufferedImage OImage;
-	private BufferedImage RImage;
-
+	
 	private BufferedImage OgunImage;
 	private BufferedImage RgunImage;
 	private int gunx;
 	private int guny;
 
-	private int width;
-	private int height;
 
 	// Projectiles the player has fired
 	private ArrayList<Projectile> ProjList = new ArrayList<>();
@@ -54,7 +49,6 @@ public class Player {
 	// How much the player slows down due to the map
 	private final double friction;
 	// If the player is about to hit a wall NORTH EAST SOUTH WEST
-	private boolean[] wall = new boolean[4];
 	private final int DEF_HEALTH = 2000000;
 	private final int DEF_MANA = 100000000;
 	private Random random = new Random(); // so randum xD
@@ -69,7 +63,6 @@ public class Player {
 	private int angle;
 	private int gunAngle;
 
-	private ImageResizer IR;
 	private ImageResizer IRgun;
 
 	public Player(int x, int y, int width, int height) {
@@ -90,7 +83,7 @@ public class Player {
 		this.alreadyFired = false;
 		this.alreadyBlinked = false;
 		this.alreadyBlast = false;
-
+                this.wall = new boolean[4];
 		gunx = x + (width / 3);
 		guny = y;
 
@@ -376,7 +369,7 @@ public class Player {
 	}
 
 	// Draws the player
-	public void drawPlayer(Graphics2D g) {
+	public void draw(Graphics2D g) {
 		Graphics2D gg = (Graphics2D) g.create();
 		gg.rotate(Math.toRadians(angle), x + (width / 2), y + (height / 2));
 		gg.drawImage(RImage, x, y, null);
@@ -415,23 +408,6 @@ public class Player {
 
 	public void changeGold(int change) {
 		gold += change;
-	}
-
-	// get the position
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
 	}
 
 	public int getVelX() {
@@ -548,4 +524,7 @@ public class Player {
 		return (this.health < 0);
 	}
 
+        public void destroy(){
+            this.health = 0;
+        }
 }
