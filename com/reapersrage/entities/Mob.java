@@ -136,6 +136,10 @@ public abstract class Mob extends com.reapersrage.entities.Entity {
             return disp;
         }
         
+        public int[] displacementFrom(int[] pos){
+            return new int[]{this.x - pos[0], this.y - pos[1]};
+        }
+        
         public boolean projCollision(Player player)
         {
             boolean collision = false;

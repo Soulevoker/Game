@@ -20,6 +20,8 @@ public class Ghost extends Mob {
     public static int ID = 0;
     //Number of ghosts summoned
     public static int NUM = 0;
+    //Current direction 
+    public static int[] direction;
 
     
     
@@ -31,6 +33,7 @@ public class Ghost extends Mob {
         super(x, y, width, height, damageOnHit, dps, "ghost");
         this.id = id;
         this.imortalObject=false;
+        this.direction = VectorMath.randomPos();
         Ghost.NUM++;
     }
     
@@ -38,6 +41,7 @@ public class Ghost extends Mob {
         super(x, y, width, height, damageOnHit, dps, "ghost");
         this.id = 0;
         this.imortalObject=false;
+        this.direction = VectorMath.randomPos();
         Ghost.NUM++;
     }
     
@@ -57,10 +61,17 @@ public class Ghost extends Mob {
     //Move the ghost in the direction of the player
     public void update(Player person){
         if (isCollided(person)) dealDamage(person); 
-        double[] disp = displacementFromPlayer(person);
+        //double[] disp = displacementFromPlayer(person);
+        double[] disp = VectorMath.scaleVector(displacementFrom(this.direction), 1);
         this.move((int)(5*disp[0]),(int)(5*disp[1]));
-        if(rand.nextInt(200) % 50 == 0) fireball(person);
-        updateProjectiles(person);        
+        if(rand.nextInt(200) == 10) fireball(person);
+        if(rand.nextInt(100) == 1) setDirection();
+        updateProjectiles(person); 
+    }
+    
+    //Sets the direction of movement
+    private void setDirection(){
+        this.direction = VectorMath.randomPos();
     }
     
     private void updateProjectiles(Player person){
@@ -83,7 +94,6 @@ public class Ghost extends Mob {
                 currProj.draw(g);
             }
 	}
-    
     
     
     //Shoots a fireball in the specified direction
