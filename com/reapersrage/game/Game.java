@@ -46,7 +46,7 @@ public class Game extends Canvas implements Runnable {
 	private boolean[] projDirs;
 	private Screen screen;
 	private static Level level;
-	private Player player;
+	private static Player player;
 
 	private Thread gameThread;
 	// Length of frame (ms)
@@ -191,7 +191,7 @@ public class Game extends Canvas implements Runnable {
 		if(gameState == 1){
 		
                     // Update the player, passing the buttons pressed
-                    player.update();
+                    player.update(null);
                     //level.update(player);
                     ticks++;
                     // Update the level
@@ -230,8 +230,8 @@ public class Game extends Canvas implements Runnable {
 		// Draw the background, mobs, and player; last is on top
 		if(gameState == 1){
 		screen.drawBackground(g);
-		level.renderMobs(g);
-                level.renderItems(g);
+		level.drawEntities(g);
+                //level.renderItems(g);
 		player.draw(g);
 		}
 		if(gameState == 2){
@@ -324,6 +324,10 @@ public class Game extends Canvas implements Runnable {
 	public static void setGameState(int gameState) {
 		Game.gameState = gameState;
 	}
+        
+        public static Player getPlayer(){
+            return player;
+        }
 
 
 

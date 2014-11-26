@@ -31,6 +31,11 @@ public abstract class Entity {
      * Draws it
      */
     public abstract void draw(Graphics2D g);
+    
+    /**
+     * Update
+     */
+    public abstract void update(Player person);
 
     /**
      * Checks whether or not there is a collision, pixel by pixel.

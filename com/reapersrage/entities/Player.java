@@ -117,7 +117,7 @@ public class Player extends Entity {
 	}
 
 	// Update the player each frame
-	public void update() {
+	public void update(Player person) {
 		parseInput();
 		boolean[] collision = checkCollision(x, y, velocity); // check
 																// collisions

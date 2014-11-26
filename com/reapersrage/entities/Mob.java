@@ -88,8 +88,6 @@ public abstract class Mob extends Entity {
                 giveGold(person);
             }
             projCollision(person);
-            
-            
         }
         
         
@@ -183,10 +181,10 @@ public abstract class Mob extends Entity {
         }
         
         public void dropGold(int gold){
-            Game.getLevel().addItem(new GoldPiece(new int[]{this.x,this.y}, gold));
+            Game.getLevel().addEntity(new GoldPiece(new int[]{this.x,this.y}, gold));
         }
         
         public void dropItem(Item item){
-            Game.getLevel().addItem(item);
+            Game.getLevel().addEntity(item);
         }
 }

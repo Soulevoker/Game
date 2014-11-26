@@ -130,14 +130,6 @@ public abstract class Projectile extends com.reapersrage.entities.Entity {
             this.destroy();
         }
     }
-
-    
-
-    
-
-  
-
-
     public int getX() {
         return x;
     }

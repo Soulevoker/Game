@@ -7,6 +7,7 @@
 package com.reapersrage.entities;
 
 import com.reapersrage.entities.Player;
+import com.reapersrage.game.Game;
 
 /**
  *
