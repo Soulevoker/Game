@@ -21,11 +21,7 @@ public class RandomLevel extends Level {
 
     private static Random random = new Random();
     //Stores all the mobs
-    private ArrayList<Mob> MobList = new ArrayList<>();
-    //private ArrayList<Projectile> ProjectileList = new ArrayList<>();
-    //Store all the items
-    private ArrayList<Item> ItemList = new ArrayList<>();
-    private ArrayList<Projectile> ProjList = new ArrayList<>();
+    
    
     
     public RandomLevel(int width, int height) {
@@ -53,13 +49,12 @@ public class RandomLevel extends Level {
         MobList.add(new Chest());
 
 
-       for(int b=0; b<10; b++){
-            MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
-            }
+        for(int b=0; b<10; b++){
+             MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
+        }
         //Sound bgMusic = new Sound();
-       // bgMusic.music("bg");
+        // bgMusic.music("bg");
 
-        
     }
 
     public void update(Player player){
@@ -117,36 +112,7 @@ public class RandomLevel extends Level {
             }
         }
     }
-    
-    public void renderMobs(Graphics2D g){
-        Iterator<Mob> mobIterator = MobList.iterator();
-        while(mobIterator.hasNext()){
-            mobIterator.next().draw(g);
-        }
-        Iterator<Projectile> projIterator = ProjList.iterator();
-        while(projIterator.hasNext()){
-            Projectile currProj = projIterator.next();
-            currProj.draw(g);
-        }
-    }
-    
-    public void renderItems(Graphics2D g){
-        Iterator<Item> ItemIterator = ItemList.iterator();
-        while(ItemIterator.hasNext()){
-            ItemIterator.next().draw(g);
-        }
-    }
-    
-    public void addItem(Item item){
-        ItemList.add(item);
-    }
-    
-    public void addProjectile(Projectile proj){
-        ProjList.add(proj);
-    }
-    
-    
-    
+
     //Debugging Information
     public void displayDebug(Player player){
         String collisionDebug = "<html>Mobs";
