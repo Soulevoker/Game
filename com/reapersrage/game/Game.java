@@ -163,6 +163,7 @@ public class Game extends Canvas implements Runnable {
 			render();
 			// Determine how long it took the frame to update/render
 			long frameLength = System.currentTimeMillis() - frameStart;
+			System.out.println(frameLength);
 			if (frameLength < FRAMERATE) {
 				// If that time is less than the desired frame length, sleep the
 				// remaining time
@@ -191,18 +192,18 @@ public class Game extends Canvas implements Runnable {
 		
                     // Update the player, passing the buttons pressed
                     player.update();
-                    level.update(player);
+                    //level.update(player);
                     ticks++;
+                    // Update the level
+                    level.update(player);
 
                     //sets gamestate to gameover if player is destroyed
                     if (player.isDestroyed()) {
 			gameState = 2;
                     }
 		
-                    // Update the level
-                    level.update(player);
-                    ticks++;
-                    debugPanel.setLabel(3, "" + ticks % 50);
+              
+                  debugPanel.setLabel(3, "" + ticks % 50);
                 }
 		//gamestate = 2 when the game is over
 		if(gameState == 2){

@@ -17,6 +17,8 @@ public class GameTile {
 	private int tileWidth;
 	private int tileHeight;
 	
+	private int tileType;
+	
 	ImageResizer IR;
 	
 	private BufferedImage originalImage;
@@ -24,14 +26,18 @@ public class GameTile {
 
 	public GameTile(int tileType, int xLocation, int yLocation, int width,
 			int height) throws IOException {
-		setTile(tileType);
+		this.tileType = tileType;
 		x = xLocation;
 		y = yLocation;
 		tileWidth = width;
 		tileHeight = height;
+		if(this.tileType != 0){
+			setTile(tileType);
 		IR = new ImageResizer(originalImage, tileWidth, tileHeight);
 		resizedImage = IR.getResizedImage();
+		}
 	}
+
 
 	private void setTile(int type) {
 		switch (type) {
@@ -80,5 +86,17 @@ public class GameTile {
 	public int getHeight() {
 		return y;
 	}
+
+
+	public int getTileType() {
+		return tileType;
+	}
+
+
+	public void setTileType(int tileType) {
+		this.tileType = tileType;
+	}
+	
+	
 
 }

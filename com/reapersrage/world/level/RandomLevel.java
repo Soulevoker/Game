@@ -51,10 +51,10 @@ public class RandomLevel extends Level {
         MobList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
         MobList.add(new Chest());
 
-/*
-        for(int b=0; b<10; b++){
+
+       for(int b=0; b<10; b++){
             MobList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
-            }*/
+            }
         //Sound bgMusic = new Sound();
        // bgMusic.music("bg");
 

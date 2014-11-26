@@ -20,7 +20,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 //creates a mob
-public abstract class Mob extends com.reapersrage.entities.Entity {
+public abstract class Mob extends Entity {
     
         
 	protected int dir;
