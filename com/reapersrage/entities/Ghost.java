@@ -65,8 +65,10 @@ public class Ghost extends Mob {
         //double[] disp = displacementFromPlayer(person);
         double[] disp = VectorMath.scaleVector(displacementFrom(this.direction), 1);
         this.move((int)(5*disp[0]),(int)(5*disp[1]));
+        //if we hit a wall or it's time to change direction
+        if(wall[0] || wall[1] || wall[2] || wall[3] || rand.nextInt(1000) == 1)
+            setDirection();
         if(rand.nextInt(200) == 10) fireball(person);
-        if(rand.nextInt(100) == 1) setDirection();
         projCollision(person);
     }
     

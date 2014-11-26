@@ -94,6 +94,7 @@ public abstract class Entity {
      */
     public void move(int dx, int dy) {
         boolean[] collision = checkCollision(x, y, new double[]{dx, dy});
+        
         //if we aren't colliding on the X axis
         int xNew = x;
         int yNew = y;
