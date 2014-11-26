@@ -25,6 +25,7 @@ public class RandomLevel extends Level {
     //private ArrayList<Projectile> ProjectileList = new ArrayList<>();
     //Store all the items
     private ArrayList<Item> ItemList = new ArrayList<>();
+    private ArrayList<Projectile> ProjList = new ArrayList<>();
    
     
     public RandomLevel(int width, int height) {
@@ -64,6 +65,7 @@ public class RandomLevel extends Level {
     public void update(Player player){
         Iterator<Mob> mobIterator = MobList.iterator();
         //Have each mob interact with the player
+        //Update the mobs
         while(mobIterator.hasNext()){
             Mob currentMob = mobIterator.next();
             currentMob.update(player);
@@ -87,6 +89,14 @@ public class RandomLevel extends Level {
             
             if (currentItem.isDestroyed()){
                 ItemIterator.remove();
+            }
+        }
+        Iterator<Projectile> projIterator = ProjList.iterator();
+        while(projIterator.hasNext()){
+            Projectile currProj = projIterator.next();
+            currProj.update(player);
+            if(currProj.isDestroyed()){
+                projIterator.remove();
             }
         }
         //Display the debugging statistics
@@ -113,6 +123,11 @@ public class RandomLevel extends Level {
         while(mobIterator.hasNext()){
             mobIterator.next().draw(g);
         }
+        Iterator<Projectile> projIterator = ProjList.iterator();
+        while(projIterator.hasNext()){
+            Projectile currProj = projIterator.next();
+            currProj.draw(g);
+        }
     }
     
     public void renderItems(Graphics2D g){
@@ -125,6 +140,12 @@ public class RandomLevel extends Level {
     public void addItem(Item item){
         ItemList.add(item);
     }
+    
+    public void addProjectile(Projectile proj){
+        ProjList.add(proj);
+    }
+    
+    
     
     //Debugging Information
     public void displayDebug(Player player){

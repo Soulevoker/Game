@@ -179,7 +179,7 @@ public class Game extends Canvas implements Runnable {
 
 	// Update routine
 	public void update() {
-                
+                long updateStart = System.currentTimeMillis();
                
 
                 //debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
@@ -203,7 +203,7 @@ public class Game extends Canvas implements Runnable {
                     }
 		
               
-                  debugPanel.setLabel(3, "" + ticks % 50);
+                  
                 }
 		//gamestate = 2 when the game is over
 		if(gameState == 2){
@@ -218,6 +218,8 @@ public class Game extends Canvas implements Runnable {
 			}
 			gameState = 1;
 		}
+                long timePassed = System.currentTimeMillis() - updateStart;
+                debugPanel.setLabel(3, "<html>" + ticks % 50 + "<br>" + timePassed);
 
 	}
 

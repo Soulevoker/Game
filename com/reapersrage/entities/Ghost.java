@@ -1,11 +1,12 @@
 package com.reapersrage.entities;
 
+import com.reapersrage.game.Game;
 import com.reapersrage.game.VectorMath;
+import com.reapersrage.world.level.RandomLevel;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import com.reapersrage.world.level.RandomLevel;
 /**
  *
  * @author David
@@ -26,7 +27,7 @@ public class Ghost extends Mob {
     
     
     //List to store the ghost's projectiles
-    private ArrayList<Projectile> ProjList = new ArrayList<>();
+    //private ArrayList<Projectile> ProjList = new ArrayList<>();
     
     //contrcutor for a ghost mob 
     public Ghost(int x, int y, int width, int height, int damageOnHit, int dps, int id) {
@@ -66,7 +67,7 @@ public class Ghost extends Mob {
         this.move((int)(5*disp[0]),(int)(5*disp[1]));
         if(rand.nextInt(200) == 10) fireball(person);
         if(rand.nextInt(100) == 1) setDirection();
-        updateProjectiles(person); 
+        projCollision(person);
     }
     
     //Sets the direction of movement
@@ -74,33 +75,17 @@ public class Ghost extends Mob {
         this.direction = VectorMath.randomPos();
     }
     
-    private void updateProjectiles(Player person){
-        Iterator<Projectile> projIterator = ProjList.iterator();
-        while(projIterator.hasNext()){
-            Projectile currProj = projIterator.next();
-            currProj.update(person);
-            if(currProj.destroyed){
-                projIterator.remove();
-            }
-        }
-        projCollision(person);
-    }
-    
     public void draw(Graphics2D g) {
             g.drawImage(RImage, x, y, null);
-            Iterator<Projectile> projIterator = ProjList.iterator();
-            while(projIterator.hasNext()){
-                Projectile currProj = projIterator.next();
-                currProj.draw(g);
-            }
+            
 	}
     
     
     //Shoots a fireball in the specified direction
     private void fireball(Player player){
-        ProjList.add(new FireBall(this.x, this.y, 40, 40, 100, displacementFromPlayer(player, 10)));
+        Game.getLevel().addProjectile(new FireBall(this.x, this.y, 40, 40, 100, displacementFromPlayer(player, 10)));
     }
-    public String projDebug() {
+    /*public String projDebug() {
         String out = "";
         Iterator<Projectile> projIterator = ProjList.iterator();
         int i = 0;
@@ -109,7 +94,7 @@ public class Ghost extends Mob {
                 out = out + "Proj "+i+":("+currentProj.getX()+","+currentProj.getY()+")";
             }
         return out;
-    }
+    }*/
     
     public void destroy(){
         dropGold(1);
