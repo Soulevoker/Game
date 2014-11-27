@@ -6,6 +6,7 @@ import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Buttons;
 import com.reapersrage.input.Keyboard;
+import com.reapersrage.input.Mouse;
 import com.reapersrage.world.level.Level;
 import com.reapersrage.world.level.RandomLevel;
 import java.awt.*;
@@ -27,15 +28,23 @@ public class Game extends Canvas implements Runnable {
 	// Name of the game to display on windows
 	static final String NAME = "DOODLE ARENA WARS 2015";
 	// Keyboard class for input
-	private static Keyboard key;
+	private Keyboard key;
+	private Mouse mouse;
 	// Is the game running
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
 	private BufferedImage OImage;
 	private GameOverScreen gameover;
+	
+	private static boolean button1_isClicked;
 
 	private int playerDir;
+	
+	private static int ClickedX;
+	private static int ClickedY;
+	
+
 
 	// value which will decide if the game is main menu/game/ or game over
 	// screen
@@ -98,8 +107,12 @@ public class Game extends Canvas implements Runnable {
 		container.setIconImage(OImage);
 
 		// adds key listener
+		key = new Keyboard();
 		addKeyListener(new Keyboard());
-
+		
+		mouse = new Mouse();
+		addMouseListener(mouse);
+		
 		// requests focus for our keylistener
 		requestFocus();
 
@@ -108,9 +121,10 @@ public class Game extends Canvas implements Runnable {
 		bufferStrategy = getBufferStrategy();
 		this.ticks = 0;
 		
+		button1_isClicked = false;
+		
 		//sets current state of the game
 		gameState = 1;
-
 	}
 
 	public static void main(String[] args) {
@@ -142,7 +156,7 @@ public class Game extends Canvas implements Runnable {
 	public void init() throws IOException {
 		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
 		screen = new Screen(WIDTH, HEIGHT);
-		player = new Player(5, 5, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
+		player = new Player((WIDTH/2)-((WIDTH/MAP_WIDTH)/2), (HEIGHT/2)-((HEIGHT/MAP_HEIGHT)/2), WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
 		gameover = new GameOverScreen(WIDTH, HEIGHT);
 		
 	}
@@ -329,6 +343,31 @@ public class Game extends Canvas implements Runnable {
             return player;
         }
 
+		public static int getClickedX() {
+			return ClickedX;
+		}
+
+		public  static void setClickedX(int clickedX) {
+			ClickedX = clickedX;
+		}
+
+		public  static int getClickedY() {
+			return ClickedY;
+		}
+
+		public static  void setClickedY(int clickedY) {
+			ClickedY = clickedY;
+		}
+
+		public static boolean isButton1_isClicked() {
+			return button1_isClicked;
+		}
+
+		public static void setButton1_isClicked(boolean n) {
+			button1_isClicked = n;
+		}
+
+        
 
 
 }
