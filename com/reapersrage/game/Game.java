@@ -20,6 +20,9 @@ public class Game extends Canvas implements Runnable {
 
 	static final int MAP_WIDTH = 10;
 	static final int MAP_HEIGHT = 10;
+	
+	private static int absolute_MapWidth = 40;
+	private static int absolute_MapHeight = 40;
 
 	// Make sure we have a 16:9 aspect ratio
 	static final int WIDTH = 800;
@@ -146,7 +149,7 @@ public class Game extends Canvas implements Runnable {
 	// Objects to create
 	// NOTE: TO MAKE THEM SHOW UP THEY MUST ALSO BE SET TO RENDER!
 	public void init() throws IOException {
-		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
+		level = new RandomLevel(absolute_MapWidth, absolute_MapHeight);
 		screen = new Screen(WIDTH, HEIGHT);
 		player = new Player((WIDTH/2)-((WIDTH/MAP_WIDTH)/2), (HEIGHT/2)-((HEIGHT/MAP_HEIGHT)/2), WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
 		gameover = new GameOverScreen(WIDTH, HEIGHT);
@@ -201,6 +204,7 @@ public class Game extends Canvas implements Runnable {
                     ticks++;
                     // Update the level
                     level.update(player);
+                    screen.Update(player);
 
                     //sets gamestate to gameover if player is destroyed
                     if (player.isDestroyed()) {
@@ -328,5 +332,23 @@ public class Game extends Canvas implements Runnable {
         public static Player getPlayer(){
             return player;
         }
+
+		public static int getAbsolute_MapWidth() {
+			return absolute_MapWidth;
+		}
+
+		public static void setAbsolute_MapWidth(int absolute_MapWidth) {
+			Game.absolute_MapWidth = absolute_MapWidth;
+		}
+
+		public static int getAbsolute_MapHeight() {
+			return absolute_MapHeight;
+		}
+
+		public static void setAbsolute_MapHeight(int absolute_MapHeight) {
+			Game.absolute_MapHeight = absolute_MapHeight;
+		}
+        
+        
     
 }
