@@ -68,9 +68,8 @@ public class Screen {
 
 		for (int y = 0; y < Game.getAbsolute_MapHeight(); y++) {
 			for (int x = 0; x < Game.getAbsolute_MapWidth(); x++) {
-						background[y][x].ChangeX(p.getVelX());
-						background[y][x].ChangeY(p.getVelY());				
-			
+						background[y][x].ChangeX(-p.getVelX());
+						background[y][x].ChangeY(-p.getVelY());
 					
 			}
 		}
