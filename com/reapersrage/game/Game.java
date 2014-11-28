@@ -37,15 +37,9 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage OImage;
 	private GameOverScreen gameover;
 	
-	private static boolean button1_isClicked;
 
 	private int playerDir;
-	
-	private static int ClickedX;
-	private static int ClickedY;
-	
-
-
+        
 	// value which will decide if the game is main menu/game/ or game over
 	// screen
 	private static int gameState;
@@ -120,9 +114,7 @@ public class Game extends Canvas implements Runnable {
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
 		this.ticks = 0;
-		
-		button1_isClicked = false;
-		
+				
 		//sets current state of the game
 		gameState = 1;
 	}
@@ -177,7 +169,7 @@ public class Game extends Canvas implements Runnable {
 			render();
 			// Determine how long it took the frame to update/render
 			long frameLength = System.currentTimeMillis() - frameStart;
-			System.out.println(frameLength);
+			
 			if (frameLength < FRAMERATE) {
 				// If that time is less than the desired frame length, sleep the
 				// remaining time
@@ -206,7 +198,6 @@ public class Game extends Canvas implements Runnable {
 		
                     // Update the player, passing the buttons pressed
                     player.update(null);
-                    //level.update(player);
                     ticks++;
                     // Update the level
                     level.update(player);
@@ -245,7 +236,6 @@ public class Game extends Canvas implements Runnable {
 		if(gameState == 1){
 		screen.drawBackground(g);
 		level.drawEntities(g);
-                //level.renderItems(g);
 		player.draw(g);
 		}
 		if(gameState == 2){
@@ -318,7 +308,6 @@ public class Game extends Canvas implements Runnable {
 	public static int getStaticHeight() {
 		return HEIGHT;
 	}
-
         
         //Text for the debug console
         public static void setDebugText(int Loc, String text){
@@ -326,11 +315,8 @@ public class Game extends Canvas implements Runnable {
         }
         public static int getTicks(){
             return ticks;
-        } 
-
-
-	
-
+        }
+        
 	public static int getGameState() {
 		return gameState;
 	}
@@ -342,32 +328,5 @@ public class Game extends Canvas implements Runnable {
         public static Player getPlayer(){
             return player;
         }
-
-		public static int getClickedX() {
-			return ClickedX;
-		}
-
-		public  static void setClickedX(int clickedX) {
-			ClickedX = clickedX;
-		}
-
-		public  static int getClickedY() {
-			return ClickedY;
-		}
-
-		public static  void setClickedY(int clickedY) {
-			ClickedY = clickedY;
-		}
-
-		public static boolean isButton1_isClicked() {
-			return button1_isClicked;
-		}
-
-		public static void setButton1_isClicked(boolean n) {
-			button1_isClicked = n;
-		}
-
-        
-
-
+    
 }

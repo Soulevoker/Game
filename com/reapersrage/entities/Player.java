@@ -62,6 +62,8 @@ public class Player extends Entity {
 
 	private int angle;
 	private int gunAngle;
+        private double[] facing;
+        private double[] gunFacing;
 
 	private ImageResizer IRgun;
 
@@ -84,8 +86,8 @@ public class Player extends Entity {
 		this.alreadyBlinked = false;
 		this.alreadyBlast = false;
                 this.wall = new boolean[4];
-		gunx = x + (width / 3);
-		guny = y;
+		this.gunx = x + (width / 3);
+		this.guny = y;
 
 		try {
 			OImage = ImageIO
@@ -111,6 +113,8 @@ public class Player extends Entity {
 
 		angle = 0;
 		gunAngle = 0;
+                this.facing = new double[]{0, 0};
+                this.gunFacing = new double[]{0, 0};
 
 		// sets initial health
 		health = DEF_HEALTH;
@@ -126,6 +130,8 @@ public class Player extends Entity {
 		updateProjectiles();
 		health += 1;
 		mana += 1;
+                
+                setDebug();
 
 	}
 
@@ -183,13 +189,17 @@ public class Player extends Entity {
 	// If the key is pressed, increments the velocity by acceleration
 	// velocity gets updated based on the inputs and acceleration
 	public void parseInput() {
-		// For each direction, check input
-		if (Buttons.up) {
+		//BEGIN PARSING KEY PRESSES FOR INPUT
+		double[] oldFacing= new double[2];
+                System.arraycopy(facing, 0, oldFacing, 0, 2);
+                this.facing = new double[]{0, 0};
+                if (Buttons.up) {
 			// Up
 			if (-1.0 * velocity[1] < MAX_V)
 				velocity[1] -= acceleration;
 			if (velocity[1] < -MAX_V)
 				velocity[1] = -MAX_V;
+                        facing[1] += 1;
 		}
 		if (Buttons.down) {
 			// Down
@@ -197,6 +207,7 @@ public class Player extends Entity {
 				velocity[1] += acceleration;
 			if (velocity[1] > MAX_V)
 				velocity[1] = MAX_V;
+                        facing[1] += -1;
 		}
 		if (Buttons.left) {
 			// Left
@@ -204,6 +215,7 @@ public class Player extends Entity {
 				velocity[0] -= acceleration;
 			if (velocity[0] < -MAX_V)
 				velocity[0] = -MAX_V;
+                        facing[0] -= 1;
 		}
 		if (Buttons.right) {
 			// Right
@@ -211,8 +223,9 @@ public class Player extends Entity {
 				velocity[0] += acceleration;
 			if (velocity[0] > MAX_V)
 				velocity[0] = MAX_V;
+                        facing[0] +=1;
 		}
-		// if not accelerating in y direction
+		// if not accelerating in y direction, decelerate
 		if (!Buttons.up && !Buttons.down && velocity[1] != 0) {
 			double newVelocity = velocity[1];
 			newVelocity -= velocity[1] > 0 ? friction : -friction;
@@ -223,7 +236,7 @@ public class Player extends Entity {
 			velocity[1] = newVelocity;
 
 		}
-		// If not accelerating in x
+		// If not accelerating in x, decelerate
 		if (!Buttons.left && !Buttons.right && velocity[0] != 0) {
 			double newVelocity = velocity[0];
 			newVelocity -= velocity[0] > 0 ? friction : -friction;
@@ -233,23 +246,20 @@ public class Player extends Entity {
 				newVelocity = 0;
 			velocity[0] = newVelocity;
 		}
-		// fire a projectile
-
-		String text = "<html>";
-		text += "projUp: " + Buttons.projUp + "<br>";
-		text += "projDown: " + Buttons.projDown + "<br>";
-		text += "projLeft: " + Buttons.projLeft + "<br>";
-		text += "projRight: " + Buttons.projRight + "<br>";
-		text += "alreadyFired: "
-				+ !(Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight);
-		text = text + "</html>";
-		Game.debugPanel.setLabel(2, text);
-		// fire
+		// If not accelerating at all use the old facing
+                if(!Buttons.up && !Buttons.down && !Buttons.left && !Buttons.right)
+                    facing = oldFacing;
+                System.out.println("Facing: " + facing[0] + " " + facing[1]);
+                angle = (int) (VectorMath.atan(facing));
+		
+                //BEGIN CHECKING THE KEYPRESSES FOR SKILL TRIGGERS
+                //fire projectile and set the gun pos to that projectiles velocity
 		if ((Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight)
 				&& !this.alreadyFired) {
 			this.alreadyFired = true;
-			fire();
-		}
+			gunFacing = fire();
+                        gunAngle = (int) (VectorMath.atan(gunFacing));               
+                }
 		if (this.alreadyFired
 				&& !(Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight)) {
 			this.alreadyFired = false;
@@ -271,69 +281,24 @@ public class Player extends Entity {
 		if (!Buttons.blast && this.alreadyBlast) {
 			this.alreadyBlast = false;
 		}
-
-		if (Buttons.up) {
-			angle = 0;
-			//gunAngle = 0;
-		}
-		if (Buttons.down) {
-			angle = 180;
-			//gunAngle = 180;
-		}
-		if (Buttons.right) {
-			angle = 90;
-			//gunAngle = 90;
-		}
-		if (Buttons.left) {
-			angle = 270;
-			//gunAngle = 270;
-		}
-
-		if (Buttons.up && Buttons.right) {
-			angle = 60;
-			//gunAngle = 60;
-		}
-		if (Buttons.up && Buttons.left) {
-			angle = 300;
-			//gunAngle = 300;
-		}
-		if (Buttons.down && Buttons.right) {
-			angle = 120;
-			//gunAngle = 120;
-		}
-		if (Buttons.down && Buttons.left) {
-			angle = 240;
-			//gunAngle = 240;
-		}
-
-		if (Buttons.projUp) {
-			gunAngle = 0;
-		}
-		if (Buttons.projDown) {
-			gunAngle = 180;
-		}
-		if (Buttons.projRight) {
-			gunAngle = 90;
-		}
-		if (Buttons.projLeft) {
-			gunAngle = 270;
-		}
-
-		if (Buttons.projUp && Buttons.projRight) {
-			gunAngle = 60;
-		}
-		if (Buttons.projUp && Buttons.projLeft) {
-			gunAngle = 300;
-		}
-		if (Buttons.projDown && Buttons.projRight) {
-			gunAngle = 120;
-		}
-		if (Buttons.projDown && Buttons.projLeft) {
-			gunAngle = 240;
-		}
-
+               
+                    
 	}
 
+        private void setDebug(){
+             //BEGIN LOGGING KEYPRESSES ON THE DEBUG PANNEL
+		String text = "<html>";
+		text += "projUp: " + Buttons.projUp + "<br>";
+		text += "projDown: " + Buttons.projDown + "<br>";
+		text += "projLeft: " + Buttons.projLeft + "<br>";
+		text += "projRight: " + Buttons.projRight + "<br>";
+		text += "alreadyFired: "
+				+ !(Buttons.projUp || Buttons.projDown || Buttons.projLeft || Buttons.projRight) + " <br>";
+                text += "angle" + angle + " <br>";
+ 		text = text + "</html>";
+		Game.debugPanel.setLabel(2, text);
+        }
+        
 	// Checks for a collision in both x and y and return an array of booleans
 	// indicating such
 	// for collisions with walls. Collisions with mobs is handeled by each
@@ -431,7 +396,7 @@ public class Player extends Entity {
 		this.y = y;
 	}
 
-	private void fire() {
+	private double[] fire() {
 		int bulletx = x;
 		int bullety = y;
 		
@@ -500,6 +465,7 @@ public class Player extends Entity {
 			ProjList.add(new FireBall(bulletx, bullety,
 					15, 15, 50, VectorMath.scaleVector(currVel, 15)));
 		}
+                return currVel;
 	}
 
 	private void blast() {
