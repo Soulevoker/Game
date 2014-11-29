@@ -120,21 +120,24 @@ public class Player extends Entity {
 		health = DEF_HEALTH;
 	}
 
-	// Update the player each frame
+	/**
+         * Each frame, update the player
+         * @param person - set to null, this is the player
+         */
 	public void update(Player person) {
 		parseInput();
-		boolean[] collision = checkCollision(x, y, velocity); // check
-																// collisions
-																// before moving
+		boolean[] collision = checkCollision(x, y, velocity); 
 		move();
 		updateProjectiles();
 		health += 1;
 		mana += 1;
-                
                 setDebug();
 
 	}
 
+        /**
+         * Updates the player's projectiles
+         */
 	public void updateProjectiles() {
 		Iterator<Projectile> projIterator = ProjList.iterator();
 		while (projIterator.hasNext()) {
@@ -146,7 +149,9 @@ public class Player extends Entity {
 		}
 	}
 
-	// Moves the player, stopping if we hit a wall
+	/**
+         * Moves the player
+         */
 	private void move() {
 		int xNew = x;
 		int yNew = y;
@@ -185,9 +190,11 @@ public class Player extends Entity {
 		guny = y;
 	}
 
-	// Parses the keypresses
-	// If the key is pressed, increments the velocity by acceleration
-	// velocity gets updated based on the inputs and acceleration
+	/**
+         * Parses the keypresses
+	 * If the key is pressed, increments the velocity by acceleration
+	 * velocity gets updated based on the inputs and acceleration
+         */
 	public void parseInput() {
 		//BEGIN PARSING KEY PRESSES FOR INPUT
 		double[] oldFacing= new double[2];
@@ -285,6 +292,9 @@ public class Player extends Entity {
                     
 	}
 
+        /**
+         * Sets the text on the debug panel for the player
+         */
         private void setDebug(){
              //BEGIN LOGGING KEYPRESSES ON THE DEBUG PANNEL
 		String text = "<html>";
@@ -299,10 +309,15 @@ public class Player extends Entity {
 		Game.debugPanel.setLabel(2, text);
         }
         
-	// Checks for a collision in both x and y and return an array of booleans
-	// indicating such
-	// for collisions with walls. Collisions with mobs is handeled by each
-	// individual mob
+	/** Checks for a collision in both x and y and return an array of booleans
+	 * indicating such
+	 * for collisions with walls. Collisions with mobs is handeled by each
+	 * individual mob
+         * @param x - current x position
+         * @param y - current y position
+         * @param v - velocity (vector)
+         * @return whether or not there will be a collision in the x or y respectively 
+         */
 	public boolean[] checkCollision(int x, int y, double[] v) {
 		boolean[] collisions = new boolean[] { false, false };
 		wall[0] = false;
@@ -333,7 +348,10 @@ public class Player extends Entity {
 		return collisions;
 	}
 
-	// Draws the player
+	/**
+         * Draws the player to the given graphics
+         * @param g - grahpics on which to dtaw the player
+         */
 	public void draw(Graphics2D g) {
 		Graphics2D gg = (Graphics2D) g.create();
 		gg.rotate(Math.toRadians(angle), x + (width / 2), y + (height / 2));
@@ -353,7 +371,6 @@ public class Player extends Entity {
 		}
 	}
 
-	// Player's health
 	public int getHealth() {
 		return health;
 	}
@@ -366,11 +383,18 @@ public class Player extends Entity {
 		return mana;
 	}
 
-	// changes players health. Negative lowers health (damage)
+	/**
+         * Changes health by desired amount
+         * @param change amount to change (negative deals damage)
+         */
 	public void changeHealth(int change) {
 		health += change;
 	}
 
+        /**
+         * Changes gold
+         * @param change - amount to change (negative to take) 
+         */
 	public void changeGold(int change) {
 		gold += change;
 	}
@@ -396,6 +420,12 @@ public class Player extends Entity {
 		this.y = y;
 	}
 
+        /**
+         * Fires a bullet. The initial position of the bullet is the location of
+         * the player's gun. The initial velocity of the bullet is determined by
+         * keypresses. All bullets move under no net force until collision.
+         * @return the velocity of the bullet fired
+         */
 	private double[] fire() {
 		int bulletx = x;
 		int bullety = y;
@@ -468,6 +498,10 @@ public class Player extends Entity {
                 return currVel;
 	}
 
+        /**
+         * Fires a bunch of bullets
+         * @deprecated this for loop takes too long
+         */
 	private void blast() {
 		if (mana >= 100) {
 			mana -= 100;
