@@ -65,6 +65,9 @@ public class Player extends Entity {
         private double[] facing;
         private double[] gunFacing;
 
+		private int xNew;
+		private int yNew;
+        
 	private ImageResizer IRgun;
 
 	public Player(int x, int y, int width, int height) {
@@ -88,7 +91,10 @@ public class Player extends Entity {
                 this.wall = new boolean[4];
 		this.gunx = x + (width / 3);
 		this.guny = y;
-
+		
+		xNew = x;
+		yNew = y;
+		
 		try {
 			OImage = ImageIO
 					.read(GameTile.class
@@ -153,8 +159,8 @@ public class Player extends Entity {
          * Moves the player
          */
 	private void move() {
-		int xNew = x;
-		int yNew = y;
+		xNew = x;
+		yNew = y;
 		boolean[] collision = checkCollision(x, y, velocity);
 		// Movement of the player
 		if (!collision[1]) {
@@ -184,8 +190,14 @@ public class Player extends Entity {
 			xNew = 0;
 			velocity[0] = 0;
 		}
-		x = xNew;
-		y = yNew;
+		
+		if(Game.getScreen().isScreenX()){
+			x = xNew;	
+		}
+		if(Game.getScreen().isScreenY()){
+			y = yNew;
+		}
+		
 		gunx = x + (width / 3);
 		guny = y;
 	}

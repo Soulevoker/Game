@@ -28,6 +28,11 @@ public class Screen {
 	
 	private int starty;
 	private int startx;
+	
+	private boolean screenX;
+	private boolean screenY;
+
+	
 
 	public Screen(int width, int height) throws IOException {
 		tileWidth = width / Game.getMapWidth();
@@ -39,6 +44,9 @@ public class Screen {
 		
 		startx = 0;
 		starty = 0;
+		
+		screenX = false;
+		screenY = false;
 
 		
 		try {
@@ -68,8 +76,16 @@ public class Screen {
 
 		for (int y = 0; y < Game.getAbsolute_MapHeight(); y++) {
 			for (int x = 0; x < Game.getAbsolute_MapWidth(); x++) {
-						background[y][x].ChangeX(-p.getVelX());
-						background[y][x].ChangeY(-p.getVelY());
+
+				
+					if(!screenX){
+						background[y][x].ChangeX(p.getVelX());
+					}
+					if(!screenY){
+						background[y][x].ChangeY(p.getVelY());
+					}
+					
+					
 					
 			}
 		}
@@ -92,9 +108,38 @@ public class Screen {
 			starty--;
 			endy--;
 		}
+		
+		if(startx == 0 && background[starty][startx].getWidth() >= 0){
+			screenX = true;
+		}
+		if(starty == 0 && background[starty][startx].getHeight() >= 0){
+			screenY = true;
+		}
+		if(endx == Game.getAbsolute_MapWidth()-1 && background[endy][endx].getWidth() <= Game.getStaticWidth()){
+			screenX = true;
+		}
+		if(endy == Game.getAbsolute_MapHeight()-1 && background[endy][endx].getHeight() <= Game.getStaticHeight()){
+			screenY = true;
+		}
+		
+		if(p.getX() + p.getWidth()/2 >= Game.getStaticWidth()/2  && Game.getButtonsPressed().right && startx == 0){
+			screenX = false;
+		}
+		if(p.getX() + p.getWidth()/2 <= Game.getStaticWidth()/2  && Game.getButtonsPressed().left && endx == Game.getAbsolute_MapWidth()-1){
+			screenX = false;
+		}
+		if(p.getY() + p.getHeight()/2 >= Game.getStaticHeight()/2  && Game.getButtonsPressed().down && starty == 0){
+			screenY = false;
+		}
+		if(p.getY() + p.getHeight()/2 <= Game.getStaticHeight()/2  && Game.getButtonsPressed().up && endy == Game.getAbsolute_MapHeight()-1){
+			screenY = false;
+		}
 
 		
+		
 	}
+
+
 
 	public void drawBackground(Graphics2D g) {
 		g.drawImage(backgroundTile, 0, 0, null);
@@ -114,5 +159,23 @@ public class Screen {
 	public void clean() {
 		background = new GameTile[Game.getMapHeight()][Game.getMapWidth()];
 	}
+
+	public boolean isScreenX() {
+		return screenX;
+	}
+
+	public void setScreenX(boolean screenX) {
+		this.screenX = screenX;
+	}
+
+	public boolean isScreenY() {
+		return screenY;
+	}
+
+	public void setScreenY(boolean screenY) {
+		this.screenY = screenY;
+	}
+	
+	
 
 }

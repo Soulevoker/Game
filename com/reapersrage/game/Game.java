@@ -21,8 +21,8 @@ public class Game extends Canvas implements Runnable {
 	static final int MAP_WIDTH = 10;
 	static final int MAP_HEIGHT = 10;
 	
-	private static int absolute_MapWidth = 40;
-	private static int absolute_MapHeight = 40;
+	private static int absolute_MapWidth = 20;
+	private static int absolute_MapHeight = 20;
 
 	// Make sure we have a 16:9 aspect ratio
 	static final int WIDTH = 800;
@@ -50,7 +50,7 @@ public class Game extends Canvas implements Runnable {
 	// Directions the player can move in: {Up, Down, Left, Right}
 	private boolean[] playerDirs;
 	private boolean[] projDirs;
-	private Screen screen;
+	private static Screen screen;
 	private static Level level;
 	private static Player player;
 
@@ -348,7 +348,18 @@ public class Game extends Canvas implements Runnable {
 		public static void setAbsolute_MapHeight(int absolute_MapHeight) {
 			Game.absolute_MapHeight = absolute_MapHeight;
 		}
+
+		public static Screen getScreen() {
+			return screen;
+		}
+
+
+
+		public static Buttons getButtonsPressed() {
+			return buttonsPressed;
+		}
         
+		
         
     
 }
