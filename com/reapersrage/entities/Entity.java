@@ -16,8 +16,11 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Entity {
 
+    //X and Y are are based on the WCS
     int x;
     int y;
+    int locX;
+    int locY;
     ImageResizer IR;
     BufferedImage OImage;
     BufferedImage RImage;

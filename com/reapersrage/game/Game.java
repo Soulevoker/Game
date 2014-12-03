@@ -228,7 +228,11 @@ public class Game extends Canvas implements Runnable {
 			gameState = 1;
 		}
                 long timePassed = System.currentTimeMillis() - updateStart;
-                debugPanel.setLabel(3, "<html> Ticks: " + ticks % 50 + "<br>ms: " + timePassed + "</html>");
+                debugPanel.setLabel(3, "<html> Ticks: " + ticks % 50 + 
+                        "<br>ms: " + timePassed + 
+                        "<br>locX: " + screen.getX() +
+                        "<br>locY: " + screen.getY() +
+                        "</html>");
 
 	}
 

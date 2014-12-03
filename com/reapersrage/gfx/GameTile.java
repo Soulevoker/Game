@@ -86,11 +86,15 @@ public class GameTile {
 		return resizedImage;
 	}
 
-	public int getWidth() {
+        /**
+         * Pixel location of tile with respect to the top of the screen
+         * @return 
+         */
+	public int getX() {
 		return x;
 	}
 
-	public int getHeight() {
+	public int getY() {
 		return y;
 	}
 
@@ -98,6 +102,14 @@ public class GameTile {
 	public int getTileType() {
 		return tileType;
 	}
+        
+        public int getTileWidth() {
+            return tileWidth;
+        }
+        
+        public int getTileHeight() {
+            return tileHeight;
+        }
 
 
 	public void setTileType(int tileType) {

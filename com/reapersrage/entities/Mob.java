@@ -73,7 +73,9 @@ public abstract class Mob extends Entity {
         }
    
         public void draw(Graphics2D g) {
-		g.drawImage(RImage, x, y, null);
+                this.locX = x - Game.getScreen().getX();
+                this.locY = y - Game.getScreen().getY();
+		g.drawImage(RImage, locX, locY, null);
 	}
 	
         public int getHealth(){

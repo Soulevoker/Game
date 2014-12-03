@@ -77,10 +77,7 @@ public class Ghost extends Mob {
         this.direction = VectorMath.randomPos();
     }
     
-    public void draw(Graphics2D g) {
-            g.drawImage(RImage, x, y, null);
-            
-	}
+    
     
     
     //Shoots a fireball in the specified direction

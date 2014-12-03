@@ -92,36 +92,37 @@ public class Screen {
 
 		
 		
-		if(background[starty+2][startx+2].getWidth() <= 0 && endx+1 < Game.getAbsolute_MapWidth()){
+		if(background[starty+2][startx+2].getX() <= 0 && endx+1 < Game.getAbsolute_MapWidth()){
 			startx++;
 			endx++;
 		}
-		if(background[starty+2][startx+2].getHeight() <= 0  && endy+1 < Game.getAbsolute_MapHeight()){
+		if(background[starty+2][startx+2].getY() <= 0  && endy+1 < Game.getAbsolute_MapHeight()){
 			starty++;
 			endy++;
 		}
-		if(background[endy-2][endx-2].getWidth() >= Game.getStaticWidth() && startx-1 > -1){
+		if(background[endy-2][endx-2].getX() >= Game.getStaticWidth() && startx-1 > -1){
 			startx--;
 			endx--;
 		}
-		if(background[endy-2][endx-2].getHeight() >= Game.getStaticHeight() && starty-1 > -1){
+		if(background[endy-2][endx-2].getY() >= Game.getStaticHeight() && starty-1 > -1){
 			starty--;
 			endy--;
 		}
 		
-		if(startx == 0 && background[starty][startx].getWidth() >= 0){
+		if(startx == 0 && background[starty][startx].getX() >= 0){
 			screenX = true;
 		}
-		if(starty == 0 && background[starty][startx].getHeight() >= 0){
+		if(starty == 0 && background[starty][startx].getY() >= 0){
 			screenY = true;
 		}
-		if(endx == Game.getAbsolute_MapWidth()-1 && background[endy][endx].getWidth() <= Game.getStaticWidth()){
+		if(endx == Game.getAbsolute_MapWidth()-1 && background[endy][endx].getX() <= Game.getStaticWidth()){
 			screenX = true;
 		}
-		if(endy == Game.getAbsolute_MapHeight()-1 && background[endy][endx].getHeight() <= Game.getStaticHeight()){
+		if(endy == Game.getAbsolute_MapHeight()-1 && background[endy][endx].getY() <= Game.getStaticHeight()){
 			screenY = true;
 		}
 		
+                
 		if(p.getX() + p.getWidth()/2 >= Game.getStaticWidth()/2  && Game.getButtonsPressed().right && startx == 0){
 			screenX = false;
 		}
@@ -148,7 +149,7 @@ public class Screen {
 			for (int x = startx; x < endx; x++) {
 
 				if (background[y][x].getTileType() != 0) {
-					g.drawImage(background[y][x].getImage(),background[y][x].getWidth(),background[y][x].getHeight(), null);
+					g.drawImage(background[y][x].getImage(),background[y][x].getX(),background[y][x].getY(), null);
 				}
 
 			}
@@ -174,7 +175,24 @@ public class Screen {
 
 	public void setScreenY(boolean screenY) {
 		this.screenY = screenY;
-	}
+        }
+        
+        /**
+         * Returns the X position of the LCS
+         * @return x
+         */
+        public int getX(){
+            return background[starty][startx].getTileWidth()*(startx-1) - background[starty][startx].getX();
+        }        
+        /**
+         * Returns he Y position of the LCS
+         * @return y
+         */
+        public int getY(){
+            return background[starty][startx].getTileHeight()*(starty-1) - background[starty][startx].getY();
+        }
+        
+        
 	
 	
 
