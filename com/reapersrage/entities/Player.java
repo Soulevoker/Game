@@ -53,7 +53,7 @@ public class Player extends Entity {
 	private final int DEF_MANA = 100000000;
 	private Random random = new Random(); // so randum xD
 
-	private boolean[] playerDirs;
+	//private boolean[] playerDirs;
 	// This way there's no autofire
 	private boolean alreadyFired;
 	// This way there's no autoblink
