@@ -79,7 +79,7 @@ public class Player extends Entity {
 		this.friction = 1;
 		this.velocity = new double[] { 0.0, 0.0 };
 		this.MAX_V = 10.0;
-		this.playerDirs = new boolean[10];
+		//this.playerDirs = new boolean[10];
 		this.alreadyFired = false;
 		this.alreadyBlinked = false;
 		this.alreadyBlast = false;
