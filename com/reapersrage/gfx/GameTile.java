@@ -74,7 +74,14 @@ public class GameTile {
 		}
 	}
 
-
+	public void ChangeX(int velx){
+		x += (velx * -1);
+	}
+	
+	public void ChangeY(int vely){
+		y += (vely * -1);
+	} 
+	
 	public BufferedImage getImage() {
 		return resizedImage;
 	}
@@ -96,6 +103,8 @@ public class GameTile {
 	public void setTileType(int tileType) {
 		this.tileType = tileType;
 	}
+
+
 	
 	
 

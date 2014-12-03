@@ -42,15 +42,15 @@ public class RandomLevel extends Level {
         int i = 0;
         //this.MobList = new ArrayList<>();
         //MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80), Game.getStaticWidth()/mapwidth, Game.getStaticHeight()/mapheight, 1, 1,i++));
-        EntityList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
+        EntityList.add(new Fountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/Game.getMapWidth(),Game.getStaticHeight()/Game.getMapHeight(),10,1));
         //MobList.add(new Spike(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1,i++));
         //One of the fountains is a mimic that actually drains health
-        EntityList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
+        EntityList.add(new MimicFountain(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/Game.getMapWidth(),Game.getStaticHeight()/Game.getMapHeight(),10,1));
         EntityList.add(new Chest());
 
 
         for(int b=0; b<10; b++){
-             EntityList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/mapwidth,Game.getStaticHeight()/mapheight,10,1));
+             EntityList.add(new Ghost(random.nextInt(Game.getStaticWidth()-80),random.nextInt(Game.getStaticHeight()-80),Game.getStaticWidth()/Game.getMapWidth(),Game.getStaticHeight()/Game.getMapHeight(),10,1));
         }
         //Sound bgMusic = new Sound();
         // bgMusic.music("bg");

@@ -6,6 +6,7 @@ import com.reapersrage.gfx.GameTile;
 import com.reapersrage.gfx.Screen;
 import com.reapersrage.input.Buttons;
 import com.reapersrage.input.Keyboard;
+import com.reapersrage.input.Mouse;
 import com.reapersrage.world.level.Level;
 import com.reapersrage.world.level.RandomLevel;
 import java.awt.*;
@@ -19,6 +20,9 @@ public class Game extends Canvas implements Runnable {
 
 	static final int MAP_WIDTH = 10;
 	static final int MAP_HEIGHT = 10;
+	
+	private static int absolute_MapWidth = 20;
+	private static int absolute_MapHeight = 20;
 
 	// Make sure we have a 16:9 aspect ratio
 	static final int WIDTH = 800;
@@ -27,16 +31,18 @@ public class Game extends Canvas implements Runnable {
 	// Name of the game to display on windows
 	static final String NAME = "DOODLE ARENA WARS 2015";
 	// Keyboard class for input
-	private static Keyboard key;
+	private Keyboard key;
+	private Mouse mouse;
 	// Is the game running
 	private boolean running = false;
 	private static Buttons buttonsPressed;
 	private static String buttonPressed;
 	private BufferedImage OImage;
 	private GameOverScreen gameover;
+	
 
 	private int playerDir;
-
+        
 	// value which will decide if the game is main menu/game/ or game over
 	// screen
 	private static int gameState;
@@ -44,7 +50,7 @@ public class Game extends Canvas implements Runnable {
 	// Directions the player can move in: {Up, Down, Left, Right}
 	private boolean[] playerDirs;
 	private boolean[] projDirs;
-	private Screen screen;
+	private static Screen screen;
 	private static Level level;
 	private static Player player;
 
@@ -98,8 +104,12 @@ public class Game extends Canvas implements Runnable {
 		container.setIconImage(OImage);
 
 		// adds key listener
+		key = new Keyboard();
 		addKeyListener(new Keyboard());
-
+		
+		mouse = new Mouse();
+		addMouseListener(mouse);
+		
 		// requests focus for our keylistener
 		requestFocus();
 
@@ -107,10 +117,9 @@ public class Game extends Canvas implements Runnable {
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
 		this.ticks = 0;
-		
+				
 		//sets current state of the game
 		gameState = 1;
-
 	}
 
 	public static void main(String[] args) {
@@ -140,9 +149,9 @@ public class Game extends Canvas implements Runnable {
 	// Objects to create
 	// NOTE: TO MAKE THEM SHOW UP THEY MUST ALSO BE SET TO RENDER!
 	public void init() throws IOException {
-		level = new RandomLevel(MAP_WIDTH, MAP_HEIGHT);
+		level = new RandomLevel(absolute_MapWidth, absolute_MapHeight);
 		screen = new Screen(WIDTH, HEIGHT);
-		player = new Player(5, 5, WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
+		player = new Player((WIDTH/2)-((WIDTH/MAP_WIDTH)/2), (HEIGHT/2)-((HEIGHT/MAP_HEIGHT)/2), WIDTH/MAP_WIDTH, HEIGHT/MAP_HEIGHT);
 		gameover = new GameOverScreen(WIDTH, HEIGHT);
 		
 	}
@@ -163,7 +172,7 @@ public class Game extends Canvas implements Runnable {
 			render();
 			// Determine how long it took the frame to update/render
 			long frameLength = System.currentTimeMillis() - frameStart;
-			System.out.println(frameLength);
+			
 			if (frameLength < FRAMERATE) {
 				// If that time is less than the desired frame length, sleep the
 				// remaining time
@@ -192,10 +201,10 @@ public class Game extends Canvas implements Runnable {
 		
                     // Update the player, passing the buttons pressed
                     player.update(null);
-                    //level.update(player);
                     ticks++;
                     // Update the level
                     level.update(player);
+                    screen.Update(player);
 
                     //sets gamestate to gameover if player is destroyed
                     if (player.isDestroyed()) {
@@ -231,7 +240,6 @@ public class Game extends Canvas implements Runnable {
 		if(gameState == 1){
 		screen.drawBackground(g);
 		level.drawEntities(g);
-                //level.renderItems(g);
 		player.draw(g);
 		}
 		if(gameState == 2){
@@ -304,7 +312,6 @@ public class Game extends Canvas implements Runnable {
 	public static int getStaticHeight() {
 		return HEIGHT;
 	}
-
         
         //Text for the debug console
         public static void setDebugText(int Loc, String text){
@@ -312,11 +319,8 @@ public class Game extends Canvas implements Runnable {
         }
         public static int getTicks(){
             return ticks;
-        } 
-
-
-	
-
+        }
+        
 	public static int getGameState() {
 		return gameState;
 	}
@@ -329,6 +333,33 @@ public class Game extends Canvas implements Runnable {
             return player;
         }
 
+		public static int getAbsolute_MapWidth() {
+			return absolute_MapWidth;
+		}
+
+		public static void setAbsolute_MapWidth(int absolute_MapWidth) {
+			Game.absolute_MapWidth = absolute_MapWidth;
+		}
+
+		public static int getAbsolute_MapHeight() {
+			return absolute_MapHeight;
+		}
+
+		public static void setAbsolute_MapHeight(int absolute_MapHeight) {
+			Game.absolute_MapHeight = absolute_MapHeight;
+		}
+
+		public static Screen getScreen() {
+			return screen;
+		}
 
 
+
+		public static Buttons getButtonsPressed() {
+			return buttonsPressed;
+		}
+        
+		
+        
+    
 }
