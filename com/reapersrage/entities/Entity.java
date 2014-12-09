@@ -96,9 +96,10 @@ public abstract class Entity {
      * Move the entity by [dx,dy] if it can
      *
      * @param dx - change in x
-     * @param dy - change in y
+     * @param dy - change in 
+     * @return if there was a collision
      */
-    public void move(int dx, int dy) {
+    public boolean move(int dx, int dy) {
         boolean[] collision = checkCollision(x, y, new double[]{dx, dy});
         
         //if we aren't colliding on the X axis
@@ -127,6 +128,8 @@ public abstract class Entity {
         }
         this.x = xNew;
         this.y = yNew;
+        
+        return collision[0] || collision[1];
     }
 
     /**

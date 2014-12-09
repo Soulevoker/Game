@@ -59,20 +59,38 @@ public class Ghost extends Mob {
         return "Ghost " + id;
     }
     
-    //Move the ghost in the direction of the player
+    /**
+     * Updates the ghost
+     * <p>
+     * Algorithm:
+     *      first the ghost decides if it will change destination
+     *       (default destination is what?)
+     *      move in that direction at a speed of 5 pixels/frame
+     *      randomly change direction ever 1000 frames (20 sec)
+     *       or change direction if we've hit something
+     *      fire a attack at the player every 200 frames (4 sec)
+     * <p>
+     * TODO:
+     *      fix issue where for some reason ghosts just flock to the walls and
+     *       do nothing
+     * 
+     * @param person - the player
+     */
     public void update(Player person){
         if (isCollided(person)) dealDamage(person); 
         //double[] disp = displacementFromPlayer(person);
         double[] disp = VectorMath.scaleVector(displacementFrom(this.direction), 1);
-        this.move((int)(5*disp[0]),(int)(5*disp[1]));
+        boolean collided = this.move((int)(5*disp[0]),(int)(5*disp[1]));
         //if we hit a wall or it's time to change direction
-        if(wall[0] || wall[1] || wall[2] || wall[3] || rand.nextInt(1000) == 1)
+        if(rand.nextInt(1000) == 1 ||  collided)
             setDirection();
         if(rand.nextInt(200) == 10) fireball(person);
         projCollision(person);
     }
     
-    //Sets the direction of movement
+    /**
+     * Sets the direction of movement
+     */
     private void setDirection(){
         this.direction = VectorMath.randomPos();
     }
@@ -80,7 +98,10 @@ public class Ghost extends Mob {
     
     
     
-    //Shoots a fireball in the specified direction
+    /**
+     * Shoots a singe fireball at player
+     * @param player the player
+     */
     private void fireball(Player player){
         Game.getLevel().addEntity(new FireBall(this.x, this.y, 40, 40, 100, displacementFromPlayer(player, 10)));
     }
