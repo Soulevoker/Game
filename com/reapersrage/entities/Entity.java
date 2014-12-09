@@ -30,10 +30,11 @@ public abstract class Entity {
     boolean imortalObject;
     boolean[] wall; //Will it hit the wall?
 
-    /**
-     * Draws it
-     */
-    public abstract void draw(Graphics2D g);
+    public void draw(Graphics2D g) {
+                this.locX = x - Game.getScreen().getX();
+                this.locY = y - Game.getScreen().getY();
+		g.drawImage(RImage, locX, locY, null);
+	}
     
     /**
      * Update
@@ -42,15 +43,17 @@ public abstract class Entity {
 
     /**
      * Checks whether or not there is a collision, pixel by pixel.
+     * 
+     * Uses LCS
      */
     public boolean isCollided(Entity person) {
-        int[] mobXrange = {x, x + width};
+        int[] mobXrange = {locX, locX + width};
         int[] personXrange = {person.getX(), person.getX() + person.getWidth()};
-        int[] mobYrange = {y, y + height};
+        int[] mobYrange = {locY, locY + height};
         int[] personYrange = {person.getY(), person.getY() + person.getHeight()};
 
-        //checks if any pixel in mob overlaps with any pixel in player
-        if (Math.abs(person.getX() - this.x) < person.getWidth() + this.width || Math.abs(person.getY() - this.y) < person.getHeight() + this.height) {
+        //checks if any pixel in mob overlaps with any pixel in player 
+        if (Math.abs(person.getX() - this.locX) < person.getWidth() + this.width || Math.abs(person.getY() - this.locY) < person.getHeight() + this.height) {
             for (int i = mobXrange[0]; i < mobXrange[1]; i++) {
                 for (int j = mobYrange[0]; j < mobYrange[1]; j++) {
                     for (int k = personXrange[0]; k < personXrange[1]; k++) {
@@ -164,6 +167,10 @@ public abstract class Entity {
 
     public abstract void destroy();
     
+    /**
+     * Get the x position
+     * @return 
+     */
     public int getX(){
         return x;
     }

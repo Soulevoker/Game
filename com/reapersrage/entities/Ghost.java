@@ -84,16 +84,7 @@ public class Ghost extends Mob {
     private void fireball(Player player){
         Game.getLevel().addEntity(new FireBall(this.x, this.y, 40, 40, 100, displacementFromPlayer(player, 10)));
     }
-    /*public String projDebug() {
-        String out = "";
-        Iterator<Projectile> projIterator = ProjList.iterator();
-        int i = 0;
-            while(projIterator.hasNext()){
-                Projectile currentProj = projIterator.next();
-                out = out + "Proj "+i+":("+currentProj.getX()+","+currentProj.getY()+")";
-            }
-        return out;
-    }*/
+
     
     public void destroy(){
         dropGold(1);

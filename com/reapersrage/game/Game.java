@@ -270,16 +270,15 @@ public class Game extends Canvas implements Runnable {
 
 	// Determine which buttons are currently being pressed
 	public void ButtonPressed() {
-		playerDirs[0] = buttonsPressed.up;
-		playerDirs[1] = buttonsPressed.down;
-		playerDirs[2] = buttonsPressed.left;
-		playerDirs[3] = buttonsPressed.right;
-		playerDirs[4] = buttonsPressed.space;
-
-		playerDirs[5] = buttonsPressed.projUp;
-		playerDirs[6] = buttonsPressed.projDown;
-		playerDirs[7] = buttonsPressed.projLeft;
-		playerDirs[8] = buttonsPressed.projRight;
+		playerDirs[0] = Buttons.up;
+		playerDirs[1] = Buttons.down;
+		playerDirs[2] = Buttons.left;
+		playerDirs[3] = Buttons.right;
+		playerDirs[4] = Buttons.space;
+		playerDirs[5] = Buttons.projUp;
+		playerDirs[6] = Buttons.projDown;
+		playerDirs[7] = Buttons.projLeft;
+		playerDirs[8] = Buttons.projRight;
 	}
 
 

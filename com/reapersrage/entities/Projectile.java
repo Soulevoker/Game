@@ -71,10 +71,6 @@ public abstract class Projectile extends com.reapersrage.entities.Entity {
         return RImage;
     }
 
-    public void draw(Graphics2D g) {
-        g.drawImage(RImage, x, y, null);
-    }
-
     //deals damage to player
     public void dealDamage(Player person) {
         int damage = damageOnHit;

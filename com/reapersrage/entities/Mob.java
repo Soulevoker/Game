@@ -72,11 +72,7 @@ public abstract class Mob extends Entity {
             this(pos[0], pos[1], width, height, damageOnHit, dps, name);
         }
    
-        public void draw(Graphics2D g) {
-                this.locX = x - Game.getScreen().getX();
-                this.locY = y - Game.getScreen().getY();
-		g.drawImage(RImage, locX, locY, null);
-	}
+        
 	
         public int getHealth(){
             return health;

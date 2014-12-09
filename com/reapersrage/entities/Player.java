@@ -411,14 +411,28 @@ public class Player extends Entity {
 		gold += change;
 	}
 
+        /**
+         * 
+         * @return x velocity
+         */
 	public int getVelX() {
 		return (int) velocity[0];
 	}
 
+        /**
+         * 
+         * @return y vecloty
+         */
 	public int getVelY() {
 		return (int) velocity[1];
 	}
 
+        /**
+         * Is it transparent
+         * @param x x pixel
+         * @param y y pixel
+         * @return true iff transparent
+         */
 	public boolean isTransparent(int x, int y) {
 		int pixel = RImage.getRGB(x, y);
 		if ((pixel >> 24) == 0x00)
