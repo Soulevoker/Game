@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>robotgame</name>
+=======
+	<name>Game</name>
+>>>>>>> newTile
 	<comment></comment>
 	<projects>
 	</projects>
