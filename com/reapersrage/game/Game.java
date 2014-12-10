@@ -127,7 +127,9 @@ public class Game extends Canvas implements Runnable {
 		game.start();
 	}
 
-	// Starts the game
+	/**
+         * Starts the game thread
+         */
 	public synchronized void start() {
 		// The game is running
 		running = true;
@@ -137,6 +139,9 @@ public class Game extends Canvas implements Runnable {
 		gameThread.start();
 	}
 
+        /**
+         * Stops the game thread
+         */
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -156,7 +161,9 @@ public class Game extends Canvas implements Runnable {
 		
 	}
 
-	// Run the game
+	/**
+         * Runs the game
+         */
 	public void run() {
 		try {
 			init();
@@ -186,7 +193,9 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	// Update routine
+	/**
+         * Updates the game
+         */
 	public void update() {
                 long updateStart = System.currentTimeMillis();
                
@@ -237,7 +246,9 @@ public class Game extends Canvas implements Runnable {
 	}
 
 
-	// Renders everything
+	/**
+         * Renders the game
+         */
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		// Draw the background, mobs, and player; last is on top
@@ -256,7 +267,10 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
-	//used to reset game will be fancier in future
+	/**
+         * Resets the game
+         * @throws IOException 
+         */
 	private void resetGame() throws IOException {
 		buttonsPressed = new Buttons();
 		buttonPressed = "";
@@ -268,7 +282,11 @@ public class Game extends Canvas implements Runnable {
 	}
 
 
-	// Determine which buttons are currently being pressed
+	/**
+         * Sets an array of button presses
+         * <p>
+         * I doubt we need this
+         */
 	public void ButtonPressed() {
 		playerDirs[0] = Buttons.up;
 		playerDirs[1] = Buttons.down;
@@ -281,86 +299,152 @@ public class Game extends Canvas implements Runnable {
 		playerDirs[8] = Buttons.projRight;
 	}
 
-
+        /**
+         * Returns the object containing the current level
+         * @return 
+         */
 	public static Level getLevel() {
 		return level;
 	}
 
+        /**
+         * Sets the level on which we are 
+         * @param level 
+         */
 	public void setLevel(Level level) {
 		this.level = level;
 	}
 
+        /**
+         * Map width. How is this different from width?
+         * @return width
+         */
 	public static int getMapWidth() {
 		return MAP_WIDTH;
 	}
 
+        /**
+         * Map height. How is this different from height?
+         * @return height
+         */
 	public static int getMapHeight() {
 		return MAP_HEIGHT;
 	}
 
+        /**
+         * Get width. Probably local?
+         * @return width
+         */
 	public int getWidth() {
 		return WIDTH;
 	}
 
+        /**
+         * Get height. Probably local?
+         * @return height
+         */
 	public int getHeight() {
 		return HEIGHT;
 	}
 
-	// I needed static methods for width and height and didn't want to get rid
-	// of the old ones
+	/**
+         * Statically return the map's width (width of the screen, local)
+         * @return width
+         */
 	public static int getStaticWidth() {
 		return WIDTH;
 	}
 
+        /**
+         * Statically returns the local height
+         * @return height
+         */
 	public static int getStaticHeight() {
 		return HEIGHT;
 	}
         
-        //Text for the debug console
+        /**
+         * Sets debug text
+         * @param Loc location to place the text
+         * @param text text
+         */
         public static void setDebugText(int Loc, String text){
                 debugPanel.setLabel(Loc,text);
         }
+        /**
+         * Number of frames that have been rendered since start
+         * @return ticks
+         */
         public static int getTicks(){
             return ticks;
         }
         
+        /**
+         * The state of the game
+         * <p>
+         * TODO: list game states here
+         * @return game state
+         */
 	public static int getGameState() {
 		return gameState;
 	}
 
+        /**
+         * Sets the game state
+         * @param gameState 
+         */
 	public static void setGameState(int gameState) {
 		Game.gameState = gameState;
 	}
         
+        /**
+         * Returns the player object
+         * @return player
+         */
         public static Player getPlayer(){
             return player;
         }
 
-		public static int getAbsolute_MapWidth() {
-			return absolute_MapWidth;
-		}
+        /**
+         * Returns the absolute width. (what does that mean?)
+         * @return width
+         */
+	public static int getAbsolute_MapWidth() {
+            return absolute_MapWidth;
+	}
+        
+        //Do we need this??
+        public static void setAbsolute_MapWidth(int absolute_MapWidth) {
+            Game.absolute_MapWidth = absolute_MapWidth;
+	}
 
-		public static void setAbsolute_MapWidth(int absolute_MapWidth) {
-			Game.absolute_MapWidth = absolute_MapWidth;
-		}
+        /**
+         * Returns absolute height. which means?
+         * @return height
+         */
+	public static int getAbsolute_MapHeight() {
+		return absolute_MapHeight;
+	}
+        
+        //do we need this?
+	public static void setAbsolute_MapHeight(int absolute_MapHeight) {
+		Game.absolute_MapHeight = absolute_MapHeight;
+	}
 
-		public static int getAbsolute_MapHeight() {
-			return absolute_MapHeight;
-		}
-
-		public static void setAbsolute_MapHeight(int absolute_MapHeight) {
-			Game.absolute_MapHeight = absolute_MapHeight;
-		}
-
-		public static Screen getScreen() {
-			return screen;
-		}
+	public static Screen getScreen() {
+		return screen;
+	}
 
 
-
-		public static Buttons getButtonsPressed() {
-			return buttonsPressed;
-		}
+        /**
+         * Returns an array of the buttons which have been pressed.
+         * <p>
+         * I don't think we need this because buttons are public static anyway
+         * @return the buttons object
+         */
+	public static Buttons getButtonsPressed() {
+		return buttonsPressed;
+	}
         
 		
         

@@ -88,12 +88,16 @@ public class GameTile {
 
         /**
          * Pixel location of tile with respect to the top of the screen
-         * @return 
+         * @return x location (local)
          */
 	public int getX() {
 		return x;
 	}
 
+        /**
+         * Pixel location of tile with respect to the top of the screen
+         * @return y location (local)
+         */
 	public int getY() {
 		return y;
 	}
