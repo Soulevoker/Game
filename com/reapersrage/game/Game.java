@@ -406,31 +406,25 @@ public class Game extends Canvas implements Runnable {
         }
 
         /**
-         * Returns the absolute width. (what does that mean?)
+         * Returns the absolute width. Width of the map in tiles, the entire field
          * @return width
          */
 	public static int getAbsolute_MapWidth() {
             return absolute_MapWidth;
 	}
-        
-        //Do we need this??
-        public static void setAbsolute_MapWidth(int absolute_MapWidth) {
-            Game.absolute_MapWidth = absolute_MapWidth;
-	}
 
         /**
-         * Returns absolute height. which means?
+         * Returns absolute height. Entire field, in tile
          * @return height
          */
 	public static int getAbsolute_MapHeight() {
 		return absolute_MapHeight;
 	}
-        
-        //do we need this?
-	public static void setAbsolute_MapHeight(int absolute_MapHeight) {
-		Game.absolute_MapHeight = absolute_MapHeight;
-	}
 
+        /**
+         * Gets the screen object
+         * @return the screen
+         */
 	public static Screen getScreen() {
 		return screen;
 	}

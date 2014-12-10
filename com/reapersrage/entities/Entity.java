@@ -138,7 +138,7 @@ public abstract class Entity {
      * @param x - current x
      * @param y - current y
      * @param v - current velocity vector
-     * @return
+     * @return if there's a collision
      */
     public boolean[] checkCollision(int x, int y, double[] v) {
         boolean[] collisions = new boolean[]{false, false};
