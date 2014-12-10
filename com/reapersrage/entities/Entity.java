@@ -43,10 +43,44 @@ public abstract class Entity {
 
     /**
      * Checks whether or not there is a collision, pixel by pixel.
-     * 
+     * <p>
      * Uses LCS
+     * 
+     * @param person to this with which to test a collision
      */
     public boolean isCollided(Entity person) {
+        int[] mobXrange = {locX, locX + width};
+        int[] personXrange = {person.getLocX(), person.getLocX() + person.getWidth()};
+        int[] mobYrange = {locY, locY + height};
+        int[] personYrange = {person.getLocY(), person.getLocY() + person.getHeight()};
+
+        //checks if any pixel in mob overlaps with any pixel in player 
+        if (Math.abs(person.getX() - this.locX) < person.getWidth() + this.width || Math.abs(person.getY() - this.locY) < person.getHeight() + this.height) {
+            for (int i = mobXrange[0]; i < mobXrange[1]; i++) {
+                for (int j = mobYrange[0]; j < mobYrange[1]; j++) {
+                    for (int k = personXrange[0]; k < personXrange[1]; k++) {
+                        for (int l = personYrange[0]; l < personYrange[1]; l++) {
+                            //The pixels of the mob and player must overlap  AND  the mob must not be transparent at that point
+                            if (((i == k) && (j == l)) && !isTransparent(i - mobXrange[0], j - mobYrange[0]) && !(person.isTransparent(k - personXrange[0], l - personYrange[0]))) {
+                                return true;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+        /**
+     * Checks whether or not there is a collision, pixel by pixel.
+     * <p>
+     * Uses LCS
+     * 
+     * @param person to this with which to test a collision
+     */
+    public boolean isCollided(Player person) {
         int[] mobXrange = {locX, locX + width};
         int[] personXrange = {person.getX(), person.getX() + person.getWidth()};
         int[] mobYrange = {locY, locY + height};
@@ -70,7 +104,7 @@ public abstract class Entity {
         }
         return false;
     }
-
+    
     /**
      * Returns true if current pixel is transparent
      *
@@ -180,6 +214,23 @@ public abstract class Entity {
     public int getY(){
         return y;
     }
+    
+    /**
+     * Gets the X in LCS
+     * @return x
+     */
+    public int getLocX(){
+        return locX;
+    }
+    
+    /**
+     * Gets the Y in LCS
+     * @return 
+     */
+    public int getLocY(){
+        return locY;
+    }
+    
     public int getWidth(){
         return width;
     }

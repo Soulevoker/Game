@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
  *
  * @author David
  */
-public abstract class Item extends Entity{
+public abstract class Item extends Entity {
 
     protected int dir;
     protected int gold;
@@ -48,10 +48,6 @@ public abstract class Item extends Entity{
         }
 
         RImage = IR.getResizedImage();
-    }
-
-    public void draw(Graphics2D g) {
-        g.drawImage(RImage, x, y, null);
     }
 
     public void update(Player person) {

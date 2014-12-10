@@ -6,11 +6,11 @@ import java.awt.event.MouseEvent;
 import com.reapersrage.game.Game;
 
 public class Mouse extends MouseAdapter {
-    
+
     public static int ClickedX;
     public static int ClickedY;
     public static boolean button1_isClicked;
-	
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {

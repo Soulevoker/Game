@@ -20,36 +20,9 @@ import javax.swing.*;
 
 public class Game extends Canvas implements Runnable {
 
-	// width and height of game screen
-//	static final int HEIGHT = (240 / 16) * 16;
-    // Make sure we have a 16:9 aspect ratio
-//	static final int WIDTH = ((HEIGHT * 16 / 9) / 16) * 16;
-    // Scale the pixels by 3
     static final int SCALE = 3;
-	// Name of the game to display on windows
-//	static final String NAME = "DOODLE ARENA WARS 2015";
-    // Keyboard class for input
-//	private static Keyboard key;
-    // Image buffer to display
-//	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
-//			BufferedImage.TYPE_INT_RGB);
-    // Array of pixels
-//	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
-//			.getData();
-    // Is the game running
-//	private boolean running = false;
-    // Number of ticks for something
-//private int tickCount;
-//private Screen screen;
-//	private Level level;
-    //Player, add all object here
-    //private Player player;
-    //private AllThings allThings;
-//	private Thread gameThread;
-    //Frame rate (FPS)
-//	static final int FRAMERATE = 50;
 
-	// Starts the game
+    // Starts the game
     static final int MAP_WIDTH = 10;
     static final int MAP_HEIGHT = 10;
 
@@ -74,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 
     private int playerDir;
 
-	// value which will decide if the game is main menu/game/ or game over
+    // value which will decide if the game is main menu/game/ or game over
     // screen
     private static int gameState;
 
@@ -183,7 +156,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-	// Objects to create
+    // Objects to create
     // NOTE: TO MAKE THEM SHOW UP THEY MUST ALSO BE SET TO RENDER!
     public void init() throws IOException {
         level = new RandomLevel(absolute_MapWidth, absolute_MapHeight);
@@ -213,7 +186,7 @@ public class Game extends Canvas implements Runnable {
             long frameLength = System.currentTimeMillis() - frameStart;
 
             if (frameLength < FRAMERATE) {
-				// If that time is less than the desired frame length, sleep the
+                // If that time is less than the desired frame length, sleep the
                 // remaining time
 
                 try {
@@ -232,8 +205,8 @@ public class Game extends Canvas implements Runnable {
     public void update() {
         long updateStart = System.currentTimeMillis();
 
-                //debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
-                //debugPanel.addLabel(0, ""+ticks % 50);
+        //debugPanel.setLabel(3, ""+(int)Math.sqrt((double)Game.ticks));
+        //debugPanel.addLabel(0, ""+ticks % 50);
         //gamestate = 1 when the game is being played
         if (gameState == 1) {
 
@@ -269,7 +242,10 @@ public class Game extends Canvas implements Runnable {
                 + "<br>locX: " + screen.getX()
                 + "<br>locY: " + screen.getY()
                 + "</html>");
+        
+        System.out.println("Jim");
 
+        
     }
 
     /**

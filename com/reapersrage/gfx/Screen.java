@@ -61,10 +61,8 @@ public class Screen {
                 background[y][x] = new GameTile(Game.getLevel().getTile(y, x),
                         (tileWidth * (x - 2)), (tileHeight * (y - 2)), tileWidth,
                         tileHeight);
-
             }
         }
-
     }
 
     public void Update(Player p) {
