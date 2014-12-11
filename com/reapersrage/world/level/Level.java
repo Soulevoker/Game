@@ -1,64 +1,70 @@
 package com.reapersrage.world.level;
 
+import com.reapersrage.entities.Entity;
+import com.reapersrage.entities.Item;
+import com.reapersrage.entities.Mob;
+import com.reapersrage.entities.Player;
+import com.reapersrage.entities.Projectile;
 import com.reapersrage.gfx.Screen;
-import com.reapersrage.world.tiles.Tile;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Soulevoker
- * Date: 10/24/13
- * Time: 5:51 PM
+ * Created with IntelliJ IDEA. User: Soulevoker Date: 10/24/13 Time: 5:51 PM
  * Copyright © Reapers' Rage 2013
  */
 public abstract class Level {
-    protected int width, height;
-    protected int[] tiles;
 
-    public Level(int width, int height) {
-        this.width = width;
-        this.height = height;
-        tiles = new int[width * height];
-        generateLevel();
-    }
+    protected int mapwidth, mapheight;
+    protected int[][] tiles;
+    //protected ArrayList<Mob> MobList = new ArrayList<>();
+    //protected ArrayList<Item> ItemList = new ArrayList<>();
+    //protected ArrayList<Projectile> ProjList = new ArrayList<>();
+    protected ArrayList<Entity> EntityList = new ArrayList<>();
+    protected Queue<Entity> EntityQueue = new LinkedList<>();
 
-    public Level(String path) {
-        loadLevel(path);
-    }
-
-
-    protected void generateLevel() {
+    public Level(int mapwidth, int mapheight) {
+        this.mapwidth = mapwidth;
+        this.mapheight = mapheight;
+        tiles = new int[this.mapheight][this.mapwidth];
 
     }
 
-    public void loadLevel(String path) {
-
+    public int getTile(int y, int x) {
+        return tiles[y][x];
     }
 
-    protected abstract void update();
+    public abstract void update(Player player);
 
-    public void render(int xScroll, int yScroll, Screen screen) {
-        screen.setOffsets(xScroll, yScroll);
-        int x0 = xScroll >> 4;
-        int x1 = (xScroll + screen.getWidth() + 16) >> 4;
-        int y0 = yScroll >> 4;
-        int y1 = (yScroll + screen.getHeight() + 16) >> 4;
-
-        for (int y = y0; y < y1; y++) {
-            for (int x = x0; x < x1; x++) {
-                getTile(x, y).render(x, y, screen);
+    public void updateEntities(Player player) {
+        Iterator<Entity> entityIterator = EntityList.iterator();
+        while (entityIterator.hasNext()) {
+            Entity currEntity = entityIterator.next();
+            currEntity.update(player);
+            if (currEntity.isDestroyed()) {
+                entityIterator.remove();
             }
+
+        }
+        while (!EntityQueue.isEmpty()) {
+            EntityList.add(EntityQueue.poll());
         }
     }
 
-    public Tile getTile(int x, int y) {
-        if (x < 0 || y < 0 || x >= width || y >= height) {
-            return Tile.voidTile;
+    public void drawEntities(Graphics2D g) {
+        Iterator<Entity> entityIterator = EntityList.iterator();
+        while (entityIterator.hasNext()) {
+            Entity currEntity = entityIterator.next();
+            currEntity.draw(g);
         }
-        if (tiles[x + y * width] == 0) {
-            return Tile.grass;
-        }
-        return Tile.voidTile;
+
     }
 
-    protected abstract void time();
+    public void addEntity(Entity entity) {
+        EntityQueue.add(entity);
+    }
+
 }
